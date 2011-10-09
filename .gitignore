@@ -1,0 +1,6 @@
+*/obj
+/bin/qwebdevide
+qrc*.cpp
+*~
+*.pro.user
+*Makefile
