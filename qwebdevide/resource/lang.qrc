@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/core">
+    <qresource prefix="/lang">
         <file>flags/ad.png</file>
         <file>flags/ae.png</file>
         <file>flags/ag.png</file>

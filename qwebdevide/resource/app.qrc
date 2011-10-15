@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>app/category_core.png</file>
+        <file>app/category_cpp.png</file>
+        <file>app/category_debug.png</file>
+        <file>app/category_help.png</file>
+        <file>app/category_texteditor.png</file>
+    </qresource>
+</RCC>

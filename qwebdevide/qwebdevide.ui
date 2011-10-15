@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>651</width>
+    <height>506</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,29 +19,41 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>651</width>
      <height>25</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionClose"/>
+   </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuTools"/>
+   <addaction name="menuHelp"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
-  <widget class="QToolBar" name="toolBar_2">
-   <property name="minimumSize">
-    <size>
-     <width>64</width>
-     <height>0</height>
-    </size>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
    </property>
-   <property name="windowTitle">
-    <string>toolBar_2</string>
+  </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>Close</string>
    </property>
-   <attribute name="toolBarArea">
-    <enum>LeftToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
