@@ -14,6 +14,7 @@ class QWebDevIde : public QCoreWindow
 public:
     explicit QWebDevIde(QWidget *parent = 0);
     ~QWebDevIde();
+    void changeEvent(QEvent *e);
 
 private:
     Ui::QWebDevIde *ui;
