@@ -1,5 +1,6 @@
 
 SOURCES += $$PWD/fancywidgets/styleanimator.cpp \
+          $$PWD/fancywidgets/minisplitter.cpp \
           $$PWD/fancywidgets/manhattanstyle.cpp \
           $$PWD/fancywidgets/fancytabwidget.cpp \
           $$PWD/fancywidgets/fancyactionbar.cpp \
@@ -12,6 +13,7 @@ HEADERS += $$PWD/fancywidgets/styleanimator.h \
     $$PWD/fancywidgets/manhattanstyle.h \
     $$PWD/fancywidgets/fancytabwidget.h \
     $$PWD/fancywidgets/fancyactionbar.h \
+    $$PWD/fancywidgets/minisplitter.h \
     $$PWD/fancywidgets/coreconstants.h \
     $$PWD/utils/utils_global.h \
     $$PWD/utils/stylehelper.h \

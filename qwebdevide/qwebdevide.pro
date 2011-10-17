@@ -29,31 +29,3 @@ FORMS    += qwebdevide.ui
 RESOURCES += \
     resource/app.qrc \
     resource/lang.qrc
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
