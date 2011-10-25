@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RightPane</class>
+ <widget class="QWidget" name="RightPane">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>199</width>
+    <height>167</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="Utils::StyledBar" name="widget" native="true">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>29</height>
+      </size>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="margin">
+       <number>1</number>
+      </property>
+      <item>
+       <widget class="QComboBox" name="comboBox">
+        <item>
+         <property name="text">
+          <string>Projects</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Opened Files</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>File System</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Bookmarks</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="rightPaneFilter">
+        <property name="toolTip">
+         <string>Filter</string>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../3rdparty/qtcreator/fancywidgets/core.qrc">
+          <normaloff>:/core/images/filtericon.png</normaloff>:/core/images/filtericon.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="rightPaneSplit">
+        <property name="toolTip">
+         <string>Split Pane</string>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../3rdparty/qtcreator/fancywidgets/core.qrc">
+          <normaloff>:/core/images/splitbutton_horizontal.png</normaloff>:/core/images/splitbutton_horizontal.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="rightPaneClose">
+        <property name="toolTip">
+         <string>Close current pane</string>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../3rdparty/qtcreator/fancywidgets/core.qrc">
+          <normaloff>:/core/images/closebutton.png</normaloff>:/core/images/closebutton.png</iconset>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QWidget" name="rightPaneContainer" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="margin">
+       <number>0</number>
+      </property>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Utils::StyledBar</class>
+   <extends>QWidget</extends>
+   <header location="global">styledbar.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../../3rdparty/qtcreator/fancywidgets/core.qrc"/>
+ </resources>
+ <connections/>
+</ui>

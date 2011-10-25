@@ -6,7 +6,7 @@
 QT       += core gui
 include(../3rdparty/qtcreator/fancywidgets.pri)
 TARGET = qwebdevide
-DEFINES += QT_SQL_LIB CORE_LIBRARY QTCREATOR_UTILS_LIB
+
 TEMPLATE = app
 unix{
     OBJECTS_DIR = ./obj/
@@ -19,13 +19,16 @@ TRANSLATIONS = ../lang/qwebdevide_ru.ts \
                 ../lang/qwebdevide_en.ts
 SOURCES += main.cpp\
         qwebdevide.cpp \
-        qcorewindow.cpp
+        qcorewindow.cpp \
+    rightpane/rightpane.cpp
 
 
 HEADERS  += qwebdevide.h \
-            qcorewindow.h
+            qcorewindow.h \
+    rightpane/rightpane.h
 
-FORMS    += qwebdevide.ui
+FORMS    += qwebdevide.ui \
+    rightpane/rightpane.ui
 RESOURCES += \
     resource/app.qrc \
     resource/lang.qrc
