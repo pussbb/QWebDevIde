@@ -20,12 +20,14 @@ TRANSLATIONS = ../lang/qwebdevide_ru.ts \
 SOURCES += main.cpp\
         qwebdevide.cpp \
         qcorewindow.cpp \
-    rightpane/rightpane.cpp
+    rightpane/rightpane.cpp \
+    rightpane/filesystembrowser.cpp
 
 
 HEADERS  += qwebdevide.h \
             qcorewindow.h \
-    rightpane/rightpane.h
+    rightpane/rightpane.h \
+    rightpane/filesystembrowser.h
 
 FORMS    += qwebdevide.ui \
     rightpane/rightpane.ui
