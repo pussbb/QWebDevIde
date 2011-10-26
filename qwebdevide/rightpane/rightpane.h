@@ -15,7 +15,7 @@ class RightPane : public QWidget
 public:
     explicit RightPane(QWidget *parent = 0);
     ~RightPane();
-    QWidget *currentWidget;
+    QPointer<QWidget> currentWidget;
     QPointer<FileSystemBrowser> sysFileBrowser;
 private slots:
     QWidget* getFileBrowserWidget();

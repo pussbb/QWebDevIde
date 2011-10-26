@@ -33,34 +33,31 @@ void RightPane::on_rightPaneSplit_clicked()
 void RightPane::on_comboBox_currentIndexChanged(int index)
 {
     if(currentWidget != NULL)
-        ui->rightPaneContainer->layout()->removeWidget(currentWidget);
+        delete currentWidget;//ui->rightPaneContainer->layout()->removeWidget(currentWidget);
+
     switch(index){
         case 0:
+            currentWidget = new QWidget();
             break;
-    case 1:
-        break;
-    case 2:{
-        /// file system view
-
-        currentWidget = getFileBrowserWidget();
-        ui->rightPaneContainer->layout()->addWidget(currentWidget);
-        break;
+        case 1:
+            currentWidget = new QWidget();
+            break;
+        case 2:
+            /// file system view
+            currentWidget = getFileBrowserWidget();
+            break;
+        case 3:
+            currentWidget = new QWidget();
+            break;
     }
-    case 3:
-        break;
-    }
+    ui->rightPaneContainer->layout()->addWidget(currentWidget);
 }
 
 QWidget * RightPane::getFileBrowserWidget()
 {
     if(sysFileBrowser != NULL)
         return sysFileBrowser;
-\
+
     sysFileBrowser = new FileSystemBrowser;
-    return sysFileBrowser;
-  /*  QFileSystemModel *model = new QFileSystemModel;
-    model->setRootPath(QDir::currentPath());
-    QListView *list = new QListView();
-    list->setModel(model);
-    list->setRootIndex(model->index(QDir::currentPath()));*/
+    return new FileSystemBrowser;
 }
