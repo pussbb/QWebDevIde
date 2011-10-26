@@ -21,13 +21,15 @@ SOURCES += main.cpp\
         qwebdevide.cpp \
         qcorewindow.cpp \
     rightpane/rightpane.cpp \
-    rightpane/filesystembrowser.cpp
+    rightpane/filesystembrowser.cpp \
+    projectmanager.cpp
 
 
 HEADERS  += qwebdevide.h \
             qcorewindow.h \
     rightpane/rightpane.h \
-    rightpane/filesystembrowser.h
+    rightpane/filesystembrowser.h \
+    projectmanager.h
 
 FORMS    += qwebdevide.ui \
     rightpane/rightpane.ui

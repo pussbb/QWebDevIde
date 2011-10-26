@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QPointer>
 #include "filesystembrowser.h"
+#include "../projectmanager.h"
 namespace Ui {
     class RightPane;
 }
@@ -13,7 +14,7 @@ class RightPane : public QWidget
     Q_OBJECT
 
 public:
-    explicit RightPane(QWidget *parent = 0);
+    explicit RightPane(QWidget *parent = 0,ProjectManager *m_prman = 0);
     ~RightPane();
     QPointer<QWidget> currentWidget;
     QPointer<FileSystemBrowser> sysFileBrowser;
@@ -27,6 +28,7 @@ private slots:
 
 private:
     Ui::RightPane *ui;
+    ProjectManager *m_projecManager;
 
 };
 

@@ -36,6 +36,9 @@ void FileSystemBrowser::doubleClickedItem(QModelIndex index)
        fileSysModel->setRootPath(file.absoluteFilePath());
        setRootIndex(fileSysModel->index(file.absoluteFilePath()));
     }
+    else{
+        emit(openFile(file.absoluteFilePath()));
+    }
 }
 
 void FileSystemBrowser::customMenu(QPoint pos)

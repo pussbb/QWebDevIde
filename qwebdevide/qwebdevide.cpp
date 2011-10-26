@@ -9,6 +9,7 @@ QWebDevIde::QWebDevIde(QWidget *parent) :
 
     buildLangMenu("qwebdevide");
     langMenuToMenuBar("menuOptions");
+    projectManager = new ProjectManager(this);
 
     QString baseName = QApplication::style()->objectName();
     #ifdef Q_WS_X11
@@ -34,8 +35,8 @@ QWebDevIde::QWebDevIde(QWidget *parent) :
       QTextEdit *textedit = new QTextEdit;
       splitter->addWidget(rightPaneSplitter);
       splitter->addWidget(textedit);
-      new RightPane(rightPaneSplitter);
-      new RightPane(rightPaneSplitter);
+      new RightPane(rightPaneSplitter,projectManager);
+      new RightPane(rightPaneSplitter,projectManager);
       rightPaneSplitter->setOrientation(Qt::Vertical);
 
       ptab->insertTab(0,new QWidget(this),QIcon(":/core/images/category_core.png"),tr("Welcome") );

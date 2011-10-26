@@ -16,7 +16,7 @@ public:
     explicit FileSystemBrowser(QWidget *parent = 0);
     QFileSystemModel *fileSysModel;
 signals:
-
+    void openFile(QString);
 public slots:
     bool eventFilter( QObject* object, QEvent* event);
     void doubleClickedItem(QModelIndex);

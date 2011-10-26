@@ -8,7 +8,7 @@
 #include <minisplitter.h>
 #include <QtGui>
 #include "rightpane/rightpane.h"
-
+#include "projectmanager.h"
 using namespace Core;
 using namespace Core::Internal;
 
@@ -24,6 +24,7 @@ public:
     explicit QWebDevIde(QWidget *parent = 0);
     ~QWebDevIde();
     void changeEvent(QEvent *e);
+    ProjectManager *projectManager;
 private:
     Ui::QWebDevIde *ui;
     void initUI();

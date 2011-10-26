@@ -1,14 +1,12 @@
 #include "rightpane.h"
 #include "ui_rightpane.h"
 #include <QtGui>
-RightPane::RightPane(QWidget *parent) :
+RightPane::RightPane(QWidget *parent,ProjectManager *prman ) :
     QWidget(parent),
-    ui(new Ui::RightPane)
+    ui(new Ui::RightPane),
+    m_projecManager(prman)
 {
     ui->setupUi(this);
-   // QGridLayout *layout = new QGridLayout(ui->rightPaneContainer);
-    ///layout->setAlignment(Qt::AlignJustify);
-   /// layout->setMargin(0);
 }
 
 RightPane::~RightPane()
@@ -27,7 +25,7 @@ void RightPane::on_rightPaneSplit_clicked()
         for RightPane(0xdf1940, name = "RightPane") attached one QSplitterHandle(0xdf7130, name = "qt_splithandle_")
       */
     if(parentWidget()->children().count()/2 < 4)
-        new RightPane(parentWidget());
+        new RightPane(parentWidget(),m_projecManager);
 }
 
 void RightPane::on_comboBox_currentIndexChanged(int index)
@@ -59,5 +57,6 @@ QWidget * RightPane::getFileBrowserWidget()
         return sysFileBrowser;
 
     sysFileBrowser = new FileSystemBrowser;
-    return new FileSystemBrowser;
+    connect(sysFileBrowser,SIGNAL(openFile(QString)),m_projecManager,SLOT(openFile(QString)));
+    return sysFileBrowser;
 }
