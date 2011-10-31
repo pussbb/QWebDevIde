@@ -35,8 +35,11 @@ void RightPane::on_rightPaneSplit_clicked()
 
 void RightPane::on_comboBox_currentIndexChanged(int index)
 {
-    if(currentWidget != NULL)
-        delete currentWidget;//ui->rightPaneContainer->layout()->removeWidget(currentWidget);
+    if(currentWidget != NULL){
+       currentWidget->hide();
+       currentWidget->setParent(0);
+       currentWidget = 0;
+    }
 
     switch(index){
         case 0:
@@ -54,7 +57,10 @@ void RightPane::on_comboBox_currentIndexChanged(int index)
             currentWidget = new QWidget();
             break;
     }
+    currentWidget->setParent(this);
     ui->rightPaneContainer->layout()->addWidget(currentWidget);
+    setFocusProxy(currentWidget);
+    currentWidget->show();
 }
 
 QWidget * RightPane::getFileBrowserWidget()
