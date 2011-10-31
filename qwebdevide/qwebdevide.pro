@@ -6,7 +6,7 @@
 QT       += core gui
 include(../3rdparty/qtcreator/fancywidgets.pri)
 TARGET = qwebdevide
-
+INCLUDEPATH += $$PWD/codeeditor
 TEMPLATE = app
 unix{
     OBJECTS_DIR = ./obj/
@@ -22,14 +22,22 @@ SOURCES += main.cpp\
         qcorewindow.cpp \
     rightpane/rightpane.cpp \
     rightpane/filesystembrowser.cpp \
-    projectmanager.cpp
+    projectmanager.cpp \
+    bookmarkmanager.cpp \
+    editorsmanager.cpp \
+    codeeditor/codeeditor.cpp \
+    codeeditor/highlighter.cpp
 
 
 HEADERS  += qwebdevide.h \
             qcorewindow.h \
     rightpane/rightpane.h \
     rightpane/filesystembrowser.h \
-    projectmanager.h
+    projectmanager.h \
+    bookmarkmanager.h \
+    editorsmanager.h \
+    codeeditor/codeeditor.h \
+    codeeditor/highlighter.h
 
 FORMS    += qwebdevide.ui \
     rightpane/rightpane.ui

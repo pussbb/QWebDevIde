@@ -3,8 +3,12 @@
 #include <styledbar.h>
 #include <QWidget>
 #include <QPointer>
+
 #include "filesystembrowser.h"
 #include "../projectmanager.h"
+#include "../bookmarkmanager.h"
+#include "../editorsmanager.h"
+
 namespace Ui {
     class RightPane;
 }
@@ -14,7 +18,7 @@ class RightPane : public QWidget
     Q_OBJECT
 
 public:
-    explicit RightPane(QWidget *parent = 0,ProjectManager *m_prman = 0);
+    explicit RightPane(QWidget *parent = 0,ProjectManager *prman = 0,EditorsManager *eman = 0,BookmarkManager *bman = 0);
     ~RightPane();
     QPointer<QWidget> currentWidget;
     QPointer<FileSystemBrowser> sysFileBrowser;
@@ -29,6 +33,8 @@ private slots:
 private:
     Ui::RightPane *ui;
     ProjectManager *m_projecManager;
+    EditorsManager *m_editorsManager;
+    BookmarkManager *m_bookmarkManager;
 
 };
 

@@ -9,6 +9,9 @@
 #include <QtGui>
 #include "rightpane/rightpane.h"
 #include "projectmanager.h"
+#include "bookmarkmanager.h"
+#include "editorsmanager.h"
+
 using namespace Core;
 using namespace Core::Internal;
 
@@ -25,6 +28,8 @@ public:
     ~QWebDevIde();
     void changeEvent(QEvent *e);
     ProjectManager *projectManager;
+    BookmarkManager *bookmarkManager;
+    EditorsManager *editorsManager;
 private:
     Ui::QWebDevIde *ui;
     void initUI();

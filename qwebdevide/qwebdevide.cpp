@@ -1,6 +1,6 @@
 #include "qwebdevide.h"
 #include "ui_qwebdevide.h"
-
+#include <codeeditor.h>
 QWebDevIde::QWebDevIde(QWidget *parent) :
     QCoreWindow(parent),
     ui(new Ui::QWebDevIde)
@@ -10,7 +10,8 @@ QWebDevIde::QWebDevIde(QWidget *parent) :
     buildLangMenu("qwebdevide");
     langMenuToMenuBar("menuOptions");
     projectManager = new ProjectManager(this);
-
+    bookmarkManager = new BookmarkManager(this);
+    editorsManager = new EditorsManager(this);
     QString baseName = QApplication::style()->objectName();
     #ifdef Q_WS_X11
         if (baseName == QLatin1String("windows")) {
@@ -32,11 +33,12 @@ QWebDevIde::QWebDevIde(QWidget *parent) :
       MiniSplitter *splitter = new MiniSplitter(parent);
       QListView *listview = new QListView;
       QTreeView *treeview = new QTreeView;
-      QTextEdit *textedit = new QTextEdit;
+      CodeEditor *textedit = new CodeEditor;
+      projectManager->editor = textedit;
       splitter->addWidget(rightPaneSplitter);
       splitter->addWidget(textedit);
-      new RightPane(rightPaneSplitter,projectManager);
-      new RightPane(rightPaneSplitter,projectManager);
+      new RightPane(rightPaneSplitter,projectManager,editorsManager,bookmarkManager);
+      new RightPane(rightPaneSplitter,projectManager,editorsManager,bookmarkManager);
       rightPaneSplitter->setOrientation(Qt::Vertical);
 
       ptab->insertTab(0,new QWidget(this),QIcon(":/core/images/category_core.png"),tr("Welcome") );
