@@ -26,7 +26,10 @@ SOURCES += main.cpp\
     bookmarkmanager.cpp \
     editorsmanager.cpp \
     codeeditor/codeeditor.cpp \
-    codeeditor/highlighter.cpp
+    codeeditor/highlighter.cpp \
+    wizard/wizard.cpp \
+    wizard/startpage.cpp \
+    wizard/commonsettings.cpp
 
 
 HEADERS  += qwebdevide.h \
@@ -37,10 +40,17 @@ HEADERS  += qwebdevide.h \
     bookmarkmanager.h \
     editorsmanager.h \
     codeeditor/codeeditor.h \
-    codeeditor/highlighter.h
+    codeeditor/highlighter.h \
+    wizard/wizard.h \
+    wizard/startpage.h \
+    wizard/commonsettings.h
 
 FORMS    += qwebdevide.ui \
-    rightpane/rightpane.ui
+    rightpane/rightpane.ui \
+    wizard/wizard.ui \
+    wizard/startpage.ui \
+    wizard/commonsettings.ui
+
 RESOURCES += \
     resource/app.qrc \
     resource/lang.qrc

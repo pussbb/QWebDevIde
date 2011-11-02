@@ -30,6 +30,9 @@ public:
     ProjectManager *projectManager;
     BookmarkManager *bookmarkManager;
     EditorsManager *editorsManager;
+private slots:
+    void on_actionNewProject_triggered();
+
 private:
     Ui::QWebDevIde *ui;
     void initUI();

@@ -1,6 +1,7 @@
 #include "qwebdevide.h"
 #include "ui_qwebdevide.h"
 #include <codeeditor.h>
+#include <wizard/wizard.h>
 QWebDevIde::QWebDevIde(QWidget *parent) :
     QCoreWindow(parent),
     ui(new Ui::QWebDevIde)
@@ -76,3 +77,9 @@ void QWebDevIde::changeEvent(QEvent *e)
     }
 }
 
+
+void QWebDevIde::on_actionNewProject_triggered()
+{
+    Wizard *wizard = new Wizard(this);
+   wizard->exec();
+}
