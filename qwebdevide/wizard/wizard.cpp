@@ -23,7 +23,8 @@ void Wizard::saveResult()
     QString path = d->itemMap.value("folder").toString();
     QString type = d->itemMap.value("type").toString();
     QString name = d->itemMap.value("name","poject").toString();
-    QSettings settings(path+"/"+name+".webpro",QSettings::IniFormat);
+    fileName = path+"/"+name+".webpro";
+    QSettings settings(fileName,QSettings::IniFormat);
     foreach(QString key,d->itemMap.keys()){
         settings.setValue(key,d->itemMap.value(key));
     }

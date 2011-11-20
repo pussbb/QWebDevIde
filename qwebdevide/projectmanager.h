@@ -4,7 +4,8 @@
 #include <QObject>
 #include <QVariantMap>
 #include <QDebug>
-#include <codeeditor.h>
+#include <abstractproject.h>
+#include <QFileInfo>
 class ProjectManager : public QObject
 {
     Q_OBJECT
@@ -12,11 +13,13 @@ public:
     explicit ProjectManager(QObject *parent = 0);
     QVariantMap openedFiles;
     QVariantMap bookmarks;
-    CodeEditor *editor;
-signals:
 
-public slots:
-    void openFile(QString );
+    void openProject(QString fileName);
+    AbstractProject *current;
+    QMap<QString,AbstractProject*> projects;
+signals:
+    void projectAdd();
+
 };
 
 #endif // PROJECTMANAGER_H

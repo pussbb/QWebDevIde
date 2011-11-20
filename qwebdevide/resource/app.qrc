@@ -5,5 +5,7 @@
         <file>app/category_debug.png</file>
         <file>app/category_help.png</file>
         <file>app/category_texteditor.png</file>
+        <file>fs-directory.png</file>
+        <file>applications-development-web.png</file>
     </qresource>
 </RCC>

@@ -30,8 +30,11 @@ public:
     ProjectManager *projectManager;
     BookmarkManager *bookmarkManager;
     EditorsManager *editorsManager;
+    void openFile(QString fileName);
 private slots:
     void on_actionNewProject_triggered();
+
+    void on_actionOpen_triggered();
 
 private:
     Ui::QWebDevIde *ui;

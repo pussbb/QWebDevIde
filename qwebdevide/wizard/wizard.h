@@ -17,6 +17,7 @@ class Wizard : public QWizard
 public:
     explicit Wizard(QWidget *parent = 0);
     ~Wizard();
+    QString fileName;
     ///QMap<QString, QVariant> pageOptions;
 
 public slots:

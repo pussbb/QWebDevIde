@@ -5,6 +5,7 @@
 #-------------------------------------------------
 QT       += core gui
 include(../3rdparty/qtcreator/fancywidgets.pri)
+include(../3rdparty/qtjsonsettings/qtjsonsettings.pri)
 TARGET = qwebdevide
 INCLUDEPATH += $$PWD/codeeditor \
                 $$PWD/wizard
@@ -30,7 +31,10 @@ SOURCES += main.cpp\
     codeeditor/highlighter.cpp \
     wizard/wizard.cpp \
     wizard/startpage.cpp \
-    wizard/commonsettings.cpp
+    wizard/commonsettings.cpp \
+    abstractproject.cpp \
+    rightpane/projectexplorer.cpp \
+    mimetypes.cpp
 
 
 HEADERS  += qwebdevide.h \
@@ -45,15 +49,31 @@ HEADERS  += qwebdevide.h \
     wizard/wizard.h \
     wizard/startpage.h \
     wizard/commonsettings.h \
-    wizard/pagedata.h
+    wizard/pagedata.h \
+    abstractproject.h \
+    rightpane/projectexplorer.h \
+    mimetypes.h
 
 FORMS    += qwebdevide.ui \
     rightpane/rightpane.ui \
     wizard/wizard.ui \
     wizard/startpage.ui \
-    wizard/commonsettings.ui
+    wizard/commonsettings.ui \
+    rightpane/projectexplorer.ui
 
 RESOURCES += \
     resource/app.qrc \
-    resource/lang.qrc
+    resource/lang.qrc \
+    resource/mimetypes.qrc
+
+
+
+
+
+
+
+
+
+
+
 

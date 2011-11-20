@@ -5,11 +5,13 @@ RightPane::RightPane(QWidget *parent,ProjectManager *prman,EditorsManager *eman,
     QWidget(parent),
     ui(new Ui::RightPane),
     m_projecManager(prman),
-    m_bookmarkManager(bman),
-    m_editorsManager(eman)
+    m_editorsManager(eman),
+    m_bookmarkManager(bman)
 {
     ui->setupUi(this);
-
+    connect( m_projecManager,SIGNAL(projectAdd()),this,SLOT(refreshProject()));
+    ui->comboBox->setCurrentIndex(-1);
+     ui->comboBox->setCurrentIndex(0);
 }
 
 RightPane::~RightPane()
@@ -36,6 +38,9 @@ void RightPane::on_rightPaneSplit_clicked()
 
 void RightPane::on_comboBox_currentIndexChanged(int index)
 {
+    if(index == -1)
+        return;
+
     if(currentWidget != NULL){
        currentWidget->hide();
        currentWidget->setParent(0);
@@ -44,7 +49,7 @@ void RightPane::on_comboBox_currentIndexChanged(int index)
 
     switch(index){
         case 0:
-            currentWidget = new QWidget();
+            currentWidget = getProjectExplorer();
             break;
         case 1:
             currentWidget = new QWidget();
@@ -70,6 +75,22 @@ QWidget * RightPane::getFileBrowserWidget()
         return sysFileBrowser;
 
     sysFileBrowser = new FileSystemBrowser;
-    connect(sysFileBrowser,SIGNAL(openFile(QString)),m_projecManager,SLOT(openFile(QString)));
+    connect(sysFileBrowser,SIGNAL(openFile(QString)),m_editorsManager,SLOT(openFile(QString)));
     return sysFileBrowser;
+}
+
+void RightPane::refreshProject()
+{
+   if(projectExplorer != NULL)
+       projectExplorer->refresh();
+}
+
+QWidget * RightPane::getProjectExplorer()
+{
+    if(projectExplorer != NULL)
+        return projectExplorer;
+
+    projectExplorer = new ProjectExplorer(NULL,m_projecManager);
+    connect(projectExplorer,SIGNAL(openFile(QString)),m_editorsManager,SLOT(openFile(QString)));
+    return projectExplorer;
 }

@@ -5,13 +5,22 @@ ProjectManager::ProjectManager(QObject *parent) :
 {
 }
 
-#include <QFile>
-void ProjectManager::openFile(QString file)
-{
-    qDebug()<<"open file"<< file;
 
-    QFile f(file);
-           if (f.open(QFile::ReadOnly | QFile::Text))
-               editor->setPlainText(f.readAll());
+
+void ProjectManager::openProject(QString fileName)
+{
+    QFileInfo fi(fileName);
+    if(projects.value(fi.baseName(),NULL) == NULL){
+        AbstractProject *pro = new AbstractProject(this);
+        pro->fileName = fileName;
+        pro->projectName = fi.baseName();
+        pro->init();
+        projects.insert(fi.baseName(),pro);
+        current = pro;
+        emit(projectAdd());
+    }
+    else{
+        current = projects.value(fi.baseName());
+    }
 
 }

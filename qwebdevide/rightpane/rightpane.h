@@ -8,6 +8,7 @@
 #include "../projectmanager.h"
 #include "../bookmarkmanager.h"
 #include "../editorsmanager.h"
+#include "projectexplorer.h"
 
 namespace Ui {
     class RightPane;
@@ -22,8 +23,12 @@ public:
     ~RightPane();
     QPointer<QWidget> currentWidget;
     QPointer<FileSystemBrowser> sysFileBrowser;
+    QPointer<ProjectExplorer> projectExplorer;
+public slots:
+    void refreshProject();
 private slots:
     QWidget* getFileBrowserWidget();
+    QWidget* getProjectExplorer();
     void on_rightPaneClose_clicked();
     void on_rightPaneSplit_clicked();
     void on_comboBox_currentIndexChanged(int index);

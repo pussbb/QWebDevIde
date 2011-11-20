@@ -35,7 +35,7 @@ QWebDevIde::QWebDevIde(QWidget *parent) :
       QListView *listview = new QListView;
       QTreeView *treeview = new QTreeView;
       CodeEditor *textedit = new CodeEditor;
-      projectManager->editor = textedit;
+      editorsManager->editor = textedit;
       splitter->addWidget(rightPaneSplitter);
       splitter->addWidget(textedit);
       new RightPane(rightPaneSplitter,projectManager,editorsManager,bookmarkManager);
@@ -81,5 +81,28 @@ void QWebDevIde::changeEvent(QEvent *e)
 void QWebDevIde::on_actionNewProject_triggered()
 {
     Wizard *wizard = new Wizard(this);
-    wizard->exec();
+    if(wizard->exec() == QDialog::Accepted){
+        openFile(wizard->fileName);
+    }
+}
+
+void QWebDevIde::openFile(QString fileName)
+{
+    QFileInfo file(fileName);qDebug()<<file.completeSuffix();
+    if(file.completeSuffix() == "webpro"){
+        projectManager->openProject(fileName);
+        qDebug()<<  projectManager->current->projectPath();
+    }
+    else
+        qDebug()<<"open in editor";
+}
+
+void QWebDevIde::on_actionOpen_triggered()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                                    tr("Open file or project"),
+                                                    QDir::currentPath(),
+                                                    tr("All Files (*.*)"));
+    if(!fileName.isEmpty())
+        openFile(fileName);
 }
