@@ -6,7 +6,8 @@
 QT       += core gui
 include(../3rdparty/qtcreator/fancywidgets.pri)
 TARGET = qwebdevide
-INCLUDEPATH += $$PWD/codeeditor
+INCLUDEPATH += $$PWD/codeeditor \
+                $$PWD/wizard
 TEMPLATE = app
 unix{
     OBJECTS_DIR = ./obj/
@@ -43,7 +44,8 @@ HEADERS  += qwebdevide.h \
     codeeditor/highlighter.h \
     wizard/wizard.h \
     wizard/startpage.h \
-    wizard/commonsettings.h
+    wizard/commonsettings.h \
+    wizard/pagedata.h
 
 FORMS    += qwebdevide.ui \
     rightpane/rightpane.ui \
@@ -54,3 +56,4 @@ FORMS    += qwebdevide.ui \
 RESOURCES += \
     resource/app.qrc \
     resource/lang.qrc
+

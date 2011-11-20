@@ -33,8 +33,6 @@
 #ifndef ICORE_H
 #define ICORE_H
 
-#include "core_global.h"
-
 #include <QtCore/QObject>
 #include <QtCore/QSettings>
 
@@ -64,7 +62,7 @@ class UniqueIDManager;
 class VariableManager;
 class VcsManager;
 
-class CORE_EXPORT ICore : public QObject
+class ICore : public QObject
 {
     Q_OBJECT
 

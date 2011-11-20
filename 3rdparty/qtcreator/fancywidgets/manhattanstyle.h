@@ -33,8 +33,6 @@
 #ifndef MANHATTANSTYLE_H
 #define MANHATTANSTYLE_H
 
-#include "core_global.h"
-
 #include <QtGui/QProxyStyle>
 
 QT_BEGIN_NAMESPACE
@@ -44,7 +42,7 @@ QT_END_NAMESPACE
 
 class ManhattanStylePrivate;
 
-class CORE_EXPORT ManhattanStyle : public QProxyStyle
+class ManhattanStyle : public QProxyStyle
 {
     Q_OBJECT
 

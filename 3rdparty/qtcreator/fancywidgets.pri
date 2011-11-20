@@ -15,11 +15,9 @@ HEADERS += $$PWD/fancywidgets/styleanimator.h \
     $$PWD/fancywidgets/fancyactionbar.h \
     $$PWD/fancywidgets/minisplitter.h \
     $$PWD/fancywidgets/coreconstants.h \
-    $$PWD/utils/utils_global.h \
     $$PWD/utils/stylehelper.h \
     $$PWD/utils/styledbar.h \
     $$PWD/utils/fancymainwindow.h \
-    $$PWD/utils/core_global.h \
     $$PWD/utils/qtcassert.h
 
 INCLUDEPATH += $$PWD/fancywidgets/ \

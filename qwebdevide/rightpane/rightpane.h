@@ -25,9 +25,7 @@ public:
 private slots:
     QWidget* getFileBrowserWidget();
     void on_rightPaneClose_clicked();
-
     void on_rightPaneSplit_clicked();
-
     void on_comboBox_currentIndexChanged(int index);
 
 private:

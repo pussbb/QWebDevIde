@@ -81,5 +81,5 @@ void QWebDevIde::changeEvent(QEvent *e)
 void QWebDevIde::on_actionNewProject_triggered()
 {
     Wizard *wizard = new Wizard(this);
-   wizard->exec();
+    wizard->exec();
 }

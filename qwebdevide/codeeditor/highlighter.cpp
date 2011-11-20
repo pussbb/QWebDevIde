@@ -45,7 +45,6 @@ Highlighter::Highlighter(QTextDocument *parent)
         rule.pattern = QRegExp(pattern);
         rule.format = keywordFormat;
         highlightingRules.append(rule);
-
     }
 
     classFormat.setFontWeight(QFont::Bold);

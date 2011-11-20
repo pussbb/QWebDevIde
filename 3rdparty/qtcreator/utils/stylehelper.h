@@ -33,8 +33,6 @@
 #ifndef STYLEHELPER_H
 #define STYLEHELPER_H
 
-#include "utils_global.h"
-
 #include <QtGui/QColor>
 #include <QtGui/QStyle>
 
@@ -50,7 +48,7 @@ QT_END_NAMESPACE
 // Helper class holding all custom color values
 
 namespace Utils {
-class QTCREATOR_UTILS_EXPORT StyleHelper
+class StyleHelper
 {
 public:
     static const unsigned int DEFAULT_BASE_COLOR = 0x666666;

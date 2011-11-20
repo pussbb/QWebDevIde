@@ -9,6 +9,7 @@ RightPane::RightPane(QWidget *parent,ProjectManager *prman,EditorsManager *eman,
     m_editorsManager(eman)
 {
     ui->setupUi(this);
+
 }
 
 RightPane::~RightPane()

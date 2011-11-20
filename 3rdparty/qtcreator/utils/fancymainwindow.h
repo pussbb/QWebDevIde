@@ -33,8 +33,6 @@
 #ifndef FANCYMAINWINDOW_H
 #define FANCYMAINWINDOW_H
 
-#include "utils_global.h"
-
 #include <QtGui/QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -45,7 +43,7 @@ namespace Utils {
 
 struct FancyMainWindowPrivate;
 
-class QTCREATOR_UTILS_EXPORT FancyMainWindow : public QMainWindow
+class FancyMainWindow : public QMainWindow
 {
     Q_OBJECT
 

@@ -47,7 +47,7 @@ int CodeEditor::lineNumberAreaWidth()
 
 
 void CodeEditor::updateLineNumberAreaWidth(int /* newBlockCount */)
-{ 
+{
     setViewportMargins(lineNumberAreaWidth(), 0, 0, 0);
 }
 
@@ -76,7 +76,7 @@ void CodeEditor::highlightCurrentLine()
 
     if (!isReadOnly()) {
         QTextEdit::ExtraSelection selection;
-        
+
         QColor lineColor = QColor(Qt::yellow).lighter(160);
 
         selection.format.setBackground(lineColor);
@@ -152,7 +152,7 @@ void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
 
 void CodeEditor::paintEvent(QPaintEvent *e)
 {
-    uint position = fontMetrics().width('  ') * 80;
+    uint position = fontMetrics().width("  ") * 80;
     QPainter p(viewport());
     QPen     pen = p.pen();
     QColor   c = pen.color();

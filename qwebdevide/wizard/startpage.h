@@ -3,7 +3,7 @@
 
 #include <QWizardPage>
 #include <QTreeWidgetItem>
-#include <QDebug>
+#include <pagedata.h>
 namespace Ui {
     class StartPage;
 }
@@ -13,7 +13,7 @@ class StartPage : public QWizardPage
     Q_OBJECT
 
 public:
-    explicit StartPage(QWidget *parent = 0);
+    explicit StartPage(QWidget *parent = 0,PageData *pageData = 0);
     ~StartPage();
 protected:
     bool isComplete () const;
@@ -22,6 +22,7 @@ private slots:
 
 private:
     Ui::StartPage *ui;
+    PageData *m_data;
 };
 
 #endif // STARTPAGE_H

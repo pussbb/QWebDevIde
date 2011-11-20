@@ -33,7 +33,6 @@
 #ifndef ICONTEXT_H
 #define ICONTEXT_H
 
-#include <core_global.h>
 
 #include <QtCore/QList>
 #include <QtCore/QObject>
@@ -42,7 +41,7 @@
 
 namespace Core {
 
-class CORE_EXPORT Context
+class Context
 {
 public:
     Context() {}
@@ -73,7 +72,7 @@ private:
     QList<int> d;
 };
 
-class CORE_EXPORT IContext : public QObject
+class IContext : public QObject
 {
     Q_OBJECT
 public:

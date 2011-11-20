@@ -1,9 +1,10 @@
 #include "commonsettings.h"
 #include "ui_commonsettings.h"
 
-CommonSettings::CommonSettings(QWidget *parent) :
+CommonSettings::CommonSettings(QWidget *parent,PageData *pageData) :
     QWizardPage(parent),
-    ui(new Ui::CommonSettings)
+    ui(new Ui::CommonSettings),
+    m_data(pageData)
 {
     ui->setupUi(this);
     ui->errorLabel->setVisible(false);
@@ -50,6 +51,8 @@ bool CommonSettings::isComplete() const
         return false;
     QFileInfo info(ui->folder->text());
     if(info.isWritable()){
+        m_data->itemMap.insert("name",ui->name->text());
+        m_data->itemMap.insert("folder",ui->folder->text());
         ui->errorLabel->setVisible(false);
         return true;
     }
