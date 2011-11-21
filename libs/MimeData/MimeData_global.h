@@ -1,0 +1,12 @@
+#ifndef MIMEDATA_GLOBAL_H
+#define MIMEDATA_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(MIMEDATA_LIBRARY)
+#  define MIMEDATASHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define MIMEDATASHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // MIMEDATA_GLOBAL_H

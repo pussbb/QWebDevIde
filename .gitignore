@@ -4,3 +4,4 @@ qrc*.cpp
 *~
 *.pro.user
 *Makefile
+/bin/lib*

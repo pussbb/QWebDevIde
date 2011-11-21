@@ -5,7 +5,7 @@
 #include "../projectmanager.h"
 #include <QTreeWidgetItem>
 #include <QDir>
-#include "../mimetypes.h"
+#include "mimedata.h"
 
 namespace Ui {
     class ProjectExplorer;
@@ -27,7 +27,7 @@ signals:
 private:
     Ui::ProjectExplorer *ui;
     ProjectManager *m_projecManager;
-    MimeTypes mime;
+    MimeData mime;
     void createProjectTree(QTreeWidgetItem *parent, QString path);
 };
 

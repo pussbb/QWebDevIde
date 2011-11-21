@@ -3,7 +3,7 @@
 # Project created by QtCreator 2011-10-09T11:21:49
 #core gui sql
 #-------------------------------------------------
-QT       += core gui
+QT       += core gui script
 include(../3rdparty/qtcreator/fancywidgets.pri)
 include(../3rdparty/qtjsonsettings/qtjsonsettings.pri)
 TARGET = qwebdevide
@@ -33,8 +33,7 @@ SOURCES += main.cpp\
     wizard/startpage.cpp \
     wizard/commonsettings.cpp \
     abstractproject.cpp \
-    rightpane/projectexplorer.cpp \
-    mimetypes.cpp
+    rightpane/projectexplorer.cpp
 
 
 HEADERS  += qwebdevide.h \
@@ -51,8 +50,7 @@ HEADERS  += qwebdevide.h \
     wizard/commonsettings.h \
     wizard/pagedata.h \
     abstractproject.h \
-    rightpane/projectexplorer.h \
-    mimetypes.h
+    rightpane/projectexplorer.h
 
 FORMS    += qwebdevide.ui \
     rightpane/rightpane.ui \
@@ -63,17 +61,15 @@ FORMS    += qwebdevide.ui \
 
 RESOURCES += \
     resource/app.qrc \
-    resource/lang.qrc \
-    resource/mimetypes.qrc
+    resource/lang.qrc
 
 
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../bin/release/ -lMimeData
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../bin/debug/ -lMimeData
+else:symbian: LIBS += -lMimeData
+else:unix: LIBS += -L$$PWD/../bin/ -lMimeData
 
-
-
-
-
-
-
-
+INCLUDEPATH += $$PWD/../libs/MimeData
+DEPENDPATH += $$PWD/../libs/MimeData
 
 

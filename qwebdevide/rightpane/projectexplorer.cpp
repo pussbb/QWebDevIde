@@ -51,7 +51,7 @@ void ProjectExplorer::createProjectTree(QTreeWidgetItem *parent, QString path)
               else{
                   QTreeWidgetItem *item = new QTreeWidgetItem(parent);
                   item->setText(0,fi.fileName());
-                  item->setIcon(0,QIcon(mime.iconForFileExt(fi.completeSuffix())));
+                  item->setIcon(0,QIcon(mime.getIconMimeType(fi.absoluteFilePath())));
                   item->setData(0,Qt::UserRole,fi.absoluteFilePath());
               }
          }
