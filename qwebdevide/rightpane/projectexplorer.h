@@ -6,7 +6,7 @@
 #include <QTreeWidgetItem>
 #include <QDir>
 #include "mimedata.h"
-
+#include <QMenu>
 namespace Ui {
     class ProjectExplorer;
 }
@@ -21,6 +21,8 @@ public:
     void refresh();
 private slots:
     void on_projectTree_itemDoubleClicked(QTreeWidgetItem *item, int column);
+
+    void on_projectTree_customContextMenuRequested(const QPoint &pos);
 
 signals:
     void openFile(QString);

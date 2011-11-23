@@ -62,3 +62,17 @@ void ProjectExplorer::on_projectTree_itemDoubleClicked(QTreeWidgetItem *item, in
     if(!item->data(column,Qt::UserRole).isNull())
         emit(openFile(item->data(column,Qt::UserRole).toString()));
 }
+
+void ProjectExplorer::on_projectTree_customContextMenuRequested(const QPoint &pos)
+{
+    QMenu *m=new QMenu();
+    ///m->addAction(ui->actionHelp_Doc);
+    if(ui->projectTree->currentIndex().isValid()
+            && ui->projectTree->currentItem()->isSelected()){
+       // pos.setX(pos.x()+5);
+       /// pos.setY(pos.y()+10);
+        if(ui->projectTree->currentItem()->parent() == NULL)
+            m->addAction(ui->actionClose_Project);
+    }
+    m->exec(ui->projectTree->mapToGlobal(pos));
+}

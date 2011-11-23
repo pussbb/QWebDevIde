@@ -50,6 +50,7 @@ class QTJSONSETTINGS_EXPORT QtJsonSettings: public QSettings
     }
 
     static const QSettings::Format json_format;
+    static const QSettings::Format webpro_format;
   private:
     static bool readJsonFile(QIODevice &device, QSettings::SettingsMap &map);
     static bool writeJsonFile(QIODevice &device,

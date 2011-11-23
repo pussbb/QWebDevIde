@@ -26,7 +26,7 @@ QWebDevIde::QWebDevIde(QWidget *parent) :
         }
     #endif
     qApp->setStyle(new ManhattanStyle(baseName));
-    FancyTabWidget* ptab = new FancyTabWidget(this);
+    ptab = new FancyTabWidget(this);
     setCentralWidget(ptab);
 
 
@@ -91,6 +91,7 @@ void QWebDevIde::openFile(QString fileName)
     QFileInfo file(fileName);qDebug()<<file.completeSuffix();
     if(file.completeSuffix() == "webpro"){
         projectManager->openProject(fileName);
+        ptab->setCurrentIndex(1);
         qDebug()<<  projectManager->current->projectPath();
     }
     else

@@ -5,16 +5,12 @@ ProjectManager::ProjectManager(QObject *parent) :
 {
 }
 
-
-
 void ProjectManager::openProject(QString fileName)
 {
     QFileInfo fi(fileName);
     if(projects.value(fi.baseName(),NULL) == NULL){
         AbstractProject *pro = new AbstractProject(this);
-        pro->fileName = fileName;
-        pro->projectName = fi.baseName();
-        pro->init();
+        pro->setProjectFile(fileName);
         projects.insert(fi.baseName(),pro);
         current = pro;
         emit(projectAdd());
@@ -22,5 +18,4 @@ void ProjectManager::openProject(QString fileName)
     else{
         current = projects.value(fi.baseName());
     }
-
 }

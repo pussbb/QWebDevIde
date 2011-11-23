@@ -30,6 +30,7 @@ public:
     ProjectManager *projectManager;
     BookmarkManager *bookmarkManager;
     EditorsManager *editorsManager;
+    FancyTabWidget* ptab;
     void openFile(QString fileName);
 private slots:
     void on_actionNewProject_triggered();

@@ -5,21 +5,17 @@ AbstractProject::AbstractProject(QObject *parent) :
 {
 
 }
-#include <QDebug>
-void AbstractProject::init()
-{//qDebug()<<fileName;
- //  QSettings settings(fileName, QSettings::IniFormat,this);
-   //// m_projectSettings.setUserIniPath();
- ///   qDebug()<<settings.fileName();
+#include "qtjsonsettings.h"
+#include <QFileInfo>
+void AbstractProject::setProjectFile(QString file)
+{
+  m_projectSettings = new QSettings(file,QtJsonSettings::webpro_format);
+  QFileInfo fi(file);
+  m_projectName = fi.baseName();
+  m_projectPath = fi.absolutePath();
 }
 
 QVariant AbstractProject::getProperty(QString property)
 {
-   return m_projectSettings.value(property);
-}
-#include <QFileInfo>
-QString AbstractProject::projectPath()
-{
-    QFileInfo fi(fileName);
-    return fi.absolutePath();
+   return m_projectSettings->value(property);
 }

@@ -19,6 +19,9 @@
    </property>
    <item row="0" column="0">
     <widget class="QTreeWidget" name="projectTree">
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
      <property name="iconSize">
       <size>
        <width>24</width>
@@ -36,6 +39,11 @@
     </widget>
    </item>
   </layout>
+  <action name="actionClose_Project">
+   <property name="text">
+    <string>Close Project</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

@@ -12,7 +12,7 @@ Wizard::Wizard(QWidget *parent) :
     setPage(1,new CommonSettings(this,d));
     connect(this,SIGNAL(accepted()),this,SLOT(saveResult()));
 }
-
+#include "qtjsonsettings.h"
 Wizard::~Wizard()
 {
     delete ui;
@@ -24,7 +24,7 @@ void Wizard::saveResult()
     QString type = d->itemMap.value("type").toString();
     QString name = d->itemMap.value("name","poject").toString();
     fileName = path+"/"+name+".webpro";
-    QSettings settings(fileName,QSettings::IniFormat);
+    QSettings settings(fileName,QtJsonSettings::webpro_format);
     foreach(QString key,d->itemMap.keys()){
         settings.setValue(key,d->itemMap.value(key));
     }

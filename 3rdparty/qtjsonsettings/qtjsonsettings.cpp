@@ -85,6 +85,7 @@ namespace {
     }
 }
 const QSettings::Format QtJsonSettings::json_format = QSettings::registerFormat("json", readJsonFile, writeJsonFile);
+const QSettings::Format QtJsonSettings::webpro_format = QSettings::registerFormat("webpro", readJsonFile, writeJsonFile);
 
 bool QtJsonSettings::readJsonFile(QIODevice &device, QSettings::SettingsMap &map)
 {
