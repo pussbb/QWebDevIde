@@ -24,6 +24,8 @@ private slots:
 
     void on_projectTree_customContextMenuRequested(const QPoint &pos);
 
+    void on_actionClose_Project_triggered();
+
 signals:
     void openFile(QString);
 private:

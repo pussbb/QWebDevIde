@@ -15,6 +15,7 @@ public:
     QVariantMap bookmarks;
 
     void openProject(QString fileName);
+    void closeProject(QString projectName);
     AbstractProject *current;
     QMap<QString,AbstractProject*> projects;
 signals:

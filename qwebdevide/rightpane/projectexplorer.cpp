@@ -76,3 +76,10 @@ void ProjectExplorer::on_projectTree_customContextMenuRequested(const QPoint &po
     }
     m->exec(ui->projectTree->mapToGlobal(pos));
 }
+
+void ProjectExplorer::on_actionClose_Project_triggered()
+{
+    QString projectName = ui->projectTree->currentItem()->text(0);
+    m_projecManager->closeProject(projectName);
+    delete ui->projectTree->currentItem();
+}
