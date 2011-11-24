@@ -38,7 +38,6 @@ private:
     ProjectManager *m_projecManager;
     EditorsManager *m_editorsManager;
     BookmarkManager *m_bookmarkManager;
-
 };
 
 #endif // RIGHTPANE_H

@@ -6,6 +6,7 @@
 QT       += core gui script
 include(../3rdparty/qtcreator/fancywidgets.pri)
 include(../3rdparty/qtjsonsettings/qtjsonsettings.pri)
+
 TARGET = qwebdevide
 INCLUDEPATH += $$PWD/codeeditor \
                 $$PWD/wizard
@@ -73,6 +74,7 @@ else:unix: LIBS += -L$$PWD/../bin/ -lMimeData
 
 INCLUDEPATH += $$PWD/../libs/MimeData
 DEPENDPATH += $$PWD/../libs/MimeData
+
 
 
 

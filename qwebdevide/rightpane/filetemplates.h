@@ -3,19 +3,23 @@
 
 #include <QObject>
 #include <QMenu>
-#include "qtjsonsettings.h"
+#include "json.h"
+#include <QtCore>
+#include <QDir>
 
 class FileTemplates : public QObject
 {
     Q_OBJECT
 public:
     explicit FileTemplates(QObject *parent = 0);
-
+    QMenu* getTemplatesMenu();
 signals:
 
 public slots:
+    void create();
 private:
-    QMenu *m_menu;
+    QMenu m_menu;
+    void buildMenu(QVariant v);
 };
 
 #endif // FILETEMPLATES_H

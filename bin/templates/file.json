@@ -1,0 +1,15 @@
+[
+  {
+     "catagory_name":" PHP ",
+     "identifier":"php",
+     "childs":[
+	  {
+	      "identifier": "php_empty",
+	      "title": "Empty php file",
+	      "file": "/empty.php",
+	      "default_name": "new_file",
+	      "file_ext": "php"
+	  }
+      ]
+   }
+]

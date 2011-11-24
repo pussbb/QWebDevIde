@@ -89,16 +89,16 @@ const QSettings::Format QtJsonSettings::webpro_format = QSettings::registerForma
 
 bool QtJsonSettings::readJsonFile(QIODevice &device, QSettings::SettingsMap &map)
 {
-    QString error;
-    QVariant parsed = Json::parse(device.readAll(), &error);
-    if (error.isEmpty())
+    JsonReader reader;
+    reader.parse(device.readAll());
+    if (reader.errorString().isEmpty())
     {
         QString str;
-        processReadKey(str, map, parsed);
+        processReadKey(str, map, reader.result());
     }
     else
     {
-        qWarning() << error;
+        qWarning() << reader.errorString();
     }
 
     return true;
@@ -115,8 +115,9 @@ bool QtJsonSettings::writeJsonFile(QIODevice &device, const QSettings::SettingsM
     {
         resultMap = processWriteKey(resultMap, it.key(), it.value());
     };
-
-    device.write(Json::prettyStringify(resultMap, 4));
+    JsonWriter writer;
+    writer.stringify(resultMap);
+    device.write(writer.result().toUtf8());
     return true;
 
 }

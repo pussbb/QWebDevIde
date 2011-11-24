@@ -39,10 +39,9 @@ QWebDevIde::QWebDevIde(QWidget *parent) :
       splitter->addWidget(rightPaneSplitter);
       splitter->addWidget(textedit);
       new RightPane(rightPaneSplitter,projectManager,editorsManager,bookmarkManager);
-      new RightPane(rightPaneSplitter,projectManager,editorsManager,bookmarkManager);
       rightPaneSplitter->setOrientation(Qt::Vertical);
 
-      ptab->insertTab(0,new QWidget(this),QIcon(":/core/images/category_core.png"),tr("Welcome") );
+    ptab->insertTab(0,new QWidget(this),QIcon(":/core/images/category_core.png"),tr("Welcome") );
     ptab->setTabEnabled(0, true);
     ptab->insertTab(1,splitter,QIcon(":/core/images/category_texteditor.png"),tr("Editor") );
     ptab->setTabEnabled(1, true);

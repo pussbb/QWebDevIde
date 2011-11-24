@@ -1,6 +1,6 @@
 #include "projectexplorer.h"
 #include "ui_projectexplorer.h"
-
+#include "filetemplates.h"
 ProjectExplorer::ProjectExplorer(QWidget *parent,ProjectManager *prman) :
     QWidget(parent),
     ui(new Ui::ProjectExplorer),
@@ -9,6 +9,8 @@ ProjectExplorer::ProjectExplorer(QWidget *parent,ProjectManager *prman) :
     ui->setupUi(this);
     if(m_projecManager->projects.count() > 0)
         refresh();
+
+
 }
 
 ProjectExplorer::~ProjectExplorer()
@@ -66,7 +68,8 @@ void ProjectExplorer::on_projectTree_itemDoubleClicked(QTreeWidgetItem *item, in
 void ProjectExplorer::on_projectTree_customContextMenuRequested(const QPoint &pos)
 {
     QMenu *m=new QMenu();
-    ///m->addAction(ui->actionHelp_Doc);
+        FileTemplates *t = new FileTemplates;
+    m->addMenu(t->getTemplatesMenu());
     if(ui->projectTree->currentIndex().isValid()
             && ui->projectTree->currentItem()->isSelected()){
        // pos.setX(pos.x()+5);
