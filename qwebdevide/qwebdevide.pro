@@ -35,7 +35,9 @@ SOURCES += main.cpp\
     wizard/commonsettings.cpp \
     abstractproject.cpp \
     rightpane/projectexplorer.cpp \
-    rightpane/filetemplates.cpp
+    rightpane/filetemplates.cpp \
+    editingwidget.cpp \
+    abstracteditor.cpp
 
 
 HEADERS  += qwebdevide.h \
@@ -53,14 +55,17 @@ HEADERS  += qwebdevide.h \
     wizard/pagedata.h \
     abstractproject.h \
     rightpane/projectexplorer.h \
-    rightpane/filetemplates.h
+    rightpane/filetemplates.h \
+    editingwidget.h \
+    abstracteditor.h
 
 FORMS    += qwebdevide.ui \
     rightpane/rightpane.ui \
     wizard/wizard.ui \
     wizard/startpage.ui \
     wizard/commonsettings.ui \
-    rightpane/projectexplorer.ui
+    rightpane/projectexplorer.ui \
+    editingwidget.ui
 
 RESOURCES += \
     resource/app.qrc \
@@ -74,6 +79,11 @@ else:unix: LIBS += -L$$PWD/../bin/ -lMimeData
 
 INCLUDEPATH += $$PWD/../libs/MimeData
 DEPENDPATH += $$PWD/../libs/MimeData
+
+
+
+
+
 
 
 

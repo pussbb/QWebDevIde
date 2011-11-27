@@ -11,7 +11,7 @@
 #include "projectmanager.h"
 #include "bookmarkmanager.h"
 #include "editorsmanager.h"
-
+#include "editingwidget.h"
 using namespace Core;
 using namespace Core::Internal;
 
@@ -41,5 +41,6 @@ private:
     Ui::QWebDevIde *ui;
     void initUI();
     MiniSplitter *rightPaneSplitter;
+    EditingWidget *m_editingWidget;
 };
 #endif // QWEBDEVIDE_H

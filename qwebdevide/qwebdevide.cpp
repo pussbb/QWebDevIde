@@ -1,7 +1,8 @@
 #include "qwebdevide.h"
 #include "ui_qwebdevide.h"
-#include <codeeditor.h>
+
 #include <wizard/wizard.h>
+
 QWebDevIde::QWebDevIde(QWidget *parent) :
     QCoreWindow(parent),
     ui(new Ui::QWebDevIde)
@@ -33,10 +34,8 @@ QWebDevIde::QWebDevIde(QWidget *parent) :
     rightPaneSplitter = new MiniSplitter(parent);
       MiniSplitter *splitter = new MiniSplitter(parent);
 
-      CodeEditor *textedit = new CodeEditor;
-      editorsManager->editor = textedit;
       splitter->addWidget(rightPaneSplitter);
-      splitter->addWidget(textedit);
+      splitter->addWidget(editorsManager->getMainEditorWidget());
       new RightPane(rightPaneSplitter,projectManager,editorsManager,bookmarkManager);
       rightPaneSplitter->setOrientation(Qt::Vertical);
 

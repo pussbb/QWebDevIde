@@ -5,17 +5,26 @@
 #include <codeeditor.h>
 #include <QDebug>
 #include <QFile>
+#include "mimedata.h"
+#include <editingwidget.h>
+#include <abstracteditor.h>
+
 class EditorsManager : public QObject
 {
     Q_OBJECT
 public:
     explicit EditorsManager(QObject *parent = 0);
-    CodeEditor *editor;
     void openProject(QString fileName);
+    inline QWidget * getMainEditorWidget(){return m_editingWidget;}
+    QMap<QString,AbstractEditor*> openedFiles;
 signals:
 
 public slots:
     void openFile(QString );
+    void closeFile(QString );
+private :
+    MimeData mime;
+    EditingWidget *m_editingWidget;
 };
 
 #endif // EDITORMANAGER_H
