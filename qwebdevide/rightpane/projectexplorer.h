@@ -7,6 +7,8 @@
 #include <QDir>
 #include "mimedata.h"
 #include <QMenu>
+#include "filetemplates.h"
+#include <QFileSystemWatcher>
 namespace Ui {
     class ProjectExplorer;
 }
@@ -21,18 +23,20 @@ public:
     void refresh();
 private slots:
     void on_projectTree_itemDoubleClicked(QTreeWidgetItem *item, int column);
-
     void on_projectTree_customContextMenuRequested(const QPoint &pos);
-
     void on_actionClose_Project_triggered();
-
+    void directoryChanged(const QString & path);
+    void filesChanged(const QString & path);
+    void updateTreeItem(QTreeWidgetItem *parent,QString path);
 signals:
     void openFile(QString);
 private:
+    QFileSystemWatcher *fileSystemWatcher;
     Ui::ProjectExplorer *ui;
     ProjectManager *m_projecManager;
     MimeData mime;
-    void createProjectTree(QTreeWidgetItem *parent, QString path);
+    FileTemplates *fileTemplates;
+    void createProjectTree(QTreeWidgetItem *parent,QString path);
 };
 
 #endif // PROJECTEXPLORER_H

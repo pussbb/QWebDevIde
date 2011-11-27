@@ -32,8 +32,7 @@ QWebDevIde::QWebDevIde(QWidget *parent) :
 
     rightPaneSplitter = new MiniSplitter(parent);
       MiniSplitter *splitter = new MiniSplitter(parent);
-      QListView *listview = new QListView;
-      QTreeView *treeview = new QTreeView;
+
       CodeEditor *textedit = new CodeEditor;
       editorsManager->editor = textedit;
       splitter->addWidget(rightPaneSplitter);

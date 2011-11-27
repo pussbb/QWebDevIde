@@ -6,6 +6,9 @@
 #include "json.h"
 #include <QtCore>
 #include <QDir>
+#include <QFileInfo>
+#include <QMessageBox>
+#include <QInputDialog>
 
 class FileTemplates : public QObject
 {
@@ -13,6 +16,7 @@ class FileTemplates : public QObject
 public:
     explicit FileTemplates(QObject *parent = 0);
     QMenu* getTemplatesMenu();
+    QString folder;
 signals:
 
 public slots:
@@ -20,6 +24,7 @@ public slots:
 private:
     QMenu m_menu;
     void buildMenu(QVariant v);
+    QString templateDir;
 };
 
 #endif // FILETEMPLATES_H

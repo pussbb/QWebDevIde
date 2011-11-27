@@ -9,8 +9,8 @@ ProjectExplorer::ProjectExplorer(QWidget *parent,ProjectManager *prman) :
     ui->setupUi(this);
     if(m_projecManager->projects.count() > 0)
         refresh();
-
-
+    fileTemplates = new FileTemplates;
+    fileSystemWatcher = new QFileSystemWatcher(this);
 }
 
 ProjectExplorer::~ProjectExplorer()
@@ -21,7 +21,13 @@ ProjectExplorer::~ProjectExplorer()
 void ProjectExplorer::refresh()
 {
     foreach(QString proName,m_projecManager->projects.keys()){
-        AbstractProject *pro = m_projecManager->projects.value(proName);
+         AbstractProject *pro = m_projecManager->projects.value(proName);
+
+         connect(fileSystemWatcher,SIGNAL(directoryChanged(QString)),
+                 this,SLOT(directoryChanged(QString)));
+        /* connect(fileSystemWatcher,SIGNAL(fileChanged(QString)),
+                 this,SLOT(filesChanged(QString)));
+*/
          QList<QTreeWidgetItem*> items = ui->projectTree->findItems(proName,Qt::MatchExactly,0);
          if(items.count() > 0){
              qDebug()<<"update";
@@ -29,14 +35,15 @@ void ProjectExplorer::refresh()
          else{
              QTreeWidgetItem *parent = new QTreeWidgetItem(ui->projectTree);
              parent->setText(0,proName);
-             parent->setData(0,Qt::UserRole,pro->projectPath());
+             parent->setData(0,33,pro->projectPath());
+             fileSystemWatcher->addPath(pro->projectPath());
              parent->setIcon(0,QIcon(":/applications-development-web.png"));
              createProjectTree(parent,pro->projectPath());
          }
     }
 }
 
-void ProjectExplorer::createProjectTree(QTreeWidgetItem *parent, QString path)
+void ProjectExplorer::createProjectTree(QTreeWidgetItem *parent,QString path)
 {
     QDir dir(path);
     dir.setFilter(QDir::Files| QDir::Dirs| QDir::NoDotAndDotDot);
@@ -44,9 +51,13 @@ void ProjectExplorer::createProjectTree(QTreeWidgetItem *parent, QString path)
     QFileInfoList list = dir.entryInfoList();
          for (int i = 0; i < list.size(); ++i) {
               QFileInfo fi = list.at(i);
+              if(fi.suffix() == "webpro")
+                  continue;
+              fileSystemWatcher->addPath(fi.absoluteFilePath());
               if(fi.isDir()){
                   QTreeWidgetItem *item = new QTreeWidgetItem(parent);
                   item->setText(0,fi.baseName());
+                  item->setData(0,33,fi.absoluteFilePath());
                   item->setIcon(0,QIcon(":/fs-directory.png"));
                   createProjectTree(item,fi.absoluteFilePath());
               }
@@ -54,7 +65,7 @@ void ProjectExplorer::createProjectTree(QTreeWidgetItem *parent, QString path)
                   QTreeWidgetItem *item = new QTreeWidgetItem(parent);
                   item->setText(0,fi.fileName());
                   item->setIcon(0,QIcon(mime.getIconMimeType(fi.absoluteFilePath())));
-                  item->setData(0,Qt::UserRole,fi.absoluteFilePath());
+                  item->setData(0,32,fi.absoluteFilePath());
               }
          }
 }
@@ -67,16 +78,19 @@ void ProjectExplorer::on_projectTree_itemDoubleClicked(QTreeWidgetItem *item, in
 
 void ProjectExplorer::on_projectTree_customContextMenuRequested(const QPoint &pos)
 {
+    if(!ui->projectTree->currentIndex().isValid()
+            && !ui->projectTree->currentItem()->isSelected())
+        return;
+
     QMenu *m=new QMenu();
-        FileTemplates *t = new FileTemplates;
-    m->addMenu(t->getTemplatesMenu());
-    if(ui->projectTree->currentIndex().isValid()
-            && ui->projectTree->currentItem()->isSelected()){
-       // pos.setX(pos.x()+5);
-       /// pos.setY(pos.y()+10);
-        if(ui->projectTree->currentItem()->parent() == NULL)
-            m->addAction(ui->actionClose_Project);
+    if(!ui->projectTree->currentItem()->data(0,33).isNull()){
+        fileTemplates->folder = ui->projectTree->currentItem()->data(0,33).toString();
+        m->addMenu(fileTemplates->getTemplatesMenu());
     }
+
+    if(ui->projectTree->currentItem()->parent() == NULL)
+        m->addAction(ui->actionClose_Project);
+
     m->exec(ui->projectTree->mapToGlobal(pos));
 }
 
@@ -85,4 +99,66 @@ void ProjectExplorer::on_actionClose_Project_triggered()
     QString projectName = ui->projectTree->currentItem()->text(0);
     m_projecManager->closeProject(projectName);
     delete ui->projectTree->currentItem();
+}
+
+void ProjectExplorer::directoryChanged(const QString &path)
+{
+    QFileInfo fi(path);
+    QModelIndexList items = ui->projectTree->model()->match(ui->projectTree->model()->index(0, 0),
+                                    33,path,1,Qt::MatchExactly | Qt::MatchRecursive);
+    foreach(QModelIndex index,items){
+        ui->projectTree->setCurrentIndex(index);
+        if(!fi.exists()){
+            fileSystemWatcher->removePath(path);
+            delete ui->projectTree->currentItem();
+        }
+        else{
+             updateTreeItem(ui->projectTree->currentItem(),path);
+        }
+    }
+   qDebug()<< "dir "+ path;
+}
+
+void ProjectExplorer::filesChanged(const QString &path)
+{
+    //Nothing for now
+}
+
+void ProjectExplorer::updateTreeItem(QTreeWidgetItem *parent, QString path)
+{
+    QDir dir(path);
+    dir.setFilter(QDir::Files| QDir::Dirs| QDir::NoDotAndDotDot);
+    dir.setSorting(QDir::DirsFirst);
+    QStringList dirList = dir.entryList();
+    for(int i = 0; i < parent->childCount();i++){
+        QTreeWidgetItem *item = parent->child(i);
+        if(!dirList.contains(item->text(0))){
+            if(!item->data(0,32).isNull())
+                fileSystemWatcher->removePath(item->data(0,32).toString());
+            else if(!item->data(0,33).isNull())
+                    fileSystemWatcher->removePath(item->data(0,33).toString());
+            delete item;
+        }
+        else
+            dirList.removeAt(dirList.indexOf(item->text(0)));
+    }
+    foreach(QString file,dirList){
+        QFileInfo fi(path + QDir::toNativeSeparators("/") + file);
+        if(fi.suffix() == "webpro")
+            continue;
+        fileSystemWatcher->addPath(fi.absoluteFilePath());
+        if(fi.isDir()){
+            QTreeWidgetItem *item = new QTreeWidgetItem(parent);
+            item->setText(0,fi.baseName());
+            item->setData(0,33,fi.absoluteFilePath());
+            item->setIcon(0,QIcon(":/fs-directory.png"));
+            createProjectTree(item,fi.absoluteFilePath());
+        }
+        else{
+            QTreeWidgetItem *item = new QTreeWidgetItem(parent);
+            item->setText(0,fi.fileName());
+            item->setIcon(0,QIcon(mime.getIconMimeType(fi.absoluteFilePath())));
+            item->setData(0,32,fi.absoluteFilePath());
+        }
+    }
 }

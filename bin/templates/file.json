@@ -2,9 +2,8 @@
   {
      "catagory_name":" PHP ",
      "identifier":"php",
-     "childs":[
+     "items":[
 	  {
-	      "identifier": "php_empty",
 	      "title": "Empty php file",
 	      "file": "/empty.php",
 	      "default_name": "new_file",

@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QSettings>
+#include "qtjsonsettings.h"
+#include <QFileInfo>
 
 class AbstractProject : public QObject
 {
@@ -11,6 +13,7 @@ public:
     explicit AbstractProject(QObject *parent = 0);
     void setProjectFile(QString file);
     QVariant getProperty(QString property);
+
     inline QString projectPath(){return m_projectPath;}
     inline QString projectName(){return m_projectName;}
 signals:
