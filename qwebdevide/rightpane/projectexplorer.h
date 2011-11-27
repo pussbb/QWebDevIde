@@ -28,6 +28,8 @@ private slots:
     void directoryChanged(const QString & path);
     void filesChanged(const QString & path);
     void updateTreeItem(QTreeWidgetItem *parent,QString path);
+    void on_actionDelete_triggered();
+
 signals:
     void openFile(QString);
 private:
@@ -37,6 +39,7 @@ private:
     MimeData mime;
     FileTemplates *fileTemplates;
     void createProjectTree(QTreeWidgetItem *parent,QString path);
+    bool removeDir(const QString &dirName);
 };
 
 #endif // PROJECTEXPLORER_H

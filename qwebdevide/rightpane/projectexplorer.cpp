@@ -90,7 +90,7 @@ void ProjectExplorer::on_projectTree_customContextMenuRequested(const QPoint &po
 
     if(ui->projectTree->currentItem()->parent() == NULL)
         m->addAction(ui->actionClose_Project);
-
+    m->addAction(ui->actionDelete);
     m->exec(ui->projectTree->mapToGlobal(pos));
 }
 
@@ -116,11 +116,11 @@ void ProjectExplorer::directoryChanged(const QString &path)
              updateTreeItem(ui->projectTree->currentItem(),path);
         }
     }
-   qDebug()<< "dir "+ path;
 }
 
 void ProjectExplorer::filesChanged(const QString &path)
 {
+    Q_UNUSED(path);
     //Nothing for now
 }
 
@@ -161,4 +161,53 @@ void ProjectExplorer::updateTreeItem(QTreeWidgetItem *parent, QString path)
             item->setData(0,32,fi.absoluteFilePath());
         }
     }
+}
+
+void ProjectExplorer::on_actionDelete_triggered()
+{
+    if(!ui->projectTree->currentItem()->data(0,33).isNull()){
+         QMessageBox msgBox;
+         msgBox.setText("Do you realy whant to delete folder.");
+         msgBox.setInformativeText("It will delete everething in this this folder");
+         msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+         msgBox.setDefaultButton(QMessageBox::Cancel);
+         int ret = msgBox.exec();
+         if(ret == QMessageBox::Yes)
+             removeDir(ui->projectTree->currentItem()->data(0,33).toString());
+    }
+    if(!ui->projectTree->currentItem()->data(0,32).isNull()){
+        QMessageBox msgBox;
+        msgBox.setText("Do you realy whant to file.");
+        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Cancel);
+        int ret = msgBox.exec();
+        if(ret == QMessageBox::Yes){
+            QFile file(ui->projectTree->currentItem()->data(0,32).toString());
+            file.remove();
+        }
+
+    }
+}
+bool ProjectExplorer::removeDir(const QString &dirName)
+{
+    bool result = true;
+    QDir dir(dirName);
+
+    if (dir.exists(dirName)) {
+        Q_FOREACH(QFileInfo info, dir.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst)) {
+            if (info.isDir()) {
+                result = removeDir(info.absoluteFilePath());
+            }
+            else {
+                result = QFile::remove(info.absoluteFilePath());
+            }
+
+            if (!result) {
+                return result;
+            }
+        }
+        result = dir.rmdir(dirName);
+    }
+
+    return result;
 }
