@@ -1,6 +1,7 @@
 TEMPLATE = subdirs
-SUBDIRS = qwebdevide \
-    libs/MimeData
+SUBDIRS =  libs/MimeData \ 
+         qwebdevide
+   
 
 # build must be last:
 CONFIG += ordered

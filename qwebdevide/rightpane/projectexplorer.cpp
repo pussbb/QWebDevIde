@@ -11,6 +11,11 @@ ProjectExplorer::ProjectExplorer(QWidget *parent,ProjectManager *prman) :
         refresh();
     fileTemplates = new FileTemplates;
     fileSystemWatcher = new QFileSystemWatcher(this);
+    connect(fileSystemWatcher,SIGNAL(directoryChanged(QString)),
+            this,SLOT(directoryChanged(QString)));
+   /* connect(fileSystemWatcher,SIGNAL(fileChanged(QString)),
+            this,SLOT(filesChanged(QString)));
+*/
 }
 
 ProjectExplorer::~ProjectExplorer()
@@ -20,25 +25,16 @@ ProjectExplorer::~ProjectExplorer()
 
 void ProjectExplorer::refresh()
 {
-    foreach(QString proName,m_projecManager->projects.keys()){
+    foreach(const QString &proName,m_projecManager->projects.keys()){
          AbstractProject *pro = m_projecManager->projects.value(proName);
-
-         connect(fileSystemWatcher,SIGNAL(directoryChanged(QString)),
-                 this,SLOT(directoryChanged(QString)));
-        /* connect(fileSystemWatcher,SIGNAL(fileChanged(QString)),
-                 this,SLOT(filesChanged(QString)));
-*/
          QList<QTreeWidgetItem*> items = ui->projectTree->findItems(proName,Qt::MatchExactly,0);
-         if(items.count() > 0){
-             qDebug()<<"update";
-         }
-         else{
+         if(items.isEmpty()){
              QTreeWidgetItem *parent = new QTreeWidgetItem(ui->projectTree);
              parent->setText(0,proName);
              parent->setData(0,33,pro->projectPath());
              fileSystemWatcher->addPath(pro->projectPath());
              parent->setIcon(0,QIcon(":/applications-development-web.png"));
-             createProjectTree(parent,pro->projectPath());
+             directoryChanged(pro->projectPath());
          }
     }
 }
@@ -49,25 +45,25 @@ void ProjectExplorer::createProjectTree(QTreeWidgetItem *parent,QString path)
     dir.setFilter(QDir::Files| QDir::Dirs| QDir::NoDotAndDotDot);
     dir.setSorting(QDir::DirsFirst);
     QFileInfoList list = dir.entryInfoList();
-         for (int i = 0; i < list.size(); ++i) {
-              QFileInfo fi = list.at(i);
-              if(fi.suffix() == "webpro")
-                  continue;
-              fileSystemWatcher->addPath(fi.absoluteFilePath());
-              if(fi.isDir()){
-                  QTreeWidgetItem *item = new QTreeWidgetItem(parent);
-                  item->setText(0,fi.baseName());
-                  item->setData(0,33,fi.absoluteFilePath());
-                  item->setIcon(0,QIcon(":/fs-directory.png"));
-                  createProjectTree(item,fi.absoluteFilePath());
-              }
-              else{
-                  QTreeWidgetItem *item = new QTreeWidgetItem(parent);
-                  item->setText(0,fi.fileName());
-                  item->setIcon(0,QIcon(mime.getIconMimeType(fi.absoluteFilePath())));
-                  item->setData(0,32,fi.absoluteFilePath());
-              }
-         }
+    for (int i = 0; i < list.size(); ++i) {
+        QFileInfo fi = list.at(i);
+        if(fi.suffix() == "webpro")
+            continue;
+        fileSystemWatcher->addPath(fi.absoluteFilePath());
+        if(fi.isDir()){
+            QTreeWidgetItem *item = new QTreeWidgetItem(parent);
+            item->setText(0,fi.baseName());
+            item->setData(0,33,fi.absoluteFilePath());
+            item->setIcon(0,QIcon(":/fs-directory.png"));
+            createProjectTree(item,fi.absoluteFilePath());
+        }
+        else{
+            QTreeWidgetItem *item = new QTreeWidgetItem(parent);
+            item->setText(0,fi.fileName());
+            item->setIcon(0,QIcon(mime.getIconMimeType(fi.absoluteFilePath())));
+            item->setData(0,32,fi.absoluteFilePath());
+        }
+    }
 }
 
 void ProjectExplorer::on_projectTree_itemDoubleClicked(QTreeWidgetItem *item, int column)
@@ -90,6 +86,7 @@ void ProjectExplorer::on_projectTree_customContextMenuRequested(const QPoint &po
 
     if(ui->projectTree->currentItem()->parent() == NULL)
         m->addAction(ui->actionClose_Project);
+
     m->addAction(ui->actionDelete);
     m->exec(ui->projectTree->mapToGlobal(pos));
 }
@@ -125,7 +122,7 @@ void ProjectExplorer::filesChanged(const QString &path)
 }
 
 void ProjectExplorer::updateTreeItem(QTreeWidgetItem *parent, QString path)
-{
+{;
     QDir dir(path);
     dir.setFilter(QDir::Files| QDir::Dirs| QDir::NoDotAndDotDot);
     dir.setSorting(QDir::DirsFirst);
@@ -142,8 +139,8 @@ void ProjectExplorer::updateTreeItem(QTreeWidgetItem *parent, QString path)
         else
             dirList.removeAt(dirList.indexOf(item->text(0)));
     }
-    foreach(QString file,dirList){
-        QFileInfo fi(path + QDir::toNativeSeparators("/") + file);
+    foreach(const QString &file,dirList){
+        QFileInfo fi = path + QDir::toNativeSeparators("/") + file;
         if(fi.suffix() == "webpro")
             continue;
         fileSystemWatcher->addPath(fi.absoluteFilePath());
@@ -194,7 +191,8 @@ bool ProjectExplorer::removeDir(const QString &dirName)
     QDir dir(dirName);
 
     if (dir.exists(dirName)) {
-        Q_FOREACH(QFileInfo info, dir.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst)) {
+        Q_FOREACH(QFileInfo info, dir.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden
+                                                    | QDir::AllDirs | QDir::Files, QDir::DirsFirst)) {
             if (info.isDir()) {
                 result = removeDir(info.absoluteFilePath());
             }
