@@ -11,7 +11,7 @@ RightPane::RightPane(QWidget *parent,ProjectManager *prman,EditorsManager *eman,
     ui->setupUi(this);
     connect( m_projecManager,SIGNAL(projectAdd()),this,SLOT(refreshProject()));
     ui->comboBox->setCurrentIndex(-1);
-     ui->comboBox->setCurrentIndex(0);
+    ui->comboBox->setCurrentIndex(0);
 }
 
 RightPane::~RightPane()

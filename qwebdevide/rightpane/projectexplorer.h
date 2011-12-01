@@ -33,7 +33,7 @@ private slots:
 signals:
     void openFile(QString);
 private:
-    QFileSystemWatcher *fileSystemWatcher;
+    QFileSystemWatcher fileSystemWatcher;
     Ui::ProjectExplorer *ui;
     ProjectManager *m_projecManager;
     MimeData mime;

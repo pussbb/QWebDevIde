@@ -10,8 +10,8 @@ ProjectExplorer::ProjectExplorer(QWidget *parent,ProjectManager *prman) :
     if(m_projecManager->projects.count() > 0)
         refresh();
     fileTemplates = new FileTemplates;
-    fileSystemWatcher = new QFileSystemWatcher(this);
-    connect(fileSystemWatcher,SIGNAL(directoryChanged(QString)),
+   /// fileSystemWatcher = new QFileSystemWatcher(this);
+    connect(&fileSystemWatcher,SIGNAL(directoryChanged(QString)),
             this,SLOT(directoryChanged(QString)));
    /* connect(fileSystemWatcher,SIGNAL(fileChanged(QString)),
             this,SLOT(filesChanged(QString)));
@@ -32,7 +32,8 @@ void ProjectExplorer::refresh()
              QTreeWidgetItem *parent = new QTreeWidgetItem(ui->projectTree);
              parent->setText(0,proName);
              parent->setData(0,33,pro->projectPath());
-             fileSystemWatcher->addPath(pro->projectPath());
+             //qDebug()<<fileSystemWatcher;
+             fileSystemWatcher.addPath(pro->projectPath());
              parent->setIcon(0,QIcon(":/applications-development-web.png"));
              directoryChanged(pro->projectPath());
          }
@@ -49,7 +50,7 @@ void ProjectExplorer::createProjectTree(QTreeWidgetItem *parent,QString path)
         QFileInfo fi = list.at(i);
         if(fi.suffix() == "webpro")
             continue;
-        fileSystemWatcher->addPath(fi.absoluteFilePath());
+        fileSystemWatcher.addPath(fi.absoluteFilePath());
         if(fi.isDir()){
             QTreeWidgetItem *item = new QTreeWidgetItem(parent);
             item->setText(0,fi.baseName());
@@ -106,7 +107,7 @@ void ProjectExplorer::directoryChanged(const QString &path)
     foreach(QModelIndex index,items){
         ui->projectTree->setCurrentIndex(index);
         if(!fi.exists()){
-            fileSystemWatcher->removePath(path);
+            fileSystemWatcher.removePath(path);
             delete ui->projectTree->currentItem();
         }
         else{
@@ -131,9 +132,9 @@ void ProjectExplorer::updateTreeItem(QTreeWidgetItem *parent, QString path)
         QTreeWidgetItem *item = parent->child(i);
         if(!dirList.contains(item->text(0))){
             if(!item->data(0,32).isNull())
-                fileSystemWatcher->removePath(item->data(0,32).toString());
+                fileSystemWatcher.removePath(item->data(0,32).toString());
             else if(!item->data(0,33).isNull())
-                    fileSystemWatcher->removePath(item->data(0,33).toString());
+                    fileSystemWatcher.removePath(item->data(0,33).toString());
             delete item;
         }
         else
@@ -143,7 +144,7 @@ void ProjectExplorer::updateTreeItem(QTreeWidgetItem *parent, QString path)
         QFileInfo fi = path + QDir::toNativeSeparators("/") + file;
         if(fi.suffix() == "webpro")
             continue;
-        fileSystemWatcher->addPath(fi.absoluteFilePath());
+        fileSystemWatcher.addPath(fi.absoluteFilePath());
         if(fi.isDir()){
             QTreeWidgetItem *item = new QTreeWidgetItem(parent);
             item->setText(0,fi.baseName());
