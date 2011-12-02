@@ -107,10 +107,16 @@ void ProjectExplorer::directoryChanged(const QString &path)
     foreach(QModelIndex index,items){
         ui->projectTree->setCurrentIndex(index);
         if(!fi.exists()){
-            fileSystemWatcher.removePath(path);
+           /// QString path = item->data(0,33).toString();
+            removeWatchedFiles(path);
             delete ui->projectTree->currentItem();
         }
         else{
+            /*QPixmap: It is not safe to use pixmaps outside the GUI thread
+            QtConcurrent::run(this,&ProjectExplorer::updateTreeItem,
+                              ui->projectTree->currentItem(),
+                              path);
+                              */
              updateTreeItem(ui->projectTree->currentItem(),path);
         }
     }
@@ -129,12 +135,14 @@ void ProjectExplorer::updateTreeItem(QTreeWidgetItem *parent, QString path)
     dir.setSorting(QDir::DirsFirst);
     QStringList dirList = dir.entryList();
     for(int i = 0; i < parent->childCount();i++){
+
         QTreeWidgetItem *item = parent->child(i);
         if(!dirList.contains(item->text(0))){
             if(!item->data(0,32).isNull())
                 fileSystemWatcher.removePath(item->data(0,32).toString());
-            else if(!item->data(0,33).isNull())
-                    fileSystemWatcher.removePath(item->data(0,33).toString());
+            else if(!item->data(0,33).isNull()){
+                removeWatchedFiles( item->data(0,33).toString());
+            }
             delete item;
         }
         else
@@ -170,8 +178,16 @@ void ProjectExplorer::on_actionDelete_triggered()
          msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
          msgBox.setDefaultButton(QMessageBox::Cancel);
          int ret = msgBox.exec();
-         if(ret == QMessageBox::Yes)
-             removeDir(ui->projectTree->currentItem()->data(0,33).toString());
+         if(ret == QMessageBox::Yes){
+             // test
+             QString path = ui->projectTree->currentItem()->data(0,33).toString();
+             QFileInfo fi(path);
+             if(fi.isSymLink())
+                 QFile::remove(path);
+             else
+                 QtConcurrent::run(this,&ProjectExplorer::removeDir,path);
+             ///removeDir(ui->projectTree->currentItem()->data(0,33).toString());
+         }
     }
     if(!ui->projectTree->currentItem()->data(0,32).isNull()){
         QMessageBox msgBox;
@@ -209,4 +225,17 @@ bool ProjectExplorer::removeDir(const QString &dirName)
     }
 
     return result;
+}
+
+void ProjectExplorer::removeWatchedFiles(const QString &path)
+{
+    QStringList watchedList = fileSystemWatcher.directories();
+    watchedList.append(fileSystemWatcher.files());
+    QStringList unused = watchedList.filter(QRegExp(path + "*"));
+    if(!unused.isEmpty())
+        fileSystemWatcher.removePaths(unused);
+    else
+        fileSystemWatcher.removePath(path);
+    watchedList.clear();
+    unused.clear();
 }

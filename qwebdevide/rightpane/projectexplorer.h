@@ -6,6 +6,7 @@
 #include <QTreeWidgetItem>
 #include <QDir>
 #include "mimedata.h"
+#include <QtCore>
 #include <QMenu>
 #include "filetemplates.h"
 #include <QFileSystemWatcher>
@@ -21,6 +22,7 @@ public:
     explicit ProjectExplorer(QWidget *parent = 0,ProjectManager *prman = 0);
     ~ProjectExplorer();
     void refresh();
+    bool removeDir(const QString &dirName);
 private slots:
     void on_projectTree_itemDoubleClicked(QTreeWidgetItem *item, int column);
     void on_projectTree_customContextMenuRequested(const QPoint &pos);
@@ -39,7 +41,8 @@ private:
     MimeData mime;
     FileTemplates *fileTemplates;
     void createProjectTree(QTreeWidgetItem *parent,QString path);
-    bool removeDir(const QString &dirName);
+
+    void removeWatchedFiles(const QString &path);
 };
 
 #endif // PROJECTEXPLORER_H
