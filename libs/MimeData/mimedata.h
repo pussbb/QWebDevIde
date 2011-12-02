@@ -13,7 +13,7 @@ public:
     QString getIconMimeType(const QFileInfo &fi);
 private:
     QScriptEngine m_engine;
-    static QHash<QString, QString> hash;
+    const static QHash<QString, QString> &hash;
 };
 
 #endif // MIMEDATA_H

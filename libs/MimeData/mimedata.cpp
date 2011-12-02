@@ -625,7 +625,7 @@ QHash<QString, QString> ff(){
    m_hash.insert("602","application/x-t602");
    return m_hash;
 }
-QHash<QString, QString> MimeData::hash = ff();
+const QHash<QString, QString> &MimeData::hash = ff();
 MimeData::MimeData()
 {
     QFile file(":/freedesktop/freedesktop.js");
