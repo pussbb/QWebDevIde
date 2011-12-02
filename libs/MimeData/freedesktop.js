@@ -1,10 +1,10 @@
 
-function getMIMEtype(filename) {
-	var fn = new String(filename);
-	var fn1 = new String();
+function getmimetype(filename) {
+	var fn = new string(filename);
+	var fn1 = new string();
 	fn1 = fn.match(/[\/\\][^\/\\]*$/);
 	///if(fn1!=null && fn1.length>0) fn = fn1;
-	fn = fn.toLowerCase();
+	fn = fn.tolowercase();
 	if(fn.search(/^.*\.ez$/)>=0) {
 		return("application/andrew-inset"); }
 	if(fn.search(/^.*\.ai$/)>=0) {
@@ -209,7 +209,7 @@ function getMIMEtype(filename) {
 		return("application/x-7z-compressed"); }
 	if(fn.search(/^.*\.abw$/)>=0) {
 		return("application/x-abiword"); }
-	if(fn.search(/^.*\.abw\.CRASHED$/)>=0) {
+	if(fn.search(/^.*\.abw\.crashed$/)>=0) {
 		return("application/x-abiword"); }
 	if(fn.search(/^.*\.abw\.gz$/)>=0) {
 		return("application/x-abiword"); }
@@ -237,7 +237,7 @@ function getMIMEtype(filename) {
 		return("application/x-blender"); }
 	if(fn.search(/^.*\.blend$/)>=0) {
 		return("application/x-blender"); }
-	if(fn.search(/^.*\.BLEND$/)>=0) {
+	if(fn.search(/^.*\.blend$/)>=0) {
 		return("application/x-blender"); }
 	if(fn.search(/^.*\.dvi\.bz2$/)>=0) {
 		return("application/x-bzdvi"); }
@@ -271,7 +271,7 @@ function getMIMEtype(filename) {
 		return("application/x-chess-pgn"); }
 	if(fn.search(/^.*\.chm$/)>=0) {
 		return("application/x-chm"); }
-	if(fn.search(/^.*\.Z$/)>=0) {
+	if(fn.search(/^.*\.z$/)>=0) {
 		return("application/x-compress"); }
 	if(fn.search(/^.*\.tar\.gz$/)>=0) {
 		return("application/x-compressed-tar"); }
@@ -327,7 +327,7 @@ function getMIMEtype(filename) {
 		return("application/x-gz-font-linux-psf"); }
 	if(fn.search(/^.*\.pcf$/)>=0) {
 		return("application/x-font-pcf"); }
-	if(fn.search(/^.*\.pcf\.Z$/)>=0) {
+	if(fn.search(/^.*\.pcf\.z$/)>=0) {
 		return("application/x-font-pcf"); }
 	if(fn.search(/^.*\.pcf\.gz$/)>=0) {
 		return("application/x-font-pcf"); }
@@ -485,7 +485,7 @@ function getMIMEtype(filename) {
 		return("application/x-palm-database"); }
 	if(fn.search(/^.*\.prc$/)>=0) {
 		return("application/x-palm-database"); }
-	if(fn.search(/^.*\.PAR2$/)>=0) {
+	if(fn.search(/^.*\.par2$/)>=0) {
 		return("application/x-par2"); }
 	if(fn.search(/^.*\.par2$/)>=0) {
 		return("application/x-par2"); }
@@ -583,7 +583,7 @@ function getMIMEtype(filename) {
 		return("application/x-tar"); }
 	if(fn.search(/^.*\.gtar$/)>=0) {
 		return("application/x-tar"); }
-	if(fn.search(/^.*\.tar\.Z$/)>=0) {
+	if(fn.search(/^.*\.tar\.z$/)>=0) {
 		return("application/x-tarz"); }
 	if(fn.search(/^.*\.gf$/)>=0) {
 		return("application/x-tex-gf"); }
@@ -640,9 +640,9 @@ function getMIMEtype(filename) {
 	if(fn.search(/^.*\.ac3$/)>=0) {
 		return("audio/ac3"); }
 	if(fn.search(/^.*\.amr$/)>=0) {
-		return("audio/AMR"); }
+		return("audio/amr"); }
 	if(fn.search(/^.*\.awb$/)>=0) {
-		return("audio/AMR-WB"); }
+		return("audio/amr-wb"); }
 	if(fn.search(/^.*\.au$/)>=0) {
 		return("audio/basic"); }
 	if(fn.search(/^.*\.snd$/)>=0) {
@@ -965,7 +965,7 @@ function getMIMEtype(filename) {
 		return("image/x-xpixmap"); }
 	if(fn.search(/^.*\.xwd$/)>=0) {
 		return("image/x-xwindowdump"); }
-	if(fn.search(/^RMAIL$/)>=0) {
+	if(fn.search(/^rmail$/)>=0) {
 		return("message/x-gnu-rmail"); }
 	if(fn.search(/^.*\.wrl$/)>=0) {
 		return("model/vrml"); }
@@ -975,7 +975,7 @@ function getMIMEtype(filename) {
 		return("text/calendar"); }
 	if(fn.search(/^.*\.css$/)>=0) {
 		return("text/css"); }
-	if(fn.search(/^.*\.CSSL$/)>=0) {
+	if(fn.search(/^.*\.cssl$/)>=0) {
 		return("text/css"); }
 	if(fn.search(/^.*\.vcf$/)>=0) {
 		return("text/directory"); }
@@ -1031,7 +1031,7 @@ function getMIMEtype(filename) {
 		return("text/x-adasrc"); }
 	if(fn.search(/^.*\.ads$/)>=0) {
 		return("text/x-adasrc"); }
-	if(fn.search(/^AUTHORS$/)>=0) {
+	if(fn.search(/^authors$/)>=0) {
 		return("text/x-authors"); }
 	if(fn.search(/^.*\.bib$/)>=0) {
 		return("text/x-bibtex"); }
@@ -1051,19 +1051,19 @@ function getMIMEtype(filename) {
 		return("text/x-c++src"); }
 	if(fn.search(/^.*\.cc$/)>=0) {
 		return("text/x-c++src"); }
-	if(fn.search(/^.*\.C$/)>=0) {
+	if(fn.search(/^.*\.c$/)>=0) {
 		return("text/x-c++src"); }
 	if(fn.search(/^.*\.c[+][+]$/)>=0) {
 		return("text/x-c++src"); }
-	if(fn.search(/^ChangeLog$/)>=0) {
+	if(fn.search(/^changelog$/)>=0) {
 		return("text/x-changelog"); }
 	if(fn.search(/^.*\.h$/)>=0) {
 		return("text/x-chdr"); }
 	if(fn.search(/^.*\.csv$/)>=0) {
 		return("text/csv"); }
-	if(fn.search(/^COPYING$/)>=0) {
+	if(fn.search(/^copying$/)>=0) {
 		return("text/x-copying"); }
-	if(fn.search(/^CREDITS$/)>=0) {
+	if(fn.search(/^credits$/)>=0) {
 		return("text/x-credits"); }
 	if(fn.search(/^.*\.c$/)>=0) {
 		return("text/x-csrc"); }
@@ -1083,9 +1083,9 @@ function getMIMEtype(filename) {
 		return("text/x-emacs-lisp"); }
 	if(fn.search(/^.*\.erl$/)>=0) {
 		return("text/x-erlang"); }
-	if(fn.search(/^.*\.[fF]$/)>=0) {
+	if(fn.search(/^.*\.[ff]$/)>=0) {
 		return("text/x-fortran"); }
-	if(fn.search(/^.*\.[fF]9[05]$/)>=0) {
+	if(fn.search(/^.*\.[ff]9[05]$/)>=0) {
 		return("text/x-fortran"); }
 	if(fn.search(/^.*\.for$/)>=0) {
 		return("text/x-fortran"); }
@@ -1107,7 +1107,7 @@ function getMIMEtype(filename) {
 		return("text/x-haskell"); }
 	if(fn.search(/^.*\.idl$/)>=0) {
 		return("text/x-idl"); }
-	if(fn.search(/^INSTALL$/)>=0) {
+	if(fn.search(/^install$/)>=0) {
 		return("text/x-install"); }
 	if(fn.search(/^.*\.java$/)>=0) {
 		return("text/x-java"); }
@@ -1117,9 +1117,9 @@ function getMIMEtype(filename) {
 		return("text/x-literate-haskell"); }
 	if(fn.search(/^.*\.log$/)>=0) {
 		return("text/x-log"); }
-	if(fn.search(/^[Mm]akefile$/)>=0) {
+	if(fn.search(/^[mm]akefile$/)>=0) {
 		return("text/x-makefile"); }
-	if(fn.search(/^GNUmakefile$/)>=0) {
+	if(fn.search(/^gnumakefile$/)>=0) {
 		return("text/x-makefile"); }
 	if(fn.search(/^.*\.moc$/)>=0) {
 		return("text/x-moc"); }
@@ -1147,7 +1147,7 @@ function getMIMEtype(filename) {
 		return("text/x-python"); }
 	if(fn.search(/^.*\.lua$/)>=0) {
 		return("text/x-lua"); }
-	if(fn.search(/^README*$/)>=0) {
+	if(fn.search(/^readme*$/)>=0) {
 		return("text/x-readme"); }
 	if(fn.search(/^.*\.nfo$/)>=0) {
 		return("text/x-readme"); }

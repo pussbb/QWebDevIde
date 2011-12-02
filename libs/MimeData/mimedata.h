@@ -8,10 +8,12 @@
 class MIMEDATASHARED_EXPORT MimeData {
 public:
     MimeData();
-    QString getMimeType(QString fileName);
-    QString getIconMimeType(QString fileName);
+    QString getMimeType(const QString &fileName);
+    QString getIconMimeType(const QString &fileName);
+    QString getIconMimeType(const QFileInfo &fi);
 private:
     QScriptEngine m_engine;
+    static QHash<QString, QString> hash;
 };
 
 #endif // MIMEDATA_H
