@@ -61,7 +61,8 @@ HEADERS  += qwebdevide.h \
     editingwidget.h \
     abstracteditor.h \
     abstractsyntaxhighlight.h \
-    highlightmanager.h
+    highlightmanager.h \
+    global.h
 
 FORMS    += qwebdevide.ui \
     rightpane/rightpane.ui \
@@ -83,6 +84,9 @@ else:unix: LIBS += -L$$PWD/../bin/ -lMimeData
 
 INCLUDEPATH += $$PWD/../libs/MimeData
 DEPENDPATH += $$PWD/../libs/MimeData
+
+
+
 
 
 

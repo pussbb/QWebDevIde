@@ -26,6 +26,7 @@ public:
     int lineNumberAreaWidth();
     void openFile(const QString file);
     bool saveFile(const QString file);
+    void setHighlightingRules(QVector<HighlightingRule> highlightingRules);
 protected:
     void resizeEvent(QResizeEvent *event);
     int findMatchingChar( QChar c1, QChar c2, bool forward, QTextBlock &block, int from );

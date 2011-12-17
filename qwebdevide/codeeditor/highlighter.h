@@ -2,7 +2,7 @@
 #define HIGHLIGHTER_H
 
 #include <QSyntaxHighlighter>
-
+#include "../global.h"
 #include <QHash>
 #include <QTextCharFormat>
 
@@ -39,16 +39,15 @@ class Highlighter : public QSyntaxHighlighter
 
 public:
     Highlighter(QTextDocument *parent = 0);
+    inline void setHighlightingRules(QVector<HighlightingRule> highlighting){
+        highlightingRules = highlighting;
+    }
 
 protected:
     void highlightBlock(const QString &text);
 
 private:
-    struct HighlightingRule
-    {
-        QRegExp pattern;
-        QTextCharFormat format;
-    };
+
     QVector<HighlightingRule> highlightingRules;
 
     QRegExp commentStartExpression;

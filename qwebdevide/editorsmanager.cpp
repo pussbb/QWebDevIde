@@ -15,6 +15,7 @@ void EditorsManager::openFile(QString file)
   qDebug()<<"open file"<< file;
   AbstractEditor *editor = new AbstractEditor;
   editor->openFile(file);
+  editor->setHighlightingRules(syntax->getHighlighting());
   openedFiles.insert(editor->fileName(),editor);
   m_editingWidget->refreshFileList(openedFiles);
   m_editingWidget->setCurrent(editor->fileName());

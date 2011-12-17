@@ -57,3 +57,5 @@ void AbstractSyntaxHighlight::dependenciesWalk(QMap<QString, AbstractSyntaxHighl
         highlightingRules << syntax->highlightingRules;
     }
 }
+
+

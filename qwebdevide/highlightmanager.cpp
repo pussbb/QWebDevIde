@@ -7,6 +7,7 @@ HighlightManager::HighlightManager(QObject *parent) :
     schemePath = appDir + QDir::toNativeSeparators("schemes/syntax/");
     syntaxesPath = appDir + QDir::toNativeSeparators("syntax/");
     initScheme();
+    initSyntaxes();
 }
 
 void HighlightManager::initScheme()
@@ -68,6 +69,7 @@ void HighlightManager::initSyntaxes()
         AbstractSyntaxHighlight *syntax = new AbstractSyntaxHighlight(this);
         syntax->setColorScheme(m_colorScheme);
         bool ok = syntax->initSyntax(file.absoluteFilePath());
+        qDebug()<<ok;
         if ( ok)
             syntaxes.insert(fileName,syntax);
     }
@@ -77,4 +79,10 @@ void HighlightManager::initSyntaxes()
             continue;
         syntax->dependenciesWalk(syntaxes);
     }
+}
+
+QVector<HighlightingRule> HighlightManager::getHighlighting(const QString &syntax)
+{qDebug()<<syntaxes.keys();
+    if(syntax.isEmpty())
+        return syntaxes.value("default")->highlightingRules;
 }

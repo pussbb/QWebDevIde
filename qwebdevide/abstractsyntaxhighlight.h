@@ -8,11 +8,8 @@
 #include "QtCore"
 #include "QRegExp"
 #include "QTextCharFormat"
+#include "global.h"
 
-struct HighlightingRule {
-    QRegExp pattern;
-    QTextCharFormat format;
-};
 class AbstractSyntaxHighlight : public QObject
 {
     Q_OBJECT
