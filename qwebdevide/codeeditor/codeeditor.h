@@ -4,6 +4,7 @@
 #include <QPlainTextEdit>
 #include <QObject>
 #include <highlighter.h>
+#include <QFile>
 
 QT_BEGIN_NAMESPACE
 class QPaintEvent;
@@ -23,7 +24,7 @@ public:
 
     void lineNumberAreaPaintEvent(QPaintEvent *event);
     int lineNumberAreaWidth();
-
+    void openFile(const QString file);
 protected:
     void resizeEvent(QResizeEvent *event);
     int findMatchingChar( QChar c1, QChar c2, bool forward, QTextBlock &block, int from );
@@ -37,7 +38,10 @@ private slots:
 private:
     QWidget *lineNumberArea;
     Highlighter *highlighter;
-    void createParenthesisSelection(int pos);void matchParentheses();
+    void createParenthesisSelection(int pos);
+    void matchParentheses();
+    void fetch(QFile *file);
+    QTextCodec *codec;
 };
 
 

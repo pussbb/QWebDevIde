@@ -90,7 +90,7 @@ void CodeEditor::highlightCurrentLine()
     setExtraSelections(extraSelections);
 
     TextBlockData *data = static_cast<TextBlockData *>(textCursor().block().userData());
-    QString m_matchBracketsList = "()[]{}";
+    QString m_matchBracketsList = "()[]{}<>";
     QTextBlock  block     =  textCursor().block();
     int blockPosition     = block.position();
     int cursorPosition    = textCursor().position();
@@ -216,4 +216,42 @@ int CodeEditor::findMatchingChar(QChar c1, QChar c2, bool forward, QTextBlock &b
                     block = block.previous();
     }
     return -1;
+}
+
+void CodeEditor::openFile(const QString file)
+{
+    QFile f(file);
+    if (!f.open(QFile::ReadOnly | QFile::Text))
+        return;
+    fetch(&f);
+}
+
+void CodeEditor::fetch(QFile *file)
+{
+    QByteArray buf;
+    buf = file->readAll();
+    int mib = 106; // utf-8
+    codec = QTextCodec::codecForUtfText(buf, 0); // try BOM detection
+    if (!codec) {
+        if (buf.length() > 3) { // auto-detect
+            const char *data = buf.constData();
+            if (data[0] != 0) {
+                if (data[1] != 0)
+                    mib = 106; // utf-8
+                else if (data[2] != 0)
+                    mib = 1014; // utf16 le
+                else
+                    mib = 1019; // utf32 le
+            } else if (data[1] != 0)
+                mib = 1013; // utf16 be
+            else
+                mib = 1018; // utf32 be
+        }
+        codec = QTextCodec::codecForMib(mib);
+    }
+    else {
+        codec = QTextCodec::codecForLocale();
+    }
+
+    setPlainText(codec->toUnicode(buf));
 }

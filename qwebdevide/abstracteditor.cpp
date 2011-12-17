@@ -7,8 +7,6 @@ AbstractEditor::AbstractEditor(QObject *parent) :
 }
 void AbstractEditor::openFile(QString fileName)
 {
-        QFile f(fileName);
-        if (f.open(QFile::ReadOnly | QFile::Text))
-            m_editor->setPlainText(f.readAll());
-        m_fileInfo = new QFileInfo(fileName);
+       m_editor->openFile(fileName);
+       m_fileInfo = new QFileInfo(fileName);
 }

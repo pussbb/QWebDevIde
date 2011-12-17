@@ -79,7 +79,7 @@ void Highlighter::highlightBlock(const QString &text)
 {
     TextBlockData *data = new TextBlockData;
 
-    QString m_matchBracketsList = "()[]{}";
+    QString m_matchBracketsList = "()[]{}<>";
     for ( int bracketIndex=0; bracketIndex<m_matchBracketsList.length(); bracketIndex++ )
     {
         QChar bracket       = m_matchBracketsList[bracketIndex];
