@@ -37,9 +37,14 @@ private slots:
 
     void on_actionOpen_triggered();
 
+    void on_actionFull_screen_triggered();
+
+    void on_actionShow_Hide_Editor_Right_pane_triggered();
+
 private:
     Ui::QWebDevIde *ui;
     void initUI();
+    RightPane *rightPane;
     MiniSplitter *rightPaneSplitter;
     EditingWidget *m_editingWidget;
 };

@@ -32,12 +32,12 @@ QWebDevIde::QWebDevIde(QWidget *parent) :
 
 
     rightPaneSplitter = new MiniSplitter(parent);
-      MiniSplitter *splitter = new MiniSplitter(parent);
+    MiniSplitter *splitter = new MiniSplitter(parent);
 
-      splitter->addWidget(rightPaneSplitter);
-      splitter->addWidget(editorsManager->getMainEditorWidget());
-      new RightPane(rightPaneSplitter,projectManager,editorsManager,bookmarkManager);
-      rightPaneSplitter->setOrientation(Qt::Vertical);
+    splitter->addWidget(rightPaneSplitter);
+    splitter->addWidget(editorsManager->getMainEditorWidget());
+    rightPane = new RightPane(rightPaneSplitter,projectManager,editorsManager,bookmarkManager);
+    rightPaneSplitter->setOrientation(Qt::Vertical);
 
     ptab->insertTab(0,new QWidget(this),QIcon(":/core/images/category_core.png"),tr("Welcome") );
     ptab->setTabEnabled(0, true);
@@ -103,4 +103,21 @@ void QWebDevIde::on_actionOpen_triggered()
                                                     tr("All Files (*.*)"));
     if(!fileName.isEmpty())
         openFile(fileName);
+}
+
+void QWebDevIde::on_actionFull_screen_triggered()
+{
+    if(!isFullScreen())
+        showFullScreen();
+    else
+        showNormal();
+}
+
+void QWebDevIde::on_actionShow_Hide_Editor_Right_pane_triggered()
+{
+    if(rightPane->isVisible())
+        rightPane->hide();
+    else
+        rightPane->show();
+
 }

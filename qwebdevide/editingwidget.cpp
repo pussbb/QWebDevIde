@@ -6,6 +6,7 @@ EditingWidget::EditingWidget(QWidget *parent) :
     ui(new Ui::EditingWidget)
 {
     ui->setupUi(this);
+  //// ui->widget_2->setProperty("panelwidget_singlerow",false);
     ui->closeFile->setEnabled(false);
 }
 

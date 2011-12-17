@@ -9,6 +9,7 @@ RightPane::RightPane(QWidget *parent,ProjectManager *prman,EditorsManager *eman,
     m_bookmarkManager(bman)
 {
     ui->setupUi(this);
+    ui->rightPaneSplit->setVisible(false);
     connect( m_projecManager,SIGNAL(projectAdd()),this,SLOT(refreshProject()));
     ui->comboBox->setCurrentIndex(-1);
     ui->comboBox->setCurrentIndex(0);
@@ -21,7 +22,8 @@ RightPane::~RightPane()
 
 void RightPane::on_rightPaneClose_clicked()
 {
-   deleteLater();
+   //deleteLater();
+    hide();
 }
 
 void RightPane::on_rightPaneSplit_clicked()

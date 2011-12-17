@@ -11,7 +11,7 @@ class AbstractEditor : public QObject
     Q_OBJECT
 public:
     explicit AbstractEditor(QObject *parent = 0);
-    inline QString fileName(){return m_fileInfo->baseName();}
+    inline QString fileName(){return m_fileInfo->fileName();}
     inline CodeEditor * getEditorWidget(){return m_editor;}
     inline QFileInfo * fileInfo(){return m_fileInfo;}
     void openFile(QString fileName);
