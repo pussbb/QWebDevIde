@@ -65,9 +65,16 @@ void HighlightManager::initSyntaxes()
         if(!file.isReadable())
             continue;
         QString fileName = file.baseName();
-        AbstractSyntaxHighlight syntax = new AbstractSyntaxHighlight(this);
-        syntax.setColorScheme(m_colorScheme);
-        syntax.initSyntax(file.absoluteFilePath(),syntaxes);
-        syntaxes.insert(fileName,syntax);
+        AbstractSyntaxHighlight *syntax = new AbstractSyntaxHighlight(this);
+        syntax->setColorScheme(m_colorScheme);
+        bool ok = syntax->initSyntax(file.absoluteFilePath());
+        if ( ok)
+            syntaxes.insert(fileName,syntax);
+    }
+    foreach(const QString &file,syntaxes.keys()){
+        AbstractSyntaxHighlight *syntax = syntaxes.value(file);
+        if ( syntax == NULL)
+            continue;
+        syntax->dependenciesWalk(syntaxes);
     }
 }

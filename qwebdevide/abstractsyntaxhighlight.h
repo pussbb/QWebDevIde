@@ -21,9 +21,13 @@ public:
     explicit AbstractSyntaxHighlight(QObject *parent = 0);
     inline void setColorScheme(QMap<QString,QTextCharFormat> colorScheme)
                         { if ( ! colorScheme.isEmpty()) m_colorScheme = colorScheme;}
-    bool initSyntax(const QString &fileName,QMap<QString ,AbstractSyntaxHighlight*> existing);
+    bool initSyntax(const QString &fileName);
+    void dependenciesWalk(QMap<QString ,AbstractSyntaxHighlight*> existing);
+    QVariantMap description;
+
 private:
     QMap<QString,QTextCharFormat> m_colorScheme;
+    QStringList dependencies;
 };
 
 #endif // ABSTRACTSYNTAXHIGHLIGHT_H
