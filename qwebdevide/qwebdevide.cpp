@@ -121,3 +121,17 @@ void QWebDevIde::on_actionShow_Hide_Editor_Right_pane_triggered()
         rightPane->show();
 
 }
+
+void QWebDevIde::on_actionSave_file_triggered()
+{
+    editorsManager->saveCurrent();
+}
+
+void QWebDevIde::on_actionSave_all_triggered()
+{
+    foreach(const QString &file,editorsManager->openedFiles.keys()) {
+        AbstractEditor *editor = editorsManager->openedFiles.value(file);
+        if ( editor != NULL)
+            editor->saveFile();
+    }
+}

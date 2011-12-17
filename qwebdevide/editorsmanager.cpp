@@ -30,4 +30,13 @@ void EditorsManager::closeFile(QString file)
     }
 }
 
+void EditorsManager::saveCurrent()
+{
+    AbstractEditor *editor = openedFiles.value(m_editingWidget->currentFileName);
+    if (editor == NULL)
+        return;
+    editor->saveFile();
+    ;
+}
+
 

@@ -18,6 +18,7 @@ public:
     ~EditingWidget();
     void setCurrent(QString file);
     void refreshFileList(QMap<QString,AbstractEditor*> openedFiles);
+    QString currentFileName;
 private slots:
     void on_openedFilesList_currentIndexChanged(int index);
     void on_closeFile_clicked();
@@ -27,7 +28,7 @@ signals:
 private:
     QPointer<QWidget> currentWidget;
     Ui::EditingWidget *ui;
-    QString currentFileName;
+
     QMap<QString, AbstractEditor*> m_openedFiles;
     void setCentralWidget(QWidget *widget);
 };

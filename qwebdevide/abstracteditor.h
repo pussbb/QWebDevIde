@@ -15,6 +15,7 @@ public:
     inline CodeEditor * getEditorWidget(){return m_editor;}
     inline QFileInfo * fileInfo(){return m_fileInfo;}
     void openFile(QString fileName);
+    bool saveFile();
 signals:
 
 public slots:

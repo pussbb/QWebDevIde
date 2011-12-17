@@ -17,6 +17,7 @@ public:
     void openProject(QString fileName);
     inline QWidget * getMainEditorWidget(){return m_editingWidget;}
     QMap<QString,AbstractEditor*> openedFiles;
+    void saveCurrent();
 signals:
 
 public slots:

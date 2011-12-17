@@ -49,6 +49,8 @@
     </widget>
     <addaction name="menuNew"/>
     <addaction name="actionOpen"/>
+    <addaction name="actionSave_file"/>
+    <addaction name="actionSave_all"/>
     <addaction name="actionClose"/>
    </widget>
    <widget class="QMenu" name="menuTools">
@@ -123,6 +125,19 @@
    </property>
    <property name="shortcut">
     <string>F10</string>
+   </property>
+  </action>
+  <action name="actionSave_file">
+   <property name="text">
+    <string>Save file</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionSave_all">
+   <property name="text">
+    <string>Save all</string>
    </property>
   </action>
  </widget>

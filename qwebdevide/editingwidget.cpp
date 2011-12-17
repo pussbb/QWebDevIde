@@ -59,6 +59,7 @@ void EditingWidget::setCurrent(QString file)
     int index = ui->openedFilesList->findData(file);
     if(index != -1){
         ui->openedFilesList->setCurrentIndex(index);
+        currentFileName = file;
     }
 }
 

@@ -41,6 +41,10 @@ private slots:
 
     void on_actionShow_Hide_Editor_Right_pane_triggered();
 
+    void on_actionSave_file_triggered();
+
+    void on_actionSave_all_triggered();
+
 private:
     Ui::QWebDevIde *ui;
     void initUI();

@@ -255,3 +255,20 @@ void CodeEditor::fetch(QFile *file)
 
     setPlainText(codec->toUnicode(buf));
 }
+
+bool CodeEditor::saveFile(const QString file)
+{
+    QFile f (file);
+    if ( !f.open(QFile::WriteOnly | QFile::Text))
+        return false;
+// rewite
+    qDebug()<<codec->toUnicode(
+                  document()->toPlainText().toLocal8Bit()
+              ).toLocal8Bit();
+    f.write(codec->toUnicode(
+                        document()->toPlainText().toLocal8Bit()
+                    ).toLocal8Bit()
+                );
+    f.close();
+    return true;
+}
