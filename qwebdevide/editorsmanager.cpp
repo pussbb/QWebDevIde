@@ -7,6 +7,7 @@ EditorsManager::EditorsManager(QObject *parent) :
     m_editingWidget = new EditingWidget(0);
     connect(m_editingWidget,SIGNAL(closeFile(QString)),
             this,SLOT(closeFile(QString)));
+    syntax = new HighlightManager(this);
 }
 
 void EditorsManager::openFile(QString file)

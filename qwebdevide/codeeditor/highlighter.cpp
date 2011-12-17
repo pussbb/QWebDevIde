@@ -28,6 +28,7 @@ void TextBlockData::insert(ParenthesisInfo *info)
 Highlighter::Highlighter(QTextDocument *parent)
     : QSyntaxHighlighter(parent)
 {
+   /*
     HighlightingRule rule;
 
     keywordFormat.setForeground(Qt::darkBlue);
@@ -72,7 +73,9 @@ Highlighter::Highlighter(QTextDocument *parent)
     highlightingRules.append(rule);
 
     commentStartExpression = QRegExp("/\\*");
-    commentEndExpression = QRegExp("\\*/");
+    commentEndExpression = QRegExp("\\*\/");
+
+    */
 }
 
 void Highlighter::highlightBlock(const QString &text)
@@ -98,16 +101,21 @@ void Highlighter::highlightBlock(const QString &text)
 
 
     setCurrentBlockUserData(data);
-    foreach (const HighlightingRule &rule, highlightingRules) {
-        QRegExp expression(rule.pattern);
-        int index = expression.indexIn(text);
-        while (index >= 0) {
-            int length = expression.matchedLength();
-            setFormat(index, length, rule.format);
-            index = expression.indexIn(text, index + length);
+    if(!highlightingRules.isEmpty()){
+        foreach (const HighlightingRule &rule, highlightingRules) {
+            QRegExp expression(rule.pattern);
+            int index = expression.indexIn(text);
+            while (index >= 0) {
+                int length = expression.matchedLength();
+                setFormat(index, length, rule.format);
+                index = expression.indexIn(text, index + length);
+            }
         }
     }
     setCurrentBlockState(0);
+
+    if(commentStartExpression.isEmpty() || commentEndExpression.isEmpty())
+        return;
 
     int startIndex = 0;
     if (previousBlockState() != 1)

@@ -8,6 +8,7 @@
 #include "mimedata.h"
 #include <editingwidget.h>
 #include <abstracteditor.h>
+#include <highlightmanager.h>
 
 class EditorsManager : public QObject
 {
@@ -18,6 +19,7 @@ public:
     inline QWidget * getMainEditorWidget(){return m_editingWidget;}
     QMap<QString,AbstractEditor*> openedFiles;
     void saveCurrent();
+    HighlightManager *syntax;
 signals:
 
 public slots:

@@ -37,7 +37,9 @@ SOURCES += main.cpp\
     rightpane/projectexplorer.cpp \
     rightpane/filetemplates.cpp \
     editingwidget.cpp \
-    abstracteditor.cpp
+    abstracteditor.cpp \
+    abstractsyntaxhighlight.cpp \
+    highlightmanager.cpp
 
 
 HEADERS  += qwebdevide.h \
@@ -57,7 +59,9 @@ HEADERS  += qwebdevide.h \
     rightpane/projectexplorer.h \
     rightpane/filetemplates.h \
     editingwidget.h \
-    abstracteditor.h
+    abstracteditor.h \
+    abstractsyntaxhighlight.h \
+    highlightmanager.h
 
 FORMS    += qwebdevide.ui \
     rightpane/rightpane.ui \
@@ -79,6 +83,10 @@ else:unix: LIBS += -L$$PWD/../bin/ -lMimeData
 
 INCLUDEPATH += $$PWD/../libs/MimeData
 DEPENDPATH += $$PWD/../libs/MimeData
+
+
+
+
 
 
 

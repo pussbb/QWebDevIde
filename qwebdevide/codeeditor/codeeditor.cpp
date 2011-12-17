@@ -230,6 +230,7 @@ void CodeEditor::fetch(QFile *file)
 {
     QByteArray buf;
     buf = file->readAll();
+    file->close();
     int mib = 106; // utf-8
     codec = QTextCodec::codecForUtfText(buf, 0); // try BOM detection
     if (!codec) {
@@ -261,10 +262,7 @@ bool CodeEditor::saveFile(const QString file)
     QFile f (file);
     if ( !f.open(QFile::WriteOnly | QFile::Text))
         return false;
-// rewite
-    qDebug()<<codec->toUnicode(
-                  document()->toPlainText().toLocal8Bit()
-              ).toLocal8Bit();
+// rewrite
     f.write(codec->toUnicode(
                         document()->toPlainText().toLocal8Bit()
                     ).toLocal8Bit()

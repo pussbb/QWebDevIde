@@ -1,0 +1,85 @@
+{
+  "comment":{
+      "bold": true,
+      "italic": true,
+      "underline": true,
+      "color": {
+	  "r": 100,
+	  "g": 200,
+	  "b": 100,
+	  "a": 255
+      }
+  },
+  "multiline_comment":{
+      "bold": true,
+      "italic": true,
+      "underline": true,
+      "color": {
+	  "r": 130,
+	  "g": 200,
+	  "b": 130,
+	  "a": 255
+      }
+  },
+  "string":{
+      "bold": true,
+      "italic": true,
+      "underline": true,
+      "color": "#FFFFFF"
+  },
+  "function":{
+      "bold": true,
+      "italic": true,
+      "underline": true,
+      "color": {
+	  "r": 130,
+	  "g": 200,
+	  "b": 130,
+	  "a": 255
+      }
+   },
+  "definition":{
+      "bold": true,
+      "italic": true,
+      "underline": true,
+      "color": {
+	  "r": 130,
+	  "g": 200,
+	  "b": 130,
+	  "a": 255
+      }
+   },
+  "operators":{
+      "bold": true,
+      "italic": true,
+      "underline": true,
+      "color": {
+	  "r": 130,
+	  "g": 200,
+	  "b": 130,
+	  "a": 255
+      }
+   },
+  "keywords":{
+      "bold": true,
+      "italic": true,
+      "underline": true,
+      "color": {
+	  "r": 130,
+	  "g": 200,
+	  "b": 130,
+	  "a": 255
+      }
+   },
+   "reqexpr":{
+      "bold": true,
+      "italic": true,
+      "underline": true,
+      "color": {
+	  "r": 130,
+	  "g": 200,
+	  "b": 130,
+	  "a": 255
+      }
+   }
+}
