@@ -7,5 +7,6 @@
         <file>app/category_texteditor.png</file>
         <file>fs-directory.png</file>
         <file>applications-development-web.png</file>
+        <file>app.png</file>
     </qresource>
 </RCC>

@@ -1,0 +1,19 @@
+[Desktop Entry]
+Comment[ru]=
+Comment=
+Exec=$(dirname %k)/qwebdevide.sh $(dirname %k) 
+GenericName[ru]=Just another web development IDE
+GenericName=Just another web development IDE
+Icon=./qwebdevide.png
+MimeType=
+Name[ru]=QWebDevIde
+Name=QWebDevIde
+Path=$(dirname %k)/
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=

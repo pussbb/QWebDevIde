@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>QWebDevIde</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resource/app.qrc">
+    <normaloff>:/app.png</normaloff>:/app.png</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout"/>
   </widget>
@@ -142,6 +146,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resource/app.qrc"/>
+ </resources>
  <connections/>
 </ui>
