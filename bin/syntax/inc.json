@@ -1,0 +1,10 @@
+{
+  "description" :{
+	"author": "fdf",
+	"build": "2011.12.17",
+	"text": "inc php files class"
+    },
+  "dependencies": [
+    "php"
+  ]
+} 

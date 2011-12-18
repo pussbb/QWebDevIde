@@ -9,7 +9,7 @@
     "html"
   ],
   "string":[
-      "\'.*\'"
+      "'([^']*)'"
   ],
   "definition": [
       "abstract",
@@ -35,12 +35,20 @@
       "public",
       "throw",
       "try",
-      "\\band\\b",
-      "\\bor\\b",
+      "band|AND",
+      "bor|OR",
       "xor",
       "var",
       "namespace",
-      "use"
+      "use",
+      "if",
+      "else",
+      "elseif",
+      "include",
+      "include_once",
+      "require",
+      "require_once",
+      "[A-Z0-9_]+"
   ],
   "operators": [
     "\\+=",
@@ -54,7 +62,9 @@
   ],
   "keywords": [
     "echo",
-   "\\b?\\$[A-Za-z0-9]+"
+   "\\b?\\$[A-Za-z0-9_]+",
+    "\\b?[\\-\\>]([A-Za-z0-9]+)\\b",
+    "[A-Za-z0-9_]+::"
   ],
   "reqexpr":[]
 } 

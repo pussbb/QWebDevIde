@@ -87,9 +87,28 @@ QVector<HighlightingRule> HighlightManager::getHighlighting(QString syntax)
         syntax = "default";
     if( !syntaxes.contains(syntax))
         return QVector<HighlightingRule> ();
-
-    commentStartExpression = syntaxes.value(syntax)->commentStartExpression;
-    commentEndExpression = syntaxes.value(syntax)->commentEndExpression;
-    multiLineCommentFormat = m_colorScheme.value("multiline_comment");
     return syntaxes.value(syntax)->highlightingRules;
+}
+
+QRegExp HighlightManager::getStartMultiComments(QString syntax)
+{
+    if(syntax.isEmpty())
+        syntax = "default";
+    if( !syntaxes.contains(syntax))
+        return QRegExp();
+    return syntaxes.value(syntax)->commentStartExpression;
+}
+
+QRegExp HighlightManager::getEndMultiComments(QString syntax)
+{
+    if(syntax.isEmpty())
+        syntax = "default";
+    if( !syntaxes.contains(syntax))
+        return QRegExp();
+    return syntaxes.value(syntax)->commentEndExpression;
+}
+
+QTextCharFormat HighlightManager::getMultiCommentsFormart()
+{
+    return m_colorScheme.value("multiline_comment");
 }

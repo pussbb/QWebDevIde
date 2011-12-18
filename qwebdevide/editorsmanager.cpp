@@ -20,9 +20,9 @@ void EditorsManager::openFile(QString file)
     QFileInfo *fi = editor->fileInfo();
     codeEditor->highlighter->highlightingRules.clear();
     codeEditor->highlighter->highlightingRules = syntax->getHighlighting(fi->completeSuffix());
-    codeEditor->highlighter->commentEndExpression = syntax->commentEndExpression;
-    codeEditor->highlighter->commentStartExpression = syntax->commentStartExpression;
-    codeEditor->highlighter->multiLineCommentFormat = syntax->multiLineCommentFormat;
+    codeEditor->highlighter->commentEndExpression = syntax->getEndMultiComments(fi->completeSuffix());
+    codeEditor->highlighter->commentStartExpression = syntax->getStartMultiComments(fi->completeSuffix());
+    codeEditor->highlighter->multiLineCommentFormat = syntax->getMultiCommentsFormart();
     emit(codeEditor->highlighter->rehighlight());
   }
 
@@ -48,7 +48,6 @@ void EditorsManager::saveCurrent()
     if (editor == NULL)
         return;
     editor->saveFile();
-    ;
 }
 
 

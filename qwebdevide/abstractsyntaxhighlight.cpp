@@ -33,7 +33,7 @@ bool AbstractSyntaxHighlight::initSyntax(const QString &fileName)
     if ( v.canConvert(QVariant::Map)){
         QVariantMap multiLine = v.toMap();
         commentStartExpression = QRegExp(multiLine.value("open","").toString());
-        commentEndExpression  = QRegExp(multiLine.value("close","").toString());
+        commentEndExpression = QRegExp(multiLine.value("close","").toString());
     }
     syntax.remove("multiline_comment");
     foreach(const QString &key,syntax.keys()){
@@ -46,6 +46,8 @@ bool AbstractSyntaxHighlight::initSyntax(const QString &fileName)
         HighlightingRule rule;
         foreach (const QString &pattern,rules) {
             rule.pattern = QRegExp(pattern);
+//            rule.pattern.setMinimal(true);
+            rule.pattern.setPatternSyntax(QRegExp::RegExp2);
             rule.format = colorScheme;
             highlightingRules.append(rule);
         }

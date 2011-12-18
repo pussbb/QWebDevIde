@@ -14,18 +14,19 @@ CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
             this, SLOT(updateLineNumberArea(QRect,int)));
     connect(this, SIGNAL(cursorPositionChanged()),
             this, SLOT(highlightCurrentLine()));
-
-  ////  bool on= true;
+    changed = false;
     QTextOption option =  document()->defaultTextOption();
-    ///if (on)
+    option.setWrapMode(QTextOption::WrapAnywhere);
+    option.setTabStop(4);
     option.setFlags(option.flags() |QTextOption::IncludeTrailingSpaces| QTextOption::ShowTabsAndSpaces  );
-    // else
-    //       option.setFlags(option.flags() & ~QTextOption::ShowTabsAndSpaces);
     QPalette p = palette();
     p.setColor(QPalette::Base, QColor(240, 240, 255));
     setPalette(p);
-
     document()->setDefaultTextOption(option);
+    QFont font;
+    font.setFamily("Monospace");
+    font.setPointSize(10);
+    setFont(font);
     highlighter = new Highlighter(document());
     updateLineNumberAreaWidth(0);
     highlightCurrentLine();
@@ -229,6 +230,8 @@ void CodeEditor::openFile(const QString file)
 void CodeEditor::fetch(QFile *file)
 {
     QByteArray buf;
+    //if(!file->isWritable())
+   //     setReadOnly(true);
     buf = file->readAll();
     file->close();
     int mib = 106; // utf-8
@@ -268,5 +271,6 @@ bool CodeEditor::saveFile(const QString file)
                     ).toLocal8Bit()
                 );
     f.close();
+    changed = false;
     return true;
 }

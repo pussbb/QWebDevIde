@@ -92,7 +92,7 @@ void QWebDevIde::openFile(QString fileName)
         qDebug()<<  projectManager->current->projectPath();
     }
     else
-        qDebug()<<"open in editor";
+        editorsManager->openFile(fileName);
 }
 
 void QWebDevIde::on_actionOpen_triggered()

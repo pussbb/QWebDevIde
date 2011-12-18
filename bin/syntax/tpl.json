@@ -2,10 +2,10 @@
   "description" :{
 	"author": "fdf",
 	"build": "2011.12.17",
-	"text": "Hi"
+	"text": "smarty "
     },
   "dependencies": [
-    "default"
+    "php"
   ],
   "comment": [
     "//[^\n]*"
@@ -14,17 +14,9 @@
     "open": "/\\*",
     "close": "\\*/"
   },
-  "string":[
-      "'([^']*)'"
-  ],
-  "function":[
-    "\\b[A-Za-z0-9_]+(?=\\()"
-  ],
-  "definition": [
-    "var",
-    "\\[\\]",
-    "\\{\\}"
-  ],
+
+  "definition": [],
+  "operators": [],
   "keywords": [],
   "reqexpr":[]
 } 

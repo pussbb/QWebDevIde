@@ -27,6 +27,7 @@ public:
     void openFile(const QString file);
     bool saveFile(const QString file);
     Highlighter *highlighter;
+    bool changed;
 protected:
     void resizeEvent(QResizeEvent *event);
     int findMatchingChar( QChar c1, QChar c2, bool forward, QTextBlock &block, int from );
@@ -35,15 +36,14 @@ private slots:
     void highlightCurrentLine();
     void updateLineNumberArea(const QRect &, int);
     void paintEvent(QPaintEvent *e);
+    inline void changedText(){changed = true;}
 
 
 private:
     QWidget *lineNumberArea;
-
     void createParenthesisSelection(int pos);
     void matchParentheses();
     void fetch(QFile *file);
-
     QTextCodec *codec;
 };
 
