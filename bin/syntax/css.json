@@ -1,0 +1,23 @@
+{
+  "description" :{
+	"author": "fdf",
+	"build": "2011.12.17",
+	"text": "Hi"
+    },
+  "dependencies": [],
+  "multiline_comment": {
+    "open": "/\\*",
+    "close": "\\*/"
+  },
+  "string":[
+      "\".*\""
+  ],
+  "definition": [],
+  "operators": [
+    ":"
+  ],
+  "keywords": [
+      "\\b?[A-Za-z|-]+:\\b"
+  ],
+  "reqexpr":[]
+} 

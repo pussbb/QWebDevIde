@@ -3,6 +3,7 @@
 AbstractSyntaxHighlight::AbstractSyntaxHighlight(QObject *parent) :
     QObject(parent)
 {
+    dependenciesResolved = false;
 }
 
 bool AbstractSyntaxHighlight::initSyntax(const QString &fileName)
@@ -30,10 +31,9 @@ bool AbstractSyntaxHighlight::initSyntax(const QString &fileName)
 
     v = syntax.value("multiline_comment");
     if ( v.canConvert(QVariant::Map)){
-        QVariantMap multiLine = v.toMap();qDebug()<<multiLine;
+        QVariantMap multiLine = v.toMap();
         commentStartExpression = QRegExp(multiLine.value("open","").toString());
         commentEndExpression  = QRegExp(multiLine.value("close","").toString());
-        qDebug()<<commentStartExpression.pattern();
     }
     syntax.remove("multiline_comment");
     foreach(const QString &key,syntax.keys()){
@@ -55,15 +55,36 @@ bool AbstractSyntaxHighlight::initSyntax(const QString &fileName)
 
 void AbstractSyntaxHighlight::dependenciesWalk(QMap<QString, AbstractSyntaxHighlight *> existing)
 {
-    if(dependencies.isEmpty())
+    if(dependencies.isEmpty() || dependenciesResolved){
+        dependenciesResolved = true;
         return;
+    }
     foreach(const QString &file,dependencies){
         AbstractSyntaxHighlight *syntax = existing.value(file);
         if ( syntax == NULL)
             continue;
+        if ( !syntax->dependenciesResolved)
+            syntax->dependenciesWalk(existing);
+
         highlightingRules << syntax->highlightingRules;
-        ///commentStartExpression
+        if(commentStartExpression.isEmpty()){
+            commentStartExpression = syntax->commentStartExpression;
+        }
+        else{
+            QString expression = commentStartExpression.pattern();
+            expression.append("|" + syntax->commentStartExpression.pattern());
+            commentStartExpression = QRegExp(expression);
+        }
+        if(commentEndExpression.isEmpty()){
+            commentEndExpression = syntax->commentEndExpression;
+        }
+        else{
+            QString expression = commentEndExpression.pattern();
+            expression.append("|" + syntax->commentEndExpression.pattern());
+            commentEndExpression = QRegExp(expression);
+        }
     }
+    dependenciesResolved = true;
 }
 
 

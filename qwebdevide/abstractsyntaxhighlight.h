@@ -23,7 +23,7 @@ public:
     QVariantMap description;
     QRegExp commentStartExpression;
     QRegExp commentEndExpression;
-
+    bool dependenciesResolved;
 private:
     QMap<QString,QTextCharFormat> m_colorScheme;
     QStringList dependencies;

@@ -1,0 +1,60 @@
+{
+  "description" :{
+	"author": "fdf",
+	"build": "2011.12.17",
+	"text": "Hi"
+    },
+  "dependencies": [
+    "default",
+    "html"
+  ],
+  "string":[
+      "\'.*\'"
+  ],
+  "definition": [
+      "abstract",
+      "catch",
+      "class",
+      "clone",
+      "const",
+      "exception",
+      "extends",
+      "final",
+      "function",
+      "global",
+      "implements",
+      "instanceof",
+      "interface",
+      "new",
+      "self",
+      "var",
+      "static",
+      "parent",
+      "private",
+      "protected",
+      "public",
+      "throw",
+      "try",
+      "\\band\\b",
+      "\\bor\\b",
+      "xor",
+      "var",
+      "namespace",
+      "use"
+  ],
+  "operators": [
+    "\\+=",
+    "!==",
+    "===",
+    "=>",
+    "::",
+    "->",
+    "<\\?php|<\\?|<\\?=",
+    "\\?>"
+  ],
+  "keywords": [
+    "echo",
+   "\\b?\\$[A-Za-z0-9]+"
+  ],
+  "reqexpr":[]
+} 

@@ -34,15 +34,10 @@
       }
    },
   "definition":{
-      "bold": true,
+      "bold": false,
       "italic": true,
-      "underline": true,
-      "color": {
-	  "r": 130,
-	  "g": 200,
-	  "b": 130,
-	  "a": 255
-      }
+      "underline": false,
+      "color": "#f6dc04"
    },
   "operators":{
       "bold": true,
