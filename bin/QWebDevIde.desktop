@@ -1,10 +1,10 @@
 [Desktop Entry]
 Comment[ru]=
 Comment=
-Exec=$(dirname %k)/qwebdevide.sh $(dirname %k) 
+Exec=$(dirname %k)/qwebdevide.sh $(dirname %k) %i=$(dirname %k)qwebdevide.png
 GenericName[ru]=Just another web development IDE
 GenericName=Just another web development IDE
-Icon=./qwebdevide.png
+Icon=
 MimeType=
 Name[ru]=QWebDevIde
 Name=QWebDevIde
