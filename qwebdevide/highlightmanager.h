@@ -17,7 +17,10 @@ class HighlightManager : public QObject
 public:
     explicit HighlightManager(QObject *parent = 0);
     QMap<QString , AbstractSyntaxHighlight*> syntaxes;
-    QVector<HighlightingRule> getHighlighting(const QString &syntax = 0);
+    QVector<HighlightingRule> getHighlighting(QString syntax = "");
+    QRegExp commentStartExpression;
+    QRegExp commentEndExpression;
+    QTextCharFormat multiLineCommentFormat;
 signals:
 
 public slots:

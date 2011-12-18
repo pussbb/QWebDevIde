@@ -270,9 +270,3 @@ bool CodeEditor::saveFile(const QString file)
     f.close();
     return true;
 }
-
-void CodeEditor::setHighlightingRules(QVector<HighlightingRule> highlightingRules)
-{
-    highlighter->setHighlightingRules(highlightingRules);
-    emit(highlighter->rehighlight());
-}

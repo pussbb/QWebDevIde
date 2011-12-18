@@ -39,25 +39,13 @@ class Highlighter : public QSyntaxHighlighter
 
 public:
     Highlighter(QTextDocument *parent = 0);
-    inline void setHighlightingRules(QVector<HighlightingRule> highlighting){
-        highlightingRules = highlighting;
-    }
-
+    QVector<HighlightingRule> highlightingRules;
+    QRegExp commentStartExpression;
+    QRegExp commentEndExpression;
+    QTextCharFormat multiLineCommentFormat;
 protected:
     void highlightBlock(const QString &text);
 
 private:
-
-    QVector<HighlightingRule> highlightingRules;
-
-    QRegExp commentStartExpression;
-    QRegExp commentEndExpression;
-
-    QTextCharFormat keywordFormat;
-    QTextCharFormat classFormat;
-    QTextCharFormat singleLineCommentFormat;
-    QTextCharFormat multiLineCommentFormat;
-    QTextCharFormat quotationFormat;
-    QTextCharFormat functionFormat;
 };
 #endif

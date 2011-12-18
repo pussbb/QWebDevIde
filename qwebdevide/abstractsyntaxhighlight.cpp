@@ -27,7 +27,14 @@ bool AbstractSyntaxHighlight::initSyntax(const QString &fileName)
     syntax.remove("description");
     dependencies = syntax.value("dependencies",QStringList()).toStringList();
     syntax.remove("dependencies");
-    ///temprory
+
+    v = syntax.value("multiline_comment");
+    if ( v.canConvert(QVariant::Map)){
+        QVariantMap multiLine = v.toMap();qDebug()<<multiLine;
+        commentStartExpression = QRegExp(multiLine.value("open","").toString());
+        commentEndExpression  = QRegExp(multiLine.value("close","").toString());
+        qDebug()<<commentStartExpression.pattern();
+    }
     syntax.remove("multiline_comment");
     foreach(const QString &key,syntax.keys()){
 
@@ -55,6 +62,7 @@ void AbstractSyntaxHighlight::dependenciesWalk(QMap<QString, AbstractSyntaxHighl
         if ( syntax == NULL)
             continue;
         highlightingRules << syntax->highlightingRules;
+        ///commentStartExpression
     }
 }
 

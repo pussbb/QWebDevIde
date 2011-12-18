@@ -16,9 +16,7 @@ public:
     inline QFileInfo * fileInfo(){return m_fileInfo;}
     void openFile(QString fileName);
     bool saveFile();
-    inline void setHighlightingRules(QVector<HighlightingRule> highlightingRules){
-        m_editor->setHighlightingRules(highlightingRules);
-    }
+  ///  void setHighlightingRules(QVector<HighlightingRule> highlightingRules);
 
 signals:
 

@@ -26,7 +26,7 @@ public:
     int lineNumberAreaWidth();
     void openFile(const QString file);
     bool saveFile(const QString file);
-    void setHighlightingRules(QVector<HighlightingRule> highlightingRules);
+    Highlighter *highlighter;
 protected:
     void resizeEvent(QResizeEvent *event);
     int findMatchingChar( QChar c1, QChar c2, bool forward, QTextBlock &block, int from );
@@ -39,7 +39,7 @@ private slots:
 
 private:
     QWidget *lineNumberArea;
-    Highlighter *highlighter;
+
     void createParenthesisSelection(int pos);
     void matchParentheses();
     void fetch(QFile *file);

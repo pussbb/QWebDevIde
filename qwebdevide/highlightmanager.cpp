@@ -81,8 +81,15 @@ void HighlightManager::initSyntaxes()
     }
 }
 
-QVector<HighlightingRule> HighlightManager::getHighlighting(const QString &syntax)
-{qDebug()<<syntaxes.keys();
+QVector<HighlightingRule> HighlightManager::getHighlighting(QString syntax)
+{
     if(syntax.isEmpty())
-        return syntaxes.value("default")->highlightingRules;
+        syntax = "default";
+    if( !syntaxes.contains(syntax))
+        return QVector<HighlightingRule> ();
+
+    commentStartExpression = syntaxes.value(syntax)->commentStartExpression;
+    commentEndExpression = syntaxes.value(syntax)->commentEndExpression;
+    multiLineCommentFormat = m_colorScheme.value("multiline_comment");
+    return syntaxes.value(syntax)->highlightingRules;
 }

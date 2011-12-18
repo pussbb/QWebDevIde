@@ -28,54 +28,7 @@ void TextBlockData::insert(ParenthesisInfo *info)
 Highlighter::Highlighter(QTextDocument *parent)
     : QSyntaxHighlighter(parent)
 {
-   /*
-    HighlightingRule rule;
 
-    keywordFormat.setForeground(Qt::darkBlue);
-    keywordFormat.setFontWeight(QFont::Bold);
-    QStringList keywordPatterns;
-    keywordPatterns << "\\bchar\\b" << "\\bclass\\b" << "\\bconst\\b"
-                    << "\\bdouble\\b"
-                    << "\\bfriend\\b" << "\\binline\\b" << "\\bint\\b"
-                    << "\\blong\\b" << "\\bnamespace\\b"
-                    << "\\bprivate\\b" << "\\bprotected\\b" << "\\bpublic\\b"
-                    << "\\btemplate\\b"
-                    << "\\bvoid\\b"<< "\\b?\\$[A-Za-z0-9]+|[\\-\\>]?[A-Za-z0-9]+\\b"
-                    << "=>" << "\\t|\\s";
-    foreach (const QString &pattern, keywordPatterns) {
-        rule.pattern = QRegExp(pattern);
-        rule.format = keywordFormat;
-        highlightingRules.append(rule);
-    }
-
-    classFormat.setFontWeight(QFont::Bold);
-    classFormat.setForeground(Qt::darkMagenta);
-    rule.pattern = QRegExp("\\bQ[A-Za-z]+\\b");
-    rule.format = classFormat;
-    highlightingRules.append(rule);
-
-    singleLineCommentFormat.setForeground(Qt::red);
-    rule.pattern = QRegExp("//[^\n]*");
-    rule.format = singleLineCommentFormat;
-    highlightingRules.append(rule);
-
-    multiLineCommentFormat.setForeground(Qt::red);
-
-    quotationFormat.setForeground(Qt::darkGreen);
-    rule.pattern = QRegExp("\".*\"");
-    rule.format = quotationFormat;
-    highlightingRules.append(rule);
-
-    functionFormat.setFontItalic(true);
-    functionFormat.setForeground(Qt::blue);
-    rule.pattern = QRegExp("\\b[A-Za-z0-9_]+(?=\\()");
-    rule.format = functionFormat;
-    highlightingRules.append(rule);
-
-    commentStartExpression = QRegExp("/\\*");
-    commentEndExpression = QRegExp("\\*\/");
-
-    */
 }
 
 void Highlighter::highlightBlock(const QString &text)
@@ -98,7 +51,6 @@ void Highlighter::highlightBlock(const QString &text)
             bracketPosition = text.indexOf(bracket, bracketPosition + 1);
         }
     }
-
 
     setCurrentBlockUserData(data);
     if(!highlightingRules.isEmpty()){

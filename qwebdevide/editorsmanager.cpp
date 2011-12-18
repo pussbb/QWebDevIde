@@ -15,7 +15,16 @@ void EditorsManager::openFile(QString file)
   qDebug()<<"open file"<< file;
   AbstractEditor *editor = new AbstractEditor;
   editor->openFile(file);
-  editor->setHighlightingRules(syntax->getHighlighting());
+  CodeEditor *codeEditor = editor->getEditorWidget();
+  if ( codeEditor != NULL) {
+    codeEditor->highlighter->highlightingRules.clear();
+    codeEditor->highlighter->highlightingRules = syntax->getHighlighting();
+    codeEditor->highlighter->commentEndExpression = syntax->commentEndExpression;
+    codeEditor->highlighter->commentStartExpression = syntax->commentStartExpression;
+    codeEditor->highlighter->multiLineCommentFormat = syntax->multiLineCommentFormat;
+    emit(codeEditor->highlighter->rehighlight());
+  }
+
   openedFiles.insert(editor->fileName(),editor);
   m_editingWidget->refreshFileList(openedFiles);
   m_editingWidget->setCurrent(editor->fileName());

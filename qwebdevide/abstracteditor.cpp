@@ -15,3 +15,4 @@ bool AbstractEditor::saveFile()
 {
     return m_editor->saveFile(m_fileInfo->absoluteFilePath());
 }
+

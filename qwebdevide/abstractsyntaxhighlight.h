@@ -21,6 +21,8 @@ public:
     bool initSyntax(const QString &fileName);
     void dependenciesWalk(QMap<QString ,AbstractSyntaxHighlight*> existing);
     QVariantMap description;
+    QRegExp commentStartExpression;
+    QRegExp commentEndExpression;
 
 private:
     QMap<QString,QTextCharFormat> m_colorScheme;
