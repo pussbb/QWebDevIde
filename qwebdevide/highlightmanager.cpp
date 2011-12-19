@@ -12,7 +12,7 @@ HighlightManager::HighlightManager(QObject *parent) :
 
 void HighlightManager::initScheme()
 {
-    QFile f(schemePath + "default.json");
+    QFile f(schemePath + "monokai.json");
     if(!f.open(QIODevice::ReadOnly))
         return;
     QTextStream stream(&f);
@@ -112,3 +112,11 @@ QTextCharFormat HighlightManager::getMultiCommentsFormart()
 {
     return m_colorScheme.value("multiline_comment");
 }
+
+QColor HighlightManager::getEditorBackround()
+{
+    if(m_colorScheme.contains("editor_background"))
+        return m_colorScheme.value("editor_background").foreground().color();
+    return QColor(240,240,130);
+}
+

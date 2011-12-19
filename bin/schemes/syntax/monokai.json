@@ -1,34 +1,34 @@
 {
   "editor_background":{
       "color": {
-		"r": 240,
-		"g": 240,
-		"b": 130,
+		"r": 39,
+		"g": 40,
+		"b": 34,
 		"a": 255
 	    }
   },
   "comment":{
-      "bold": true,
-      "italic": true,
-      "underline": true,
+      "bold": false,
+      "italic": false,
+      "underline": false,
       "color": "gray"
   },
   "multiline_comment":{
       "bold": false,
       "italic": false,
       "underline": false,
-      "color": "#F80909"
+      "color": "gray"
   },
   "string":{
-      "bold": true,
-      "italic": true,
-      "underline": true,
-      "color": "white"
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "color": "#c4c756"
   },
   "function":{
-      "bold": true,
-      "italic": true,
-      "underline": true,
+      "bold": false,
+      "italic": false,
+      "underline": false,
       "color": {
 	  "r": 130,
 	  "g": 200,
@@ -38,36 +38,36 @@
    },
   "definition":{
       "bold": false,
-      "italic": true,
+      "italic": false,
       "underline": false,
       "color": "#f6dc04"
    },
   "operators":{
-      "bold": true,
-      "italic": true,
-      "underline": true,
+      "bold": false,
+      "italic": false,
+      "underline": false,
       "color": {
-	  "r": 130,
-	  "g": 200,
-	  "b": 130,
+	  "r": 197,
+	  "g": 39,
+	  "b": 94,
 	  "a": 255
       }
    },
   "keywords":{
-      "bold": true,
-      "italic": true,
-      "underline": true,
+      "bold": false,
+      "italic": false,
+      "underline": false,
       "color": {
-	  "r": 30,
-	  "g": 210,
-	  "b": 130,
+	  "r": 248,
+	  "g": 248,
+	  "b": 242,
 	  "a": 255
       }
    },
    "reqexpr":{
-      "bold": true,
-      "italic": true,
-      "underline": true,
+      "bold": false,
+      "italic": false,
+      "underline": false,
       "color": {
 	  "r": 130,
 	  "g": 200,

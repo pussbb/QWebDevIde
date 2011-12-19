@@ -28,6 +28,7 @@ public:
     bool saveFile(const QString file);
     Highlighter *highlighter;
     bool changed;
+    void setBackgroundColor(const QColor &color);
 protected:
     void resizeEvent(QResizeEvent *event);
     int findMatchingChar( QChar c1, QChar c2, bool forward, QTextBlock &block, int from );

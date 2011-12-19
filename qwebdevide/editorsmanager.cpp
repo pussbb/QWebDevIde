@@ -19,6 +19,7 @@ void EditorsManager::openFile(QString file)
   if ( codeEditor != NULL) {
     QFileInfo *fi = editor->fileInfo();
     codeEditor->highlighter->highlightingRules.clear();
+    codeEditor->setBackgroundColor(syntax->getEditorBackround());
     codeEditor->highlighter->highlightingRules = syntax->getHighlighting(fi->completeSuffix());
     codeEditor->highlighter->commentEndExpression = syntax->getEndMultiComments(fi->completeSuffix());
     codeEditor->highlighter->commentStartExpression = syntax->getStartMultiComments(fi->completeSuffix());

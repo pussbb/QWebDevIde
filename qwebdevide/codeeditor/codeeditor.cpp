@@ -16,12 +16,12 @@ CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
             this, SLOT(highlightCurrentLine()));
     changed = false;
     QTextOption option =  document()->defaultTextOption();
-    option.setWrapMode(QTextOption::WrapAnywhere);
+   //// option.setWrapMode(QTextOption::WrapAnywhere);
     option.setTabStop(4);
     option.setFlags(option.flags() |QTextOption::IncludeTrailingSpaces| QTextOption::ShowTabsAndSpaces  );
-    QPalette p = palette();
-    p.setColor(QPalette::Base, QColor(240, 240, 255));
-    setPalette(p);
+   // QPalette p = palette();
+  //  p.setColor(QPalette::Base, QColor(240, 240, 255));
+  //  setPalette(p);
     document()->setDefaultTextOption(option);
     QFont font;
     font.setFamily("Monospace");
@@ -273,4 +273,11 @@ bool CodeEditor::saveFile(const QString file)
     f.close();
     changed = false;
     return true;
+}
+
+void CodeEditor::setBackgroundColor(const QColor &color)
+{
+    QPalette p = palette();
+    p.setColor(QPalette::Base, color);
+    setPalette(p);
 }
