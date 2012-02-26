@@ -2,6 +2,7 @@
 #include "ui_qwebdevide.h"
 
 #include <wizard/wizard.h>
+#include "pluginmanager.h"
 
 QWebDevIde::QWebDevIde(QWidget *parent) :
     QCoreWindow(parent),
@@ -49,6 +50,7 @@ QWebDevIde::QWebDevIde(QWidget *parent) :
     ptab->setTabEnabled(3, true);
     ptab->setCurrentIndex(0);
     restoreWindowState();
+    PluginManager pm;
 }
 
 void QWebDevIde::initUI()

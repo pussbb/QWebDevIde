@@ -41,7 +41,6 @@ SOURCES += main.cpp\
     abstractsyntaxhighlight.cpp \
     highlightmanager.cpp
 
-
 HEADERS  += qwebdevide.h \
             qcorewindow.h \
     rightpane/rightpane.h \
@@ -85,19 +84,10 @@ else:unix: LIBS += -L$$PWD/../bin/ -lMimeData
 INCLUDEPATH += $$PWD/../libs/MimeData
 DEPENDPATH += $$PWD/../libs/MimeData
 
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../bin/ -lPluginManager
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../bin/ -lPluginManagerd
+else:symbian: LIBS += -lPluginManager
+else:unix: LIBS += -L$$PWD/../bin/ -lPluginManager
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INCLUDEPATH += $$PWD/../libs/PluginManager
+DEPENDPATH += $$PWD/../libs/PluginManager

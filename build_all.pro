@@ -1,6 +1,7 @@
 TEMPLATE = subdirs
-SUBDIRS =  libs/MimeData \ 
-         qwebdevide
+SUBDIRS =  libs/MimeData \
+           libs/PluginManager \
+            qwebdevide
    
 
 # build must be last:
