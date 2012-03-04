@@ -1,18 +1,17 @@
-#ifndef COREPLUGIN_H
-#define COREPLUGIN_H
+#ifndef CODEEDITORPLUGIN_H
+#define CODEEDITORPLUGIN_H
 
 #include <QtCore>
 #include <QtGui>
 #include <QObject>
 #include "../../libs/PluginManager/iplugin.h"
 
-class CorePlugin : public QObject, IPlugin
+class CodeEditorPlugin : public QObject, IPlugin
 {
     Q_OBJECT
     Q_INTERFACES(IPlugin)
 
 public:
-    explicit CorePlugin();
     QStringList dependencies() const;
     void init();
 };

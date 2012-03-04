@@ -4,6 +4,19 @@
 #include "QMainWindow"
 #define qApp (static_cast<QApplication *>(QCoreApplication::instance()))
 
+/*
+QStringList CorePlugin::dependesis()
+{
+    return QStringList();
+}*/
+CorePlugin::CorePlugin()
+{
+
+}
+QStringList CorePlugin::dependencies() const
+{
+    return QStringList();
+}
 void CorePlugin::init()
 {
     qDebug()<<qApp;
@@ -16,3 +29,9 @@ void CorePlugin::init()
 }
 
 Q_EXPORT_PLUGIN2(core, CorePlugin);
+
+
+
+
+
+

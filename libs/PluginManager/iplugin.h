@@ -1,10 +1,12 @@
 #ifndef IPLUGIN_H
 #define IPLUGIN_H
+#include <QtCore>
 
 class IPlugin
 {
 public:
     virtual ~IPlugin() {}
+    virtual QStringList dependencies() const  = 0 ;
     virtual void init() = 0;
 };
 
