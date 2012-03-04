@@ -5,7 +5,7 @@
 #include <QtGui>
 #include <QObject>
 #include "../../libs/PluginManager/iplugin.h"
-
+#include "../coreplugin/coreplugin.h"
 class CodeEditorPlugin : public QObject, IPlugin
 {
     Q_OBJECT
@@ -13,7 +13,7 @@ class CodeEditorPlugin : public QObject, IPlugin
 
 public:
     QStringList dependencies() const;
-    void init();
+    void init(QMap<QString, QObject *> dependencies);
 };
 
 #endif // COREPLUGIN_H

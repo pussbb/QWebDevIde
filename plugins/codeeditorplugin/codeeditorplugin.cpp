@@ -1,5 +1,5 @@
 #include "codeeditorplugin.h"
-
+#include "QDebug"
 
 QStringList CodeEditorPlugin::dependencies() const
 {
@@ -7,9 +7,10 @@ QStringList CodeEditorPlugin::dependencies() const
 }
 
 
-void CodeEditorPlugin::init()
+void CodeEditorPlugin::init(QMap<QString, QObject *> dependencies)
 {
-
+    CorePlugin *cp = static_cast<CorePlugin *>(dependencies.value("Core"));
+    qDebug()<< cp->menuBar;
 }
 
 Q_EXPORT_PLUGIN2(CodeEditor, CodeEditorPlugin);

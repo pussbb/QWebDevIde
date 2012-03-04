@@ -15,7 +15,6 @@ PluginManager::PluginManager(QObject *parent):
         QFileInfo fi = directory_walker.fileInfo();
         if(QLibrary::isLibrary(fi.fileName()))
             plugins.insert(fi.baseName(), fi);
-
     }
 
     loadPlugins();
@@ -32,6 +31,7 @@ void PluginManager::loadPlugins()
 
 bool PluginManager::resolveDependecies(const QStringList &dependecies)
 {
+    m_dependecies.clear();
     if ( dependecies.empty())
         return true;
 
@@ -44,6 +44,7 @@ bool PluginManager::resolveDependecies(const QStringList &dependecies)
             if ( ! loadPlugin(filePath, baseName))
                 return false;
         }
+        m_dependecies.insert(file, m_loadedPlugins.value(baseName));
     }
     return true;
 }
@@ -54,12 +55,13 @@ bool PluginManager::loadPlugin(const QString &file, const QString &baseName)
         return true;
 
     QPluginLoader pluginLoader(file);
+    pluginLoader.setLoadHints(QLibrary::ResolveAllSymbolsHint | QLibrary::ExportExternalSymbolsHint);
     QObject *plugin = pluginLoader.instance();
     if (plugin) {
         IPlugin *ip = qobject_cast<IPlugin *>(plugin);
         if ( resolveDependecies(ip->dependencies())) {
-            loadedPlugins.insert(baseName, plugin);
-            ip->init();
+            m_loadedPlugins.insert(baseName, plugin);
+            ip->init(m_dependecies);
             return true;
         }
         else {
@@ -77,6 +79,6 @@ bool PluginManager::loadPlugin(const QString &file, const QString &baseName)
 
 bool PluginManager::initialized(const QString &baseName)
 {
-    QObject *plugin = loadedPlugins.value(baseName);
+    QObject *plugin = m_loadedPlugins.value(baseName);
     return plugin != NULL;
 }

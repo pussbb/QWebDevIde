@@ -11,19 +11,19 @@ QStringList CorePlugin::dependesis()
 }*/
 CorePlugin::CorePlugin()
 {
-
 }
 QStringList CorePlugin::dependencies() const
 {
     return QStringList();
 }
-void CorePlugin::init()
+void CorePlugin::init(QMap<QString, QObject *> dependencies)
 {
-    qDebug()<<qApp;
+
+    Q_UNUSED(dependencies);
     foreach(QWidget *widget, qApp->topLevelWidgets()) {
       if(widget->inherits("QWebDevIde")){
           QMainWindow *mw = qobject_cast<QMainWindow *>(widget);
-          qDebug()<<mw->menuBar();
+          menuBar =  mw->menuBar();
       }
     }
 }

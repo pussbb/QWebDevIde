@@ -1,7 +1,8 @@
 TEMPLATE = subdirs
 SUBDIRS =  libs/MimeData \
            libs/PluginManager \
-            qwebdevide
+           qwebdevide \
+           plugins \
    
 
 # build must be last:

@@ -14,7 +14,8 @@ class CorePlugin : public QObject, IPlugin
 public:
     explicit CorePlugin();
     QStringList dependencies() const;
-    void init();
+    void init(QMap<QString, QObject *> dependencies);
+    QMenuBar *menuBar;
 };
 
 #endif // COREPLUGIN_H
