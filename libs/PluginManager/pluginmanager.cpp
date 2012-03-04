@@ -2,12 +2,12 @@
 #include "QDir"
 #include "iplugin.h"
 
-PluginManager::PluginManager(QObject *parent):
-    QObject(parent)
+PluginManager::PluginManager(QObject *parent, QString locale):
+    QObject(parent),
+    m_locale(locale),
+    m_pluginPath(QCoreApplication::applicationDirPath() + QDir::toNativeSeparators("/plugins/"))
 {
-
-    QString directory_path = QCoreApplication::applicationDirPath() + QDir::toNativeSeparators("/plugins/");
-    QDirIterator directory_walker(directory_path, QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
+    QDirIterator directory_walker(m_pluginPath, QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
 
     while(directory_walker.hasNext())
     {
@@ -18,6 +18,7 @@ PluginManager::PluginManager(QObject *parent):
     }
 
     loadPlugins();
+    loadTranslation();
 }
 
 void PluginManager::loadPlugins()
@@ -25,7 +26,8 @@ void PluginManager::loadPlugins()
     foreach(const QString &file,plugins.keys())
     {
         QFileInfo fi = plugins.value(file);
-        loadPlugin(fi.absoluteFilePath(), fi.baseName());
+        if ( ! loadPlugin(fi.absoluteFilePath(), fi.baseName()))
+            plugins.remove(file);
     }
 }
 
@@ -81,4 +83,23 @@ bool PluginManager::initialized(const QString &baseName)
 {
     QObject *plugin = m_loadedPlugins.value(baseName);
     return plugin != NULL;
+}
+// functions translate not tested
+void PluginManager::loadTranslation(QString locale)
+{
+    if ( locale.isEmpty())
+        locale = m_locale;
+
+    foreach(const QString &file, m_loadedPlugins.keys())
+    {
+        QFileInfo fi = plugins.value(file);
+        QTranslator *tr = new QTranslator();
+        tr->load(m_pluginPath + fi.baseName() + "_" + locale);
+        QCoreApplication::installTranslator(tr);
+    }
+}
+
+void PluginManager::retranlsate(QString locale)
+{
+    loadTranslation(locale);
 }

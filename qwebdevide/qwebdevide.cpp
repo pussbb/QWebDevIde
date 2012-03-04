@@ -50,7 +50,7 @@ QWebDevIde::QWebDevIde(QWidget *parent) :
     ptab->setTabEnabled(3, true);
     ptab->setCurrentIndex(0);
     restoreWindowState();
-    PluginManager pm;
+    PluginManager *pm = new PluginManager(this, locale);
 }
 
 void QWebDevIde::initUI()
