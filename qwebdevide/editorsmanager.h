@@ -2,31 +2,34 @@
 #define EDITORMANAGER_H
 
 #include <QObject>
-#include <codeeditor.h>
 #include <QDebug>
-#include <QFile>
-#include "mimedata.h"
+#include <QFileInfo>
 #include <editingwidget.h>
-#include <abstracteditor.h>
-#include <highlightmanager.h>
-
+#include <mimedata.h>
+#include "../plugins/ifaces.h"
+#include "QMap"
 class EditorsManager : public QObject
 {
     Q_OBJECT
+
 public:
     explicit EditorsManager(QObject *parent = 0);
-    void openProject(QString fileName);
     inline QWidget * getMainEditorWidget(){return m_editingWidget;}
-    QMap<QString,AbstractEditor*> openedFiles;
+    QMap<QString, QWidget *> openedFiles;
     void saveCurrent();
-    HighlightManager *syntax;
+    void saveAll();
+    void initPlugins(QMap<QString, QObject *> list);
+
 signals:
 
 public slots:
     void openFile(QString );
     void closeFile(QString );
+
 private :
     MimeData mime;
+    QMap<QString, IEditors *> m_openedFiles;
+    QMap<QString, IEditors *> editors;
     EditingWidget *m_editingWidget;
 };
 

@@ -1,6 +1,5 @@
 TEMPLATE = subdirs
-SUBDIRS =  libs/MimeData \
-           libs/PluginManager \
+SUBDIRS =  libs  \
            qwebdevide \
            plugins \
    

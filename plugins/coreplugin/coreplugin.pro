@@ -3,7 +3,10 @@ TARGET = Core
 TEMPLATE = lib
 CONFIG += plugin
 
-INCLUDEPATH += ./
+INCLUDEPATH += ./ \
+    ../../qwebdevide/
+
+DEPENDPATH += ../../qwebdevide/
 
 SOURCES += coreplugin.cpp
 
@@ -15,3 +18,5 @@ unix{
     DESTDIR = ../../bin/plugins/
     UI_DIR = ./obj/
 }
+
+

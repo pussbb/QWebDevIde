@@ -1,5 +1,4 @@
 #include "editorsmanager.h"
-#include <codeeditor.h>
 
 EditorsManager::EditorsManager(QObject *parent) :
     QObject(parent)
@@ -7,48 +6,70 @@ EditorsManager::EditorsManager(QObject *parent) :
     m_editingWidget = new EditingWidget(0);
     connect(m_editingWidget,SIGNAL(closeFile(QString)),
             this,SLOT(closeFile(QString)));
-    syntax = new HighlightManager(this);
 }
 
 void EditorsManager::openFile(QString file)
 {
-  qDebug()<<"open file"<< file;
-  AbstractEditor *editor = new AbstractEditor;
-  editor->openFile(file);
-  CodeEditor *codeEditor = editor->getEditorWidget();
-  if ( codeEditor != NULL) {
-    QFileInfo *fi = editor->fileInfo();
-    codeEditor->highlighter->highlightingRules.clear();
-    codeEditor->setBackgroundColor(syntax->getEditorBackround());
-    codeEditor->highlighter->highlightingRules = syntax->getHighlighting(fi->completeSuffix());
-    codeEditor->highlighter->commentEndExpression = syntax->getEndMultiComments(fi->completeSuffix());
-    codeEditor->highlighter->commentStartExpression = syntax->getStartMultiComments(fi->completeSuffix());
-    codeEditor->highlighter->multiLineCommentFormat = syntax->getMultiCommentsFormart();
-    emit(codeEditor->highlighter->rehighlight());
-  }
+    QFileInfo fi(file);
+    QString mimeType = mime.getMimeType(file);
 
-  openedFiles.insert(editor->fileName(),editor);
-  m_editingWidget->refreshFileList(openedFiles);
-  m_editingWidget->setCurrent(editor->fileName());
+    if ( fi.isDir())
+        mimeType = "folder";
+
+    IEditors *editor = editors.value(mime.getMimeType(file));
+    if ( editor == NULL) {
+        editor = editors.value("default");
+        if ( editor == NULL)
+            return;
+    }
+
+    if (mimeType == "folder")
+        return;
+
+    m_openedFiles.insert(fi.fileName(), editor);
+    openedFiles.insert(fi.fileName(),editor->open(file));
+    m_editingWidget->refreshFileList(openedFiles);
+    m_editingWidget->setCurrent(fi.fileName());
 
 }
 
 void EditorsManager::closeFile(QString file)
 {
-    AbstractEditor *editor = openedFiles.value(file);
-    if(editor != NULL){
-        editor->deleteLater();
+    QWidget *editorWidget = openedFiles.value(file);
+    IEditors *editor =m_openedFiles.value(file);
+    if( editor != NULL) {
+        editor->close(file);
+        editorWidget->deleteLater();
         openedFiles.remove(file);
+        m_openedFiles.remove(file);
         m_editingWidget->refreshFileList(openedFiles);
     }
 }
 
 void EditorsManager::saveCurrent()
 {
-    AbstractEditor *editor = openedFiles.value(m_editingWidget->currentFileName);
+
+    IEditors *editor = m_openedFiles.value(m_editingWidget->currentFileName);
     if (editor == NULL)
         return;
-    editor->saveFile();
+    editor->save(m_editingWidget->currentFileName);
+}
+
+void EditorsManager::initPlugins(QMap<QString, QObject *> list)
+{
+    foreach(QString name, list.keys()) {
+        IEditors *iEditor = qobject_cast<IEditors *>(list.value(name));
+        if (iEditor)
+        {
+            foreach(const QString &mime, iEditor->mimeTypes()) {
+                editors.insert(mime, iEditor);
+            }
+        }
+    }
+}
+
+void EditorsManager::saveAll()
+{
 }
 
 

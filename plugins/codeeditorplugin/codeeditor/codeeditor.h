@@ -3,8 +3,11 @@
 
 #include <QPlainTextEdit>
 #include <QObject>
-#include <highlighter.h>
+
 #include <QFile>
+#include <QTextCharFormat>
+#include <QTextBlock>
+#include <textblockdata.h>
 
 QT_BEGIN_NAMESPACE
 class QPaintEvent;
@@ -21,17 +24,19 @@ class CodeEditor : public QPlainTextEdit
 
 public:
     CodeEditor(QWidget *parent = 0);
-
     void lineNumberAreaPaintEvent(QPaintEvent *event);
     int lineNumberAreaWidth();
     void openFile(const QString file);
-    bool saveFile(const QString file);
-    Highlighter *highlighter;
+    bool saveFile();
     bool changed;
     void setBackgroundColor(const QColor &color);
+    inline QString file(){return m_file;}
 protected:
     void resizeEvent(QResizeEvent *event);
     int findMatchingChar( QChar c1, QChar c2, bool forward, QTextBlock &block, int from );
+
+signals:
+
 private slots:
     void updateLineNumberAreaWidth(int newBlockCount);
     void highlightCurrentLine();
@@ -39,15 +44,14 @@ private slots:
     void paintEvent(QPaintEvent *e);
     inline void changedText(){changed = true;}
 
-
 private:
+    QString m_file;
     QWidget *lineNumberArea;
     void createParenthesisSelection(int pos);
     void matchParentheses();
     void fetch(QFile *file);
     QTextCodec *codec;
 };
-
 
 class LineNumberArea : public QWidget
 {

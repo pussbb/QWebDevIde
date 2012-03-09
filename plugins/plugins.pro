@@ -1,6 +1,8 @@
 TEMPLATE = subdirs
 SUBDIRS =  coreplugin \
-            codeeditorplugin
+            codeeditorplugin \
+            colorscheme \
+            syntaxhighlighter
 
 
 # build must be last:

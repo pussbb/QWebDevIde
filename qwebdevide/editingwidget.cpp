@@ -6,8 +6,8 @@ EditingWidget::EditingWidget(QWidget *parent) :
     ui(new Ui::EditingWidget)
 {
     ui->setupUi(this);
-  //// ui->widget_2->setProperty("panelwidget_singlerow",false);
     ui->closeFile->setEnabled(false);
+    m_openedFiles.clear();
 }
 
 EditingWidget::~EditingWidget()
@@ -29,10 +29,10 @@ void EditingWidget::setCentralWidget(QWidget *widget)
     currentWidget->show();
 }
 
-void EditingWidget::refreshFileList(QMap<QString, AbstractEditor*> openedFiles)
+void EditingWidget::refreshFileList(QMap<QString, QWidget *> openedFiles)
 {
     m_openedFiles = openedFiles;
-    for(int i = 0 ; i < ui->openedFilesList->count(); i++){
+    for(int i = 0 ; i < ui->openedFilesList->count(); i++) {
         QString item = ui->openedFilesList->itemData(i).toString();
         if(openedFiles.value(item) == NULL)
             ui->openedFilesList->removeItem(i);
@@ -47,9 +47,9 @@ void EditingWidget::refreshFileList(QMap<QString, AbstractEditor*> openedFiles)
 void EditingWidget::on_openedFilesList_currentIndexChanged(int index)
 {
     QString file = ui->openedFilesList->itemData(index).toString();
-    AbstractEditor *editor = m_openedFiles.value(file);
+    QWidget *editor = m_openedFiles.value(file);
     if(editor != NULL){
-        setCentralWidget(editor->getEditorWidget());
+        setCentralWidget(editor);
         ui->closeFile->setEnabled(true);
     }
 }

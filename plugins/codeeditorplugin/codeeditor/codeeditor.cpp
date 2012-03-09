@@ -2,8 +2,6 @@
 
 #include "codeeditor.h"
 
-
-
 CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
 {
     lineNumberArea = new LineNumberArea(this);
@@ -20,14 +18,14 @@ CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
     option.setTabStop(4);
     option.setFlags(option.flags() |QTextOption::IncludeTrailingSpaces| QTextOption::ShowTabsAndSpaces  );
    // QPalette p = palette();
-  //  p.setColor(QPalette::Base, QColor(240, 240, 255));
-  //  setPalette(p);
+  // p.setColor(QPalette::Base, QColor(240, 240, 255));
+  // setPalette(p);
     document()->setDefaultTextOption(option);
     QFont font;
     font.setFamily("Monospace");
     font.setPointSize(10);
     setFont(font);
-    highlighter = new Highlighter(document());
+
     updateLineNumberAreaWidth(0);
     highlightCurrentLine();
 }
@@ -222,8 +220,9 @@ int CodeEditor::findMatchingChar(QChar c1, QChar c2, bool forward, QTextBlock &b
 void CodeEditor::openFile(const QString file)
 {
     QFile f(file);
-    if (!f.open(QFile::ReadOnly | QFile::Text))
+    if ( ! f.open(QFile::ReadOnly | QFile::Text))
         return;
+    m_file = file;
     fetch(&f);
 }
 
@@ -260,9 +259,9 @@ void CodeEditor::fetch(QFile *file)
     setPlainText(codec->toUnicode(buf));
 }
 
-bool CodeEditor::saveFile(const QString file)
+bool CodeEditor::saveFile()
 {
-    QFile f (file);
+    QFile f (m_file);
     if ( !f.open(QFile::WriteOnly | QFile::Text))
         return false;
 // rewrite

@@ -187,6 +187,7 @@ QHash<QString, QString> ff(){
    m_hash.insert("class","application/x-java");
    m_hash.insert("jnlp","application/x-java-jnlp-file");
    m_hash.insert("js","application/javascript");
+   m_hash.insert("coffee","text/coffeescript");
    m_hash.insert("jpr","application/x-jbuilder-project");
    m_hash.insert("jpx","application/x-jbuilder-project");
    m_hash.insert("karbon","application/x-karbon");

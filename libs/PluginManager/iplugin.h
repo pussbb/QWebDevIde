@@ -7,7 +7,7 @@ class IPlugin
 public:
     virtual ~IPlugin() {}
     virtual QStringList dependencies() const  = 0 ;
-    virtual void init(QMap<QString, QObject *> dependencies) = 0;
+    virtual void init(QMap<QString, QObject *> dependencies, QObject *parent) = 0;
 };
 
 QT_BEGIN_NAMESPACE

@@ -5,6 +5,7 @@ AbstractProject::AbstractProject(QObject *parent) :
 {
 
 }
+
 void AbstractProject::setProjectFile(QString file)
 {
   m_projectSettings = new QSettings(file,QtJsonSettings::webpro_format);

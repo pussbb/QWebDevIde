@@ -15,6 +15,8 @@ QWebDevIde::QWebDevIde(QWidget *parent) :
     projectManager = new ProjectManager(this);
     bookmarkManager = new BookmarkManager(this);
     editorsManager = new EditorsManager(this);
+        PluginManager *pm = new PluginManager(this, locale);
+        editorsManager->initPlugins(pm->loadedPlugins());
     QString baseName = QApplication::style()->objectName();
     #ifdef Q_WS_X11
         if (baseName == QLatin1String("windows")) {
@@ -50,7 +52,7 @@ QWebDevIde::QWebDevIde(QWidget *parent) :
     ptab->setTabEnabled(3, true);
     ptab->setCurrentIndex(0);
     restoreWindowState();
-    PluginManager *pm = new PluginManager(this, locale);
+
 }
 
 void QWebDevIde::initUI()
@@ -132,8 +134,8 @@ void QWebDevIde::on_actionSave_file_triggered()
 void QWebDevIde::on_actionSave_all_triggered()
 {
     foreach(const QString &file,editorsManager->openedFiles.keys()) {
-        AbstractEditor *editor = editorsManager->openedFiles.value(file);
-        if ( editor != NULL)
-            editor->saveFile();
+//        AbstractEditor *editor = editorsManager->openedFiles.value(file);
+//        if ( editor != NULL)
+//            editor->saveFile();
     }
 }

@@ -1,37 +1,35 @@
-#ifndef HIGHLIGHTMANAGER_H
-#define HIGHLIGHTMANAGER_H
+#ifndef SYNTAXHIGHLIGHTER_H
+#define SYNTAXHIGHLIGHTER_H
 
-#include <QObject>
-#include "abstractsyntaxhighlight.h"
-#include <QMap>
-#include "json.h"
-#include <QTextCharFormat>
-#include <QFile>
-#include <QTextStream>
-#include <QDir>
 #include <QtCore>
-
-class HighlightManager : public QObject
+#include "../../libs/PluginManager/iplugin.h"
+#include <codeeditor.h>
+#include <highlightmanager.h>
+class SyntaxHighlighter : public QObject, IPlugin
 {
     Q_OBJECT
+    Q_INTERFACES(IPlugin)
+
 public:
-    explicit HighlightManager(QObject *parent = 0);
+    explicit SyntaxHighlighter();
+    QStringList dependencies() const;
+    void init(QMap<QString, QObject *> dependencies, QObject *parent);
+
     QMap<QString , AbstractSyntaxHighlight*> syntaxes;
     QVector<HighlightingRule> getHighlighting(QString syntax = "");
     QRegExp getStartMultiComments(QString syntax = "");
     QRegExp getEndMultiComments(QString syntax = "");
     QTextCharFormat getMultiCommentsFormart();
     QColor getEditorBackround();
-signals:
 
 public slots:
+    void setEditorColorScheme(CodeEditor *editor);
 
 private:
-    void initScheme();
+    HighlightManager *highlightManager;
     void initSyntaxes();
-    QString schemePath;
     QString syntaxesPath;
     QMap<QString,QTextCharFormat> m_colorScheme;
 };
 
-#endif // HIGHLIGHTMANAGER_H
+#endif

@@ -8,6 +8,7 @@ class BookmarkManager : public QObject
     Q_OBJECT
 public:
     explicit BookmarkManager(QObject *parent = 0);
+    inline QString test(){return "test";}
 
 signals:
 

@@ -8,7 +8,6 @@ PluginManager::PluginManager(QObject *parent, QString locale):
     m_pluginPath(QCoreApplication::applicationDirPath() + QDir::toNativeSeparators("/plugins/"))
 {
     QDirIterator directory_walker(m_pluginPath, QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories);
-
     while(directory_walker.hasNext())
     {
         directory_walker.next();
@@ -32,13 +31,15 @@ void PluginManager::loadPlugins()
 }
 
 bool PluginManager::resolveDependecies(const QStringList &dependecies)
-{
+{qDebug()<<dependecies;
     m_dependecies.clear();
     if ( dependecies.empty())
         return true;
 
     foreach(const QString &file, dependecies) {
         QString baseName = "lib" + file;
+        qDebug()<< file;
+        qDebug()<<initialized(baseName);
         if ( ! initialized(baseName)) {
             QString filePath = plugins.value(baseName).absoluteFilePath();
             if ( filePath.isEmpty())
@@ -63,10 +64,11 @@ bool PluginManager::loadPlugin(const QString &file, const QString &baseName)
         IPlugin *ip = qobject_cast<IPlugin *>(plugin);
         if ( resolveDependecies(ip->dependencies())) {
             m_loadedPlugins.insert(baseName, plugin);
-            ip->init(m_dependecies);
+            ip->init(m_dependecies, parent());
             return true;
         }
         else {
+            qDebug()<< file;
             qDebug()<< "depencieses not resolve";
             return false;
         }

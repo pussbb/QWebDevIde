@@ -3,11 +3,13 @@ TEMPLATE = lib
 TARGET = CodeEditor
 CONFIG += plugin
 
-INCLUDEPATH += ./
 
-SOURCES += codeeditorplugin.cpp
+include("../json.pri")
+include("./codeeditor_dependencies.pri")
 
-HEADERS += codeeditorplugin.h
+SOURCES += codeeditorplugin.cpp \
+    codeeditor/codeeditor.cpp \
+    codeeditor/textblockdata.cpp
 
 unix{
     OBJECTS_DIR = ./obj/
@@ -15,3 +17,16 @@ unix{
     DESTDIR = ../../bin/plugins/
     UI_DIR = ./obj/
 }
+
+HEADERS += \
+
+
+
+
+
+
+
+
+
+
+

@@ -28,18 +28,13 @@ SOURCES += main.cpp\
     projectmanager.cpp \
     bookmarkmanager.cpp \
     editorsmanager.cpp \
-    codeeditor/codeeditor.cpp \
-    codeeditor/highlighter.cpp \
     wizard/wizard.cpp \
     wizard/startpage.cpp \
     wizard/commonsettings.cpp \
     abstractproject.cpp \
     rightpane/projectexplorer.cpp \
     rightpane/filetemplates.cpp \
-    editingwidget.cpp \
-    abstracteditor.cpp \
-    abstractsyntaxhighlight.cpp \
-    highlightmanager.cpp
+    editingwidget.cpp
 
 HEADERS  += qwebdevide.h \
             qcorewindow.h \
@@ -48,8 +43,6 @@ HEADERS  += qwebdevide.h \
     projectmanager.h \
     bookmarkmanager.h \
     editorsmanager.h \
-    codeeditor/codeeditor.h \
-    codeeditor/highlighter.h \
     wizard/wizard.h \
     wizard/startpage.h \
     wizard/commonsettings.h \
@@ -57,11 +50,8 @@ HEADERS  += qwebdevide.h \
     abstractproject.h \
     rightpane/projectexplorer.h \
     rightpane/filetemplates.h \
-    editingwidget.h \
-    abstracteditor.h \
-    abstractsyntaxhighlight.h \
-    highlightmanager.h \
-    global.h
+    editingwidget.h
+
 
 FORMS    += qwebdevide.ui \
     rightpane/rightpane.ui \

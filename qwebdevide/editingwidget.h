@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QPointer>
-#include "abstracteditor.h"
+#include <QtCore>
 
 namespace Ui {
     class EditingWidget;
@@ -17,7 +17,7 @@ public:
     explicit EditingWidget(QWidget *parent = 0);
     ~EditingWidget();
     void setCurrent(QString file);
-    void refreshFileList(QMap<QString,AbstractEditor*> openedFiles);
+    void refreshFileList(QMap<QString,QWidget *> openedFiles);
     QString currentFileName;
 private slots:
     void on_openedFilesList_currentIndexChanged(int index);
@@ -28,8 +28,7 @@ signals:
 private:
     QPointer<QWidget> currentWidget;
     Ui::EditingWidget *ui;
-
-    QMap<QString, AbstractEditor*> m_openedFiles;
+    QMap<QString,QWidget *> m_openedFiles;
     void setCentralWidget(QWidget *widget);
 };
 
