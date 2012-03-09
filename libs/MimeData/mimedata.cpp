@@ -623,6 +623,7 @@ QHash<QString, QString> ff(){
    m_hash.insert("emp","application/vnd.emusic-emusic_package");
    m_hash.insert("ica","application/x-ica");
    m_hash.insert("xul","application/vnd.mozilla.xul+xml");
+   m_hash.insert("webpro", "application/web.dev.ide");
    m_hash.insert("602","application/x-t602");
    return m_hash;
 }
@@ -637,7 +638,7 @@ MimeData::MimeData()
 
 QString MimeData::getMimeType(const QString &fileName)
 {
-    const QString cmd = QString("getMIMEtype(\"%1\")").arg(fileName);
+    const QString cmd = QString("getmimetype(\"%1\");").arg(fileName);
     const QScriptValue res = m_engine.evaluate(cmd);
     if(res.isString())
         return res.toString();

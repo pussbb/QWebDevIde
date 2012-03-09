@@ -25,31 +25,23 @@ SOURCES += main.cpp\
         qcorewindow.cpp \
     rightpane/rightpane.cpp \
     rightpane/filesystembrowser.cpp \
-    projectmanager.cpp \
     bookmarkmanager.cpp \
     editorsmanager.cpp \
     wizard/wizard.cpp \
     wizard/startpage.cpp \
     wizard/commonsettings.cpp \
-    abstractproject.cpp \
-    rightpane/projectexplorer.cpp \
-    rightpane/filetemplates.cpp \
     editingwidget.cpp
 
 HEADERS  += qwebdevide.h \
             qcorewindow.h \
     rightpane/rightpane.h \
     rightpane/filesystembrowser.h \
-    projectmanager.h \
     bookmarkmanager.h \
     editorsmanager.h \
     wizard/wizard.h \
     wizard/startpage.h \
     wizard/commonsettings.h \
     wizard/pagedata.h \
-    abstractproject.h \
-    rightpane/projectexplorer.h \
-    rightpane/filetemplates.h \
     editingwidget.h
 
 
@@ -58,7 +50,6 @@ FORMS    += qwebdevide.ui \
     wizard/wizard.ui \
     wizard/startpage.ui \
     wizard/commonsettings.ui \
-    rightpane/projectexplorer.ui \
     editingwidget.ui
 
 RESOURCES += \

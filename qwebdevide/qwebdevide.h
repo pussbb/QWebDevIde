@@ -8,7 +8,7 @@
 #include <minisplitter.h>
 #include <QtGui>
 #include "rightpane/rightpane.h"
-#include "projectmanager.h"
+
 #include "bookmarkmanager.h"
 #include "editorsmanager.h"
 #include "editingwidget.h"
@@ -27,11 +27,12 @@ public:
     explicit QWebDevIde(QWidget *parent = 0);
     ~QWebDevIde();
     void changeEvent(QEvent *e);
-    ProjectManager *projectManager;
     BookmarkManager *bookmarkManager;
     EditorsManager *editorsManager;
     FancyTabWidget* ptab;
-    void openFile(QString fileName);
+
+public slots:
+    void openFile(QString );
 private slots:
     void on_actionNewProject_triggered();
 

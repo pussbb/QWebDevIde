@@ -12,11 +12,10 @@ QWebDevIde::QWebDevIde(QWidget *parent) :
 
     buildLangMenu("qwebdevide");
     langMenuToMenuBar("menuOptions");
-    projectManager = new ProjectManager(this);
     bookmarkManager = new BookmarkManager(this);
     editorsManager = new EditorsManager(this);
-        PluginManager *pm = new PluginManager(this, locale);
-        editorsManager->initPlugins(pm->loadedPlugins());
+    PluginManager *pm = new PluginManager(this, locale);
+    editorsManager->initPlugins(pm->loadedPlugins());
     QString baseName = QApplication::style()->objectName();
     #ifdef Q_WS_X11
         if (baseName == QLatin1String("windows")) {
@@ -39,7 +38,8 @@ QWebDevIde::QWebDevIde(QWidget *parent) :
 
     splitter->addWidget(rightPaneSplitter);
     splitter->addWidget(editorsManager->getMainEditorWidget());
-    rightPane = new RightPane(rightPaneSplitter,projectManager,editorsManager,bookmarkManager);
+    rightPane = new RightPane(rightPaneSplitter);
+    rightPane->initPlugins(pm->loadedPlugins());
     rightPaneSplitter->setOrientation(Qt::Vertical);
 
     ptab->insertTab(0,new QWidget(this),QIcon(":/core/images/category_core.png"),tr("Welcome") );
@@ -90,12 +90,12 @@ void QWebDevIde::on_actionNewProject_triggered()
 void QWebDevIde::openFile(QString fileName)
 {
     QFileInfo file(fileName);qDebug()<<file.completeSuffix();
-    if(file.completeSuffix() == "webpro"){
-        projectManager->openProject(fileName);
-        ptab->setCurrentIndex(1);
-        qDebug()<<  projectManager->current->projectPath();
-    }
-    else
+//    if(file.completeSuffix() == "webpro"){
+//        projectManager->openProject(fileName);
+//        ptab->setCurrentIndex(1);
+//        qDebug()<<  projectManager->current->projectPath();
+//    }
+//    else
         editorsManager->openFile(fileName);
 }
 
@@ -133,9 +133,5 @@ void QWebDevIde::on_actionSave_file_triggered()
 
 void QWebDevIde::on_actionSave_all_triggered()
 {
-    foreach(const QString &file,editorsManager->openedFiles.keys()) {
-//        AbstractEditor *editor = editorsManager->openedFiles.value(file);
-//        if ( editor != NULL)
-//            editor->saveFile();
-    }
+    editorsManager->saveAll();
 }

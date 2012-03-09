@@ -1,10 +1,10 @@
 
 function getmimetype(filename) {
-	var fn = new string(filename);
-	var fn1 = new string();
+	var fn = new String(filename);
+	var fn1 = new String();
 	fn1 = fn.match(/[\/\\][^\/\\]*$/);
-	///if(fn1!=null && fn1.length>0) fn = fn1;
-	fn = fn.tolowercase();
+	//if(fn1!=null && fn1.length>0) fn = fn1;
+    fn = fn.toLowerCase();
 	if(fn.search(/^.*\.ez$/)>=0) {
 		return("application/andrew-inset"); }
 	if(fn.search(/^.*\.ai$/)>=0) {
@@ -1273,5 +1273,7 @@ function getmimetype(filename) {
 		return("application/vnd.mozilla.xul+xml"); }
 	if(fn.search(/^.*\.602$/)>=0) {
 		return("application/x-t602"); }
+	if(fn.search(/^.*\.webpro$/)>=0) {
+        return("application/web.dev.ide"); }
 	return("binary/octet-stream");
 }

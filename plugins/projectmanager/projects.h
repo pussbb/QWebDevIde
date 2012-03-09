@@ -1,26 +1,27 @@
-#ifndef PROJECTMANAGER_H
-#define PROJECTMANAGER_H
+#ifndef PROJECTS_H
+#define PROJECTS_H
 
 #include <QObject>
 #include <QVariantMap>
 #include <QDebug>
 #include <abstractproject.h>
 #include <QFileInfo>
-class ProjectManager : public QObject
+
+class Projects : public QObject
 {
     Q_OBJECT
 public:
-    explicit ProjectManager(QObject *parent = 0);
-    QVariantMap openedFiles;
-    QVariantMap bookmarks;
-
+    explicit Projects(QObject *parent = 0);
     void openProject(QString fileName);
     void closeProject(QString projectName);
     AbstractProject *current;
     QMap<QString,AbstractProject*> projects;
+
 signals:
     void projectAdd();
 
+public slots:
+
 };
 
-#endif // PROJECTMANAGER_H
+#endif // PROJECTS_H

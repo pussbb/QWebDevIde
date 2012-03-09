@@ -1,18 +1,17 @@
 #include "rightpane.h"
 #include "ui_rightpane.h"
 #include <QtGui>
-RightPane::RightPane(QWidget *parent,ProjectManager *prman,EditorsManager *eman,BookmarkManager *bman ) :
+RightPane::RightPane(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::RightPane),
-    m_projecManager(prman),
-    m_editorsManager(eman),
-    m_bookmarkManager(bman)
+    ui(new Ui::RightPane)
 {
     ui->setupUi(this);
     ui->rightPaneSplit->setVisible(false);
-    connect( m_projecManager,SIGNAL(projectAdd()),this,SLOT(refreshProject()));
-    ui->comboBox->setCurrentIndex(-1);
-    ui->comboBox->setCurrentIndex(0);
+    if ( ui->comboBox->count() > 0) {
+        ui->comboBox->setCurrentIndex(-1);
+        ui->comboBox->setCurrentIndex(0);
+    }
+
 }
 
 RightPane::~RightPane()
@@ -32,67 +31,39 @@ void RightPane::on_rightPaneSplit_clicked()
         for RightPane(0xdf1940, name = "RightPane") attached one QSplitterHandle(0xdf7130, name = "qt_splithandle_")
       */
     if(parentWidget()->children().count()/2 < 4)
-        new RightPane(parentWidget(),
-                        m_projecManager,
-                            m_editorsManager,
-                                m_bookmarkManager);
+        new RightPane(parentWidget());
 }
 
 void RightPane::on_comboBox_currentIndexChanged(int index)
 {
-    if(index == -1)
+    if( index == -1 || widgets.count() == 0)
         return;
 
-    if(currentWidget != NULL){
+    if( currentWidget != NULL ){
        currentWidget->hide();
        currentWidget->setParent(0);
        currentWidget = 0;
     }
-
-    switch(index){
-        case 0:
-            currentWidget = getProjectExplorer();
-            break;
-        case 1:
-            currentWidget = new QWidget();
-            break;
-        case 2:
-            /// file system view
-
-            currentWidget = getFileBrowserWidget();
-            break;
-        case 3:
-            currentWidget = new QWidget();
-            break;
-    }
+    QString name = ui->comboBox->itemData(index).toString();
+    currentWidget = widgets.value(name)->getWidget();
     currentWidget->setParent(this);
     ui->rightPaneContainer->layout()->addWidget(currentWidget);
     setFocusProxy(currentWidget);
     currentWidget->show();
 }
 
-QWidget * RightPane::getFileBrowserWidget()
+void RightPane::initPlugins(QMap<QString, QObject *> list)
 {
-    if(sysFileBrowser != NULL)
-        return sysFileBrowser;
-
-    sysFileBrowser = new FileSystemBrowser;
-    connect(sysFileBrowser,SIGNAL(openFile(QString)),m_editorsManager,SLOT(openFile(QString)));
-    return sysFileBrowser;
-}
-
-void RightPane::refreshProject()
-{
-   if(projectExplorer != NULL)
-       projectExplorer->refresh();
-}
-
-QWidget * RightPane::getProjectExplorer()
-{
-    if(projectExplorer != NULL)
-        return projectExplorer;
-
-    projectExplorer = new ProjectExplorer(NULL,m_projecManager);
-    connect(projectExplorer,SIGNAL(openFile(QString)),m_editorsManager,SLOT(openFile(QString)));
-    return projectExplorer;
+    foreach(QString name, list.keys()) {
+        IRightPane *pane = qobject_cast<IRightPane *>(list.value(name));
+        if (pane)
+        {
+            ui->comboBox->addItem(pane->widgetTitle(), name);
+            widgets.insert(name, pane);
+        }
+    }
+    if ( ui->comboBox->count() > 0) {
+        ui->comboBox->setCurrentIndex(-1);
+        ui->comboBox->setCurrentIndex(0);
+    }
 }

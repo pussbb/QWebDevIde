@@ -33,28 +33,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QComboBox" name="comboBox">
-        <item>
-         <property name="text">
-          <string>Projects</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Opened Files</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>File System</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Bookmarks</string>
-         </property>
-        </item>
-       </widget>
+       <widget class="QComboBox" name="comboBox"/>
       </item>
       <item>
        <widget class="QToolButton" name="rightPaneFilter">

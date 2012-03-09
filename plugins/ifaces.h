@@ -20,4 +20,18 @@ Q_DECLARE_INTERFACE(IEditors,
                     "com.pussbb.QWEBIDE.Plugin.IEditors/0.1");
 QT_END_NAMESPACE
 
+class IRightPane
+{
+public:
+    virtual ~IRightPane() {}
+    virtual QWidget * getWidget() = 0;
+    virtual QString widgetTitle() = 0 ;
+};
+
+QT_BEGIN_NAMESPACE
+Q_DECLARE_INTERFACE(IRightPane,
+                    "com.pussbb.QWEBIDE.Plugin.IRightPane/0.1");
+QT_END_NAMESPACE
+
+
 #endif // IFACES_H

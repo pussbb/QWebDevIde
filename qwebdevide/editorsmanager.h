@@ -8,6 +8,7 @@
 #include <mimedata.h>
 #include "../plugins/ifaces.h"
 #include "QMap"
+
 class EditorsManager : public QObject
 {
     Q_OBJECT

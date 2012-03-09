@@ -1,11 +1,11 @@
-#include "projectmanager.h"
+#include "projects.h"
 
-ProjectManager::ProjectManager(QObject *parent) :
+Projects::Projects(QObject *parent) :
     QObject(parent)
 {
 }
 
-void ProjectManager::openProject(QString fileName)
+void Projects::openProject(QString fileName)
 {
     QFileInfo fi(fileName);
     if(projects.value(fi.baseName(),NULL) == NULL){
@@ -20,7 +20,7 @@ void ProjectManager::openProject(QString fileName)
     }
 }
 
-void ProjectManager::closeProject(QString projectName)
+void Projects::closeProject(QString projectName)
 {
     projects.remove(projectName);
     current = NULL;

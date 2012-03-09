@@ -11,7 +11,7 @@ EditorsManager::EditorsManager(QObject *parent) :
 void EditorsManager::openFile(QString file)
 {
     QFileInfo fi(file);
-    QString mimeType = mime.getMimeType(file);
+    QString mimeType = mime.getMimeType(fi.fileName());
 
     if ( fi.isDir())
         mimeType = "folder";
@@ -23,8 +23,10 @@ void EditorsManager::openFile(QString file)
             return;
     }
 
-    if (mimeType == "folder")
+    if (mimeType == "folder" || mimeType == "application/web.dev.ide") {
+        editor->open(file);
         return;
+    }
 
     m_openedFiles.insert(fi.fileName(), editor);
     openedFiles.insert(fi.fileName(),editor->open(file));

@@ -2,14 +2,15 @@
 #define PROJECTEXPLORER_H
 
 #include <QWidget>
-#include "../projectmanager.h"
+#include <projects.h>
 #include <QTreeWidgetItem>
 #include <QDir>
-#include "mimedata.h"
+#include <mimedata.h>
 #include <QtCore>
 #include <QMenu>
 #include "filetemplates.h"
 #include <QFileSystemWatcher>
+
 namespace Ui {
     class ProjectExplorer;
 }
@@ -19,10 +20,12 @@ class ProjectExplorer : public QWidget
     Q_OBJECT
 
 public:
-    explicit ProjectExplorer(QWidget *parent = 0,ProjectManager *prman = 0);
+    explicit ProjectExplorer(QWidget *parent = 0, Projects *projects = 0);
     ~ProjectExplorer();
-    void refresh();
+
     bool removeDir(const QString &dirName);
+public slots:
+    void refresh();
 private slots:
     void on_projectTree_itemDoubleClicked(QTreeWidgetItem *item, int column);
     void on_projectTree_customContextMenuRequested(const QPoint &pos);
@@ -37,7 +40,7 @@ signals:
 private:
     QFileSystemWatcher fileSystemWatcher;
     Ui::ProjectExplorer *ui;
-    ProjectManager *m_projecManager;
+    Projects *m_projectManager;
     MimeData mime;
     FileTemplates *fileTemplates;
     void createProjectTree(QTreeWidgetItem *parent,QString path);

@@ -1,13 +1,13 @@
 #include "projectexplorer.h"
 #include "ui_projectexplorer.h"
 #include "filetemplates.h"
-ProjectExplorer::ProjectExplorer(QWidget *parent,ProjectManager *prman) :
+ProjectExplorer::ProjectExplorer(QWidget *parent, Projects *projects) :
     QWidget(parent),
     ui(new Ui::ProjectExplorer),
-    m_projecManager(prman)
+    m_projectManager(projects)
 {
     ui->setupUi(this);
-    if(m_projecManager->projects.count() > 0)
+    if(m_projectManager->projects.count() > 0)
         refresh();
     fileTemplates = new FileTemplates;
    /// fileSystemWatcher = new QFileSystemWatcher(this);
@@ -25,8 +25,8 @@ ProjectExplorer::~ProjectExplorer()
 
 void ProjectExplorer::refresh()
 {
-    foreach(const QString &proName,m_projecManager->projects.keys()){
-         AbstractProject *pro = m_projecManager->projects.value(proName);
+    foreach(const QString &proName,m_projectManager->projects.keys()){
+         AbstractProject *pro = m_projectManager->projects.value(proName);
          QList<QTreeWidgetItem*> items = ui->projectTree->findItems(proName,Qt::MatchExactly,0);
          if(items.isEmpty()){
              QTreeWidgetItem *parent = new QTreeWidgetItem(ui->projectTree);
@@ -95,7 +95,7 @@ void ProjectExplorer::on_projectTree_customContextMenuRequested(const QPoint &po
 void ProjectExplorer::on_actionClose_Project_triggered()
 {
     QString projectName = ui->projectTree->currentItem()->text(0);
-    m_projecManager->closeProject(projectName);
+    m_projectManager->closeProject(projectName);
     delete ui->projectTree->currentItem();
 }
 
