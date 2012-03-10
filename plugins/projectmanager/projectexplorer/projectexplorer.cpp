@@ -106,16 +106,10 @@ void ProjectExplorer::directoryChanged(const QString &path)
     foreach(QModelIndex index,items){
         ui->projectTree->setCurrentIndex(index);
         if(!fi.exists()){
-            /// QString path = item->data(0,33).toString();
             removeWatchedFiles(path);
             delete ui->projectTree->currentItem();
         }
         else{
-            /*QPixmap: It is not safe to use pixmaps outside the GUI thread
-            QtConcurrent::run(this,&ProjectExplorer::updateTreeItem,
-                              ui->projectTree->currentItem(),
-                              path);
-                              */
             updateTreeItem(ui->projectTree->currentItem(),path);
         }
     }
@@ -128,7 +122,7 @@ void ProjectExplorer::filesChanged(const QString &path)
 }
 
 void ProjectExplorer::updateTreeItem(QTreeWidgetItem *parent, QString path)
-{;
+{
     QDir dir(path);
     dir.setFilter(QDir::Files| QDir::Dirs| QDir::NoDotAndDotDot);
     dir.setSorting(QDir::DirsFirst);
@@ -190,7 +184,7 @@ void ProjectExplorer::on_actionDelete_triggered()
     }
     if(!ui->projectTree->currentItem()->data(0,32).isNull()){
         QMessageBox msgBox;
-        msgBox.setText("Do you realy whant to file.");
+        msgBox.setText("Do you realy whant to delete file.");
         msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
         msgBox.setDefaultButton(QMessageBox::Cancel);
         int ret = msgBox.exec();

@@ -1,6 +1,7 @@
 #include <QtGui>
 
 #include "codeeditor.h"
+#include <QSettings>
 
 CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
 {
@@ -16,6 +17,7 @@ CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
     initSettings();
     updateLineNumberAreaWidth(0);
     highlightCurrentLine();
+
 }
 
 
@@ -27,15 +29,18 @@ void CodeEditor::initSettings()
     m_lineAreaStyle.lineColor = QColor(220,220,217,55);
     QTextOption option =  document()->defaultTextOption();
     QFont font;
-    font.setFamily("Monospace");
-    font.setPointSize(10);
+    QSettings settings;
+    font.setFamily(settings.value("Editor/fontFamily", "Monospace").toString());
+    font.setPointSize(settings.value("Editor/fontSize", 10).toInt());
     setFont(font);
+    int tabStop = settings.value("Editor/tabStop", 4).toInt();
+    option.setTabStop(fontMetrics().width(" ") * tabStop);
 
-////    option.setTabStop(fontMetrics().width(" ") * 4);
     option.setWrapMode(QTextOption::NoWrap);
-    option.setFlags(QTextOption::IncludeTrailingSpaces |
-                    QTextOption::AddSpaceForLineAndParagraphSeparators|QTextOption::ShowTabsAndSpaces
-                     );
+    option.setFlags( QTextOption::IncludeTrailingSpaces
+                     | QTextOption::AddSpaceForLineAndParagraphSeparators
+                     |QTextOption::ShowTabsAndSpaces
+                   );
     option.setUseDesignMetrics(true);
     document()->setDefaultTextOption(option);
 }
@@ -148,25 +153,15 @@ void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
         qDebug()<< "-----";
         if (block.isVisible() && bottom >= event->rect().top()) {
             QString number = QString::number(blockNumber + 1);
-            /*painter.setPen(QPen(Qt::black));
-            painter.drawText(0, top - 1, lineNumberArea->width(), fontMetrics().height(),
-                             Qt::AlignRight, number);*/
             painter.setPen(m_lineAreaStyle.textPen);
             painter.drawText(0, top, lineNumberArea->width(), fontMetrics().height(),
                              Qt::AlignRight, number);
         }
         if ( textCursor().block().blockNumber() == blockNumber) {
             QString number = QString::number(blockNumber + 1);
-            QFont font;
-           // font.setBold(true);
-            painter.setFont(font);
             painter.setPen(Qt::lightGray);
             painter.drawText(0, top - 1, lineNumberArea->width(), fontMetrics().height(),
                                          Qt::AlignRight, number);
-            painter.setPen(m_lineAreaStyle.textPen);
-            painter.drawText(0, top, lineNumberArea->width(), fontMetrics().height(),
-                             Qt::AlignRight, number);
-
         }
         block = block.next();
         top = bottom;
@@ -230,9 +225,9 @@ int CodeEditor::findMatchingChar(QChar c1, QChar c2, bool forward, QTextBlock &b
                     if (m->character == c2)
                             i --;
                     // we found the braket
-                    if (i==0)
-                    {createParenthesisSelection(globalPosition);
-                            return globalPosition;
+                    if (i==0) {
+                        createParenthesisSelection(globalPosition);
+                        return globalPosition;
                     }
             }
             if (forward)

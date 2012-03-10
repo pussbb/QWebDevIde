@@ -43,15 +43,9 @@ void FileSystemBrowser::doubleClickedItem(QModelIndex index)
 
 void FileSystemBrowser::customMenu(QPoint pos)
 {
-  /// QMenu *menu = new QMenu();
    QModelIndex index = indexAt(pos);
-   qDebug()<< index;
     if(index.isValid()){
-        qDebug()<< "delete remove";
+        QFileInfo file = fileSysModel->fileInfo(index);
     }
-    else{
-        qDebug()<<"create";
-    }
-    qDebug()<<pos;
 }
 

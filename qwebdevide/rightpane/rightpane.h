@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QPointer>
 
-#include "filesystembrowser.h"
 #include "../../plugins/ifaces.h"
 
 namespace Ui {
