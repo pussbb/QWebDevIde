@@ -8,10 +8,12 @@ AbstractProject::AbstractProject(QObject *parent) :
 
 void AbstractProject::setProjectFile(QString file)
 {
-  m_projectSettings = new QSettings(file,QtJsonSettings::webpro_format);
-  QFileInfo fi(file);
-  m_projectName = fi.baseName();
-  m_projectPath = fi.absolutePath();
+    QFileInfo fi(file);
+    if ( ! fi.isDir())
+        m_projectSettings = new QSettings(file,QtJsonSettings::webpro_format);
+
+    m_projectName = fi.baseName();
+    m_projectPath = fi.absolutePath();
 }
 
 QVariant AbstractProject::getProperty(QString property)

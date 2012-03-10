@@ -142,15 +142,11 @@ void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
     painter.fillRect(event->rect(),m_lineAreaStyle.backgroundBrush);
 
     QTextBlock block = firstVisibleBlock();
-    int blockNumber = block.blockNumber();qDebug()<<blockNumber;
+    int blockNumber = block.blockNumber();
     int top = (int) blockBoundingGeometry(block).translated(contentOffset()).top();
     int bottom = top + (int) blockBoundingRect(block).height();
 
     while (block.isValid() && top <= event->rect().bottom()) {
-        qDebug()<< "-----";
-        qDebug()<<blockNumber;
-        qDebug()<<textCursor().block().blockNumber();
-        qDebug()<< "-----";
         if (block.isVisible() && bottom >= event->rect().top()) {
             QString number = QString::number(blockNumber + 1);
             painter.setPen(m_lineAreaStyle.textPen);
@@ -299,5 +295,47 @@ void CodeEditor::setLineAreaPalette(LineAreaStyle lineAreaStyle)
 {
     m_lineAreaStyle = lineAreaStyle;
     emit(cursorPositionChanged());
+}
+
+void CodeEditor::keyPressEvent(QKeyEvent *e)
+{
+
+    if ( e->key() == Qt::Key_Tab) {
+        textCursor().insertText(QString(" ").repeated(4));
+        return;
+    }
+    /// to upper case
+    if ( e->key() == Qt::Key_U
+         && e->modifiers() == Qt::ControlModifier
+         && textCursor().hasSelection()) {
+
+        QTextCursor cursor = textCursor();
+        cursor.beginEditBlock();
+        int start = cursor.selectionStart();
+        int end = cursor.selectionEnd();
+        cursor.insertText(cursor.selectedText().toUpper());
+        cursor.setPosition(start);
+        cursor.setPosition(end, QTextCursor::KeepAnchor);
+        cursor.endEditBlock();
+        setTextCursor(cursor);
+
+    }
+    ///to lower case
+    if ( e->key() == Qt::Key_U
+         && int(e->modifiers()) == (Qt::ControlModifier + Qt::ShiftModifier)
+         && textCursor().hasSelection()) {
+
+        QTextCursor cursor = textCursor();
+        cursor.beginEditBlock();
+        int start = cursor.selectionStart();
+        int end = cursor.selectionEnd();
+        cursor.insertText(cursor.selectedText().toLower());
+        cursor.setPosition(start);
+        cursor.setPosition(end, QTextCursor::KeepAnchor);
+        cursor.endEditBlock();
+        setTextCursor(cursor);
+
+    }
+    QPlainTextEdit::keyPressEvent(e);
 }
 

@@ -37,6 +37,7 @@ public:
 protected:
     void resizeEvent(QResizeEvent *event);
     int findMatchingChar( QChar c1, QChar c2, bool forward, QTextBlock &block, int from );
+    void keyPressEvent ( QKeyEvent * e );
 
 signals:
 
