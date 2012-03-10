@@ -49,5 +49,8 @@
     "@.*\\s"
   ],
   "keywords": [";","@.*\\s"],
+  "nonprintable": [
+    "\\s|\\t|\\n"
+  ],
   "reqexpr":[]
 } 

@@ -45,6 +45,12 @@
       "underline": false,
       "color": "#73715c"
   },
+  "nonprintable": {
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "color": "#73715c"
+    },
   "multiline_comment":{
       "bold": false,
       "italic": false,
