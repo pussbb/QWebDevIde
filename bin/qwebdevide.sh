@@ -1,4 +1,4 @@
 #!/bin/bash
  
-export LD_PRELOAD=$1/libMimeData.so, $1/libPluginManager.so 
+export LD_LIBRARY_PATH=$1
 $1/qwebdevide
