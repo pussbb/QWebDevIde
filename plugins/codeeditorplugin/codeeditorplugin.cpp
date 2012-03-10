@@ -3,17 +3,15 @@
 
 QStringList CodeEditorPlugin::dependencies() const
 {
-    return QStringList() << "Core";
+    return QStringList();
 }
-
 
 void CodeEditorPlugin::init(QMap<QString, QObject *> dependencies, QObject *parent)
 {
     Q_UNUSED(dependencies);
-    //CorePlugin *cp = static_cast<CorePlugin *>(dependencies.value("Core"));
-    //qDebug()<< cp->menuBar;
-
+    Q_UNUSED(parent);
 }
+
 QWidget * CodeEditorPlugin::open(const QString &file)
 {
     CodeEditor *editor = new CodeEditor();
@@ -33,7 +31,8 @@ bool CodeEditorPlugin::save(const QString &fileName)
 
 void CodeEditorPlugin::close(const QString &fileName)
 {
-
+    openedFiles.value(fileName)->deleteLater();
+    openedFiles.remove(fileName);
 }
 
 QStringList CodeEditorPlugin::mimeTypes()
@@ -46,8 +45,6 @@ QStringList CodeEditorPlugin::mimeTypes()
                          << "text/html"
                          << "text/plain";
 }
-
-
 
 Q_EXPORT_PLUGIN2(CodeEditor, CodeEditorPlugin);
 

@@ -3,7 +3,7 @@ TEMPLATE = lib
 TARGET = CodeEditor
 CONFIG += plugin
 
-
+includu("../commonplugin.pri")
 include("../json.pri")
 include("./codeeditor_dependencies.pri")
 

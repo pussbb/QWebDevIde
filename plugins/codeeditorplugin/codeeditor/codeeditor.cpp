@@ -5,30 +5,39 @@
 CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
 {
     lineNumberArea = new LineNumberArea(this);
-    lineNumberArea->setAutoFillBackground(true);
-    m_lineAreaStyle.backgroundBrush = QBrush(Qt::lightGray);
-    m_lineAreaStyle.textPen = QPen();
-    m_lineAreaStyle.lineColor = QColor(220,220,217,55);
+
     connect(this, SIGNAL(blockCountChanged(int)),
             this, SLOT(updateLineNumberAreaWidth(int)));
     connect(this, SIGNAL(updateRequest(QRect,int)),
             this, SLOT(updateLineNumberArea(QRect,int)));
     connect(this, SIGNAL(cursorPositionChanged()),
             this, SLOT(highlightCurrentLine()));
-    changed = false;
-    QTextOption option =  document()->defaultTextOption();
-   //// option.setWrapMode(QTextOption::WrapAnywhere);
-    option.setTabStop(4);
-    option.setFlags(option.flags() |QTextOption::IncludeTrailingSpaces| QTextOption::ShowTabsAndSpaces  );
 
-    document()->setDefaultTextOption(option);
+    initSettings();
+    updateLineNumberAreaWidth(0);
+    highlightCurrentLine();
+}
+
+
+void CodeEditor::initSettings()
+{
+    changed = false;
+    m_lineAreaStyle.backgroundBrush = QBrush(Qt::lightGray);
+    m_lineAreaStyle.textPen = QPen();
+    m_lineAreaStyle.lineColor = QColor(220,220,217,55);
+    QTextOption option =  document()->defaultTextOption();
     QFont font;
     font.setFamily("Monospace");
     font.setPointSize(10);
     setFont(font);
 
-    updateLineNumberAreaWidth(0);
-    highlightCurrentLine();
+////    option.setTabStop(fontMetrics().width(" ") * 4);
+    option.setWrapMode(QTextOption::NoWrap);
+    option.setFlags(QTextOption::IncludeTrailingSpaces |
+                    QTextOption::AddSpaceForLineAndParagraphSeparators|QTextOption::ShowTabsAndSpaces
+                     );
+    option.setUseDesignMetrics(true);
+    document()->setDefaultTextOption(option);
 }
 
 int CodeEditor::lineNumberAreaWidth()
@@ -40,7 +49,7 @@ int CodeEditor::lineNumberAreaWidth()
         ++digits;
     }
 
-    int space = 30 + fontMetrics().width(QLatin1Char('9')) * digits;
+    int space = 10 + fontMetrics().width(QLatin1Char('9')) * digits;
 
     return space;
 }
@@ -76,10 +85,8 @@ void CodeEditor::highlightCurrentLine()
 
     if (!isReadOnly()) {
         QTextEdit::ExtraSelection selection;
-
         selection.format.setBackground(m_lineAreaStyle.lineColor);
         selection.format.setProperty(QTextFormat::FullWidthSelection, true);
-
         selection.cursor = textCursor();
         selection.cursor.clearSelection();
         extraSelections.append(selection);
@@ -130,11 +137,15 @@ void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
     painter.fillRect(event->rect(),m_lineAreaStyle.backgroundBrush);
 
     QTextBlock block = firstVisibleBlock();
-    int blockNumber = block.blockNumber();
+    int blockNumber = block.blockNumber();qDebug()<<blockNumber;
     int top = (int) blockBoundingGeometry(block).translated(contentOffset()).top();
     int bottom = top + (int) blockBoundingRect(block).height();
 
     while (block.isValid() && top <= event->rect().bottom()) {
+        qDebug()<< "-----";
+        qDebug()<<blockNumber;
+        qDebug()<<textCursor().block().blockNumber();
+        qDebug()<< "-----";
         if (block.isVisible() && bottom >= event->rect().top()) {
             QString number = QString::number(blockNumber + 1);
             /*painter.setPen(QPen(Qt::black));
@@ -144,7 +155,19 @@ void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
             painter.drawText(0, top, lineNumberArea->width(), fontMetrics().height(),
                              Qt::AlignRight, number);
         }
+        if ( textCursor().block().blockNumber() == blockNumber) {
+            QString number = QString::number(blockNumber + 1);
+            QFont font;
+           // font.setBold(true);
+            painter.setFont(font);
+            painter.setPen(Qt::lightGray);
+            painter.drawText(0, top - 1, lineNumberArea->width(), fontMetrics().height(),
+                                         Qt::AlignRight, number);
+            painter.setPen(m_lineAreaStyle.textPen);
+            painter.drawText(0, top, lineNumberArea->width(), fontMetrics().height(),
+                             Qt::AlignRight, number);
 
+        }
         block = block.next();
         top = bottom;
         bottom = top + (int) blockBoundingRect(block).height();
@@ -277,13 +300,9 @@ bool CodeEditor::saveFile()
     return true;
 }
 
-//void CodeEditor::setPalette(const QPalette &palette)
-//{
-//    setPalette(palette);
-//}
-
 void CodeEditor::setLineAreaPalette(LineAreaStyle lineAreaStyle)
 {
     m_lineAreaStyle = lineAreaStyle;
     emit(cursorPositionChanged());
 }
+

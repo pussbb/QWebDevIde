@@ -55,6 +55,7 @@ private:
     QTextCodec *codec;
     QWidget *lineNumberArea;
     LineAreaStyle m_lineAreaStyle;
+    void initSettings();
 };
 
 class LineNumberArea : public QWidget

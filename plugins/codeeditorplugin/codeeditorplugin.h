@@ -4,7 +4,7 @@
 #include <QtCore>
 #include <QtGui>
 #include <QObject>
-#include "../coreplugin/coreplugin.h"
+#include <iplugin.h>
 #include <ifaces.h>
 #include "codeeditor/codeeditor.h"
 

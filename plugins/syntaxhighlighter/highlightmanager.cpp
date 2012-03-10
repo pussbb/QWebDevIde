@@ -15,6 +15,7 @@ void HighlightManager::initSyntaxes()
     filters << "*.json";
     dir.setNameFilters(filters);
     QFileInfoList files = dir.entryInfoList();
+
     foreach(const QFileInfo &file,files){
         if( ! file.isReadable())
             continue;
@@ -26,6 +27,7 @@ void HighlightManager::initSyntaxes()
         if ( ok)
             syntaxes.insert(fileName,syntax);
     }
+
     foreach(const QString &file,syntaxes.keys()){
         AbstractSyntaxHighlight *syntax = syntaxes.value(file);
         if ( syntax == NULL)
