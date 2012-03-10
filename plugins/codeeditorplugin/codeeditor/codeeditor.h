@@ -8,6 +8,7 @@
 #include <QTextCharFormat>
 #include <QTextBlock>
 #include <textblockdata.h>
+#include <global.h>
 
 QT_BEGIN_NAMESPACE
 class QPaintEvent;
@@ -29,8 +30,10 @@ public:
     void openFile(const QString file);
     bool saveFile();
     bool changed;
-    void setBackgroundColor(const QColor &color);
+ ///   void setPalette(const QPalette &palette);
     inline QString file(){return m_file;}
+    void setLineAreaPalette(LineAreaStyle lineAreaStyle);
+
 protected:
     void resizeEvent(QResizeEvent *event);
     int findMatchingChar( QChar c1, QChar c2, bool forward, QTextBlock &block, int from );
@@ -46,11 +49,12 @@ private slots:
 
 private:
     QString m_file;
-    QWidget *lineNumberArea;
     void createParenthesisSelection(int pos);
     void matchParentheses();
     void fetch(QFile *file);
     QTextCodec *codec;
+    QWidget *lineNumberArea;
+    LineAreaStyle m_lineAreaStyle;
 };
 
 class LineNumberArea : public QWidget

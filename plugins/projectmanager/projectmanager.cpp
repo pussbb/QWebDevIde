@@ -14,15 +14,12 @@ QStringList ProjectManager::dependencies() const
 void ProjectManager::init(QMap<QString, QObject *> dependencies, QObject *parent)
 {
     Q_UNUSED(dependencies);
-    qDebug()<< parent->metaObject();
-    qDebug()<< parent->metaObject()->className();
     m_parent = parent;
 }
 
 QWidget * ProjectManager::open(const QString &file)
 {
     Q_UNUSED(file);
-    qDebug()<< "project request";
     projects->openProject(file);
     return NULL;
 }
@@ -50,7 +47,7 @@ QWidget * ProjectManager::getWidget()
            return projectExplorer;
 
     projectExplorer = new ProjectExplorer(NULL,projects);
-    connect(projects,SIGNAL(projectAdd()),projectExplorer, SLOT(refresh()));
+    connect(projects,SIGNAL(projectAdded()),projectExplorer, SLOT(refresh()));
     connect(projectExplorer,SIGNAL(openFile(QString)), m_parent ,SLOT(openFile(QString)));
     return projectExplorer;
 }

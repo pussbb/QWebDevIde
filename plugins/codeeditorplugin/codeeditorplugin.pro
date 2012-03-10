@@ -19,6 +19,8 @@ unix{
 }
 
 HEADERS += \
+    global.h
+
 
 
 

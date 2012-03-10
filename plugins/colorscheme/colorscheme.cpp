@@ -74,15 +74,29 @@ QColor ColorScheme::getEditorBackround()
 {
     if( m_colorScheme.contains("editor_background"))
         return m_colorScheme.value("editor_background").foreground().color();
-    return QColor(240,240,130);
+    return QColor(220,220,217);
 }
 
 void ColorScheme::setEditorColorScheme(CodeEditor *editor)
 {
-    editor->setBackgroundColor(getEditorBackround());
+    LineAreaStyle lineArea;
+    QColor bgColor = m_colorScheme.value("line_area_background").foreground().color();
+    QColor textColor = m_colorScheme.value("line_area_text").foreground().color();
+    lineArea.lineColor = m_colorScheme.value("current_line_background").foreground().color();
+    lineArea.backgroundBrush = QBrush(bgColor);
+    lineArea.textPen = QPen(textColor);
+    lineArea.textPen.setCosmetic(true);
+    lineArea.textPen.setCapStyle(Qt::RoundCap);
+    editor->setLineAreaPalette(lineArea);
+    QPalette palette;
+    palette.setColor(QPalette::Base, getEditorBackround());
+    palette.setColor(QPalette::Text,  m_colorScheme.value("defualt_font_color").foreground().color());
+    editor->setPalette(palette);
 }
 
-Q_EXPORT_PLUGIN2(ColorScheme, ColorScheme);
+Q_EXPORT_PLUGIN2(ColorScheme, ColorScheme)
+
+
 
 
 

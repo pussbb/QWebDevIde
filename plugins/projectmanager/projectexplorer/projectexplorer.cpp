@@ -8,14 +8,11 @@ ProjectExplorer::ProjectExplorer(QWidget *parent, Projects *projects) :
 {
     ui->setupUi(this);
     if(m_projectManager->projects.count() > 0)
-        refresh();
+
+    refresh();
     fileTemplates = new FileTemplates;
-   /// fileSystemWatcher = new QFileSystemWatcher(this);
     connect(&fileSystemWatcher,SIGNAL(directoryChanged(QString)),
             this,SLOT(directoryChanged(QString)));
-   /* connect(fileSystemWatcher,SIGNAL(fileChanged(QString)),
-            this,SLOT(filesChanged(QString)));
-*/
 }
 
 ProjectExplorer::~ProjectExplorer()
@@ -26,17 +23,16 @@ ProjectExplorer::~ProjectExplorer()
 void ProjectExplorer::refresh()
 {
     foreach(const QString &proName,m_projectManager->projects.keys()){
-         AbstractProject *pro = m_projectManager->projects.value(proName);
-         QList<QTreeWidgetItem*> items = ui->projectTree->findItems(proName,Qt::MatchExactly,0);
-         if(items.isEmpty()){
-             QTreeWidgetItem *parent = new QTreeWidgetItem(ui->projectTree);
-             parent->setText(0,proName);
-             parent->setData(0,33,pro->projectPath());
-             //qDebug()<<fileSystemWatcher;
-             fileSystemWatcher.addPath(pro->projectPath());
-             parent->setIcon(0,QIcon(":/applications-development-web.png"));
-             directoryChanged(pro->projectPath());
-         }
+        AbstractProject *pro = m_projectManager->projects.value(proName);
+        QList<QTreeWidgetItem*> items = ui->projectTree->findItems(proName,Qt::MatchExactly,0);
+        if(items.isEmpty()){
+            QTreeWidgetItem *parent = new QTreeWidgetItem(ui->projectTree);
+            parent->setText(0,proName);
+            parent->setData(0,33,pro->projectPath());
+            fileSystemWatcher.addPath(pro->projectPath());
+            parent->setIcon(0,QIcon(":/applications-development-web.png"));
+            directoryChanged(pro->projectPath());
+        }
     }
 }
 
@@ -75,8 +71,11 @@ void ProjectExplorer::on_projectTree_itemDoubleClicked(QTreeWidgetItem *item, in
 
 void ProjectExplorer::on_projectTree_customContextMenuRequested(const QPoint &pos)
 {
-    if(!ui->projectTree->currentIndex().isValid()
-            && !ui->projectTree->currentItem()->isSelected())
+    if ( m_projectManager->projects.isEmpty())
+        return;
+
+    if( ! ui->projectTree->currentIndex().isValid()
+            && ! ui->projectTree->currentItem()->isSelected())
         return;
 
     QMenu *m=new QMenu();
@@ -103,11 +102,11 @@ void ProjectExplorer::directoryChanged(const QString &path)
 {
     QFileInfo fi(path);
     QModelIndexList items = ui->projectTree->model()->match(ui->projectTree->model()->index(0, 0),
-                                    33,path,1,Qt::MatchExactly | Qt::MatchRecursive);
+                                                            33,path,1,Qt::MatchExactly | Qt::MatchRecursive);
     foreach(QModelIndex index,items){
         ui->projectTree->setCurrentIndex(index);
         if(!fi.exists()){
-           /// QString path = item->data(0,33).toString();
+            /// QString path = item->data(0,33).toString();
             removeWatchedFiles(path);
             delete ui->projectTree->currentItem();
         }
@@ -117,7 +116,7 @@ void ProjectExplorer::directoryChanged(const QString &path)
                               ui->projectTree->currentItem(),
                               path);
                               */
-             updateTreeItem(ui->projectTree->currentItem(),path);
+            updateTreeItem(ui->projectTree->currentItem(),path);
         }
     }
 }
@@ -172,22 +171,22 @@ void ProjectExplorer::updateTreeItem(QTreeWidgetItem *parent, QString path)
 void ProjectExplorer::on_actionDelete_triggered()
 {
     if(!ui->projectTree->currentItem()->data(0,33).isNull()){
-         QMessageBox msgBox;
-         msgBox.setText("Do you realy whant to delete folder.");
-         msgBox.setInformativeText("It will delete everething in this this folder");
-         msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
-         msgBox.setDefaultButton(QMessageBox::Cancel);
-         int ret = msgBox.exec();
-         if(ret == QMessageBox::Yes){
-             // test
-             QString path = ui->projectTree->currentItem()->data(0,33).toString();
-             QFileInfo fi(path);
-             if(fi.isSymLink())
-                 QFile::remove(path);
-             else
-                 QtConcurrent::run(this,&ProjectExplorer::removeDir,path);
-             ///removeDir(ui->projectTree->currentItem()->data(0,33).toString());
-         }
+        QMessageBox msgBox;
+        msgBox.setText("Do you realy whant to delete folder.");
+        msgBox.setInformativeText("It will delete everething in this this folder");
+        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Cancel);
+        int ret = msgBox.exec();
+        if(ret == QMessageBox::Yes){
+            // test
+            QString path = ui->projectTree->currentItem()->data(0,33).toString();
+            QFileInfo fi(path);
+            if(fi.isSymLink())
+                QFile::remove(path);
+            else
+                QtConcurrent::run(this,&ProjectExplorer::removeDir,path);
+            ///removeDir(ui->projectTree->currentItem()->data(0,33).toString());
+        }
     }
     if(!ui->projectTree->currentItem()->data(0,32).isNull()){
         QMessageBox msgBox;

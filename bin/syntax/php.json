@@ -1,6 +1,6 @@
 {
   "description" :{
-	"author": "fdf",
+	"author": "pussbb",
 	"build": "2011.12.17",
 	"text": "Hi"
     },
@@ -27,7 +27,6 @@
       "interface",
       "new",
       "self",
-      "var",
       "static",
       "parent",
       "private",
@@ -49,16 +48,16 @@
       "require",
       "require_once",
       "return",
-      "[A-Za-z0-9_]+"
+      "[A-Za-z0-9_]+",
+      "=>",
+      "::",
+      "->"
   ],
   "operators": [
     "\\+=",
     "\\(.*(,)",
     "!==",
     "===",
-    "=>",
-    "::",
-    "->",
     "<\\?php|<\\?|<\\?=",
     "\\?>"
   ],

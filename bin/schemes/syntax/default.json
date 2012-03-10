@@ -1,66 +1,98 @@
 {
   "editor_background":{
       "color": {
-           "r": 240,
-		"g": 240,
-		"b": 130,
-		"a": 255
+        "r": 39,
+		"g": 40,
+		"b": 34,
+		"a": 245
 	    }
   },
+  "defualt_font_color":{
+      "color": {
+        "r": 255,
+        "g": 255,
+        "b": 255,
+        "a": 245
+        }
+  },
+  "line_area_background":{
+    "color": {
+            "r": 39,
+            "g": 40,
+            "b": 34,
+            "a": 255
+            }
+    },
+  "line_area_text" :{
+     "color": {
+            "r": 143,
+            "g": 144,
+            "b": 138,
+            "a": 205
+        }
+  },
+  "current_line_background" :{
+     "color": {
+            "r": 220,
+            "g": 220,
+            "b": 217,
+            "a": 55
+        }
+  },
   "comment":{
-      "bold": true,
+      "bold": false,
       "italic": true,
-      "underline": true,
-      "color": "gray"
+      "underline": false,
+      "color": "#73715c"
   },
   "multiline_comment":{
       "bold": false,
       "italic": false,
       "underline": false,
-      "color": "#F80909"
+      "color": "#73715c"
   },
   "string":{
-      "bold": true,
-      "italic": true,
-      "underline": true,
-      "color": "white"
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "color": "#e6db74"
   },
   "function":{
       "bold": true,
-      "italic": true,
-      "underline": true,
+      "italic": false,
+      "underline": false,
       "color": {
-	  "r": 130,
-	  "g": 200,
-	  "b": 130,
+	  "r": 86,
+	  "g": 206,
+	  "b": 188,
 	  "a": 255
       }
    },
   "definition":{
       "bold": false,
-      "italic": true,
+      "italic": false,
       "underline": false,
-      "color": "#f6dc04"
+      "color": "#c5275e"
    },
   "operators":{
-      "bold": true,
-      "italic": true,
-      "underline": true,
+      "bold": false,
+      "italic": false,
+      "underline": false,
       "color": {
-	  "r": 130,
-	  "g": 200,
-	  "b": 130,
+	  "r": 255,
+	  "g": 255,
+	  "b": 255,
 	  "a": 255
       }
    },
   "keywords":{
-      "bold": true,
-      "italic": true,
-      "underline": true,
+      "bold": false,
+      "italic": false,
+      "underline": false,
       "color": {
-	  "r": 30,
-	  "g": 210,
-	  "b": 130,
+	  "r": 248,
+	  "g": 248,
+	  "b": 242,
 	  "a": 255
       }
    },
