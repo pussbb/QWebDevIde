@@ -24,7 +24,6 @@ SOURCES += main.cpp\
         qwebdevide.cpp \
         qcorewindow.cpp \
     rightpane/rightpane.cpp \
-    rightpane/filesystembrowser.cpp \
     bookmarkmanager.cpp \
     editorsmanager.cpp \
     wizard/wizard.cpp \
@@ -35,7 +34,6 @@ SOURCES += main.cpp\
 HEADERS  += qwebdevide.h \
             qcorewindow.h \
     rightpane/rightpane.h \
-    rightpane/filesystembrowser.h \
     bookmarkmanager.h \
     editorsmanager.h \
     wizard/wizard.h \

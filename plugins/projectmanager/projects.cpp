@@ -13,7 +13,7 @@ void Projects::openProject(QString fileName)
         pro->setProjectFile(fileName);
         projects.insert(fi.baseName(),pro);
         current = pro;
-        emit(projectAdd());
+        emit(projectAdded());
     }
     else{
         current = projects.value(fi.baseName());

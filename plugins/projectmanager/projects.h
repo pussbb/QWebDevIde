@@ -18,7 +18,7 @@ public:
     QMap<QString,AbstractProject*> projects;
 
 signals:
-    void projectAdd();
+    void projectAdded();
 
 public slots:
 
