@@ -36,40 +36,39 @@ void HighlightManager::initSyntaxes()
 
 QVector<HighlightingRule> HighlightManager::getHighlighting(QString syntax)
 {
-    if( syntax.isEmpty())
+    if( ! syntaxes.contains(syntax))
         syntax = "default";
+
     if( ! syntaxes.contains(syntax))
         return QVector<HighlightingRule> ();
+
     return syntaxes.value(syntax)->highlightingRules;
 }
 
 QRegExp HighlightManager::getStartMultiComments(QString syntax)
 {
-    if( syntax.isEmpty())
+    if( ! syntaxes.contains(syntax))
         syntax = "default";
-    if( !syntaxes.contains(syntax))
+
+    if( ! syntaxes.contains(syntax))
         return QRegExp();
+
     return syntaxes.value(syntax)->commentStartExpression;
 }
 
 QRegExp HighlightManager::getEndMultiComments(QString syntax)
 {
-    if( syntax.isEmpty())
+    if( ! syntaxes.contains(syntax))
         syntax = "default";
-    if( !syntaxes.contains(syntax))
+
+    if( ! syntaxes.contains(syntax))
         return QRegExp();
+
     return syntaxes.value(syntax)->commentEndExpression;
 }
 
 QTextCharFormat HighlightManager::getMultiCommentsFormart()
 {
     return m_colorScheme.value("multiline_comment");
-}
-
-QColor HighlightManager::getEditorBackround()
-{
-    if( m_colorScheme.contains("editor_background"))
-        return m_colorScheme.value("editor_background").foreground().color();
-    return QColor(240,240,130);
 }
 

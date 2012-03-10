@@ -21,7 +21,6 @@ public:
     QRegExp getStartMultiComments(QString syntax = "");
     QRegExp getEndMultiComments(QString syntax = "");
     QTextCharFormat getMultiCommentsFormart();
-    QColor getEditorBackround();
     inline void setColorScheme(QMap<QString,QTextCharFormat> scheme){ m_colorScheme = scheme;}
     void initSyntaxes();
 
