@@ -33,20 +33,10 @@ void EditingWidget::refreshFileList(QMap<QString, EditedFile> openedFiles)
 {
     m_openedFiles = openedFiles;
     ui->openedFilesList->clear();
-    /*for(int i = 0 ; i < ui->openedFilesList->count(); i++) {
-        QString item = ui->openedFilesList->itemData(i).toString();
-        if( ! openedFiles.contains(item))
-            ui->openedFilesList->removeItem(i);
-        else
-            openedFiles.remove(item);
-    }*/
-
     foreach(QString fileId, openedFiles.keys()){
         EditedFile editedFile= openedFiles.value(fileId);
         ui->openedFilesList->addItem(editedFile.fi.fileName(),fileId);
     }
-
-    qDebug()<<  ui->openedFilesList->currentIndex();
 }
 
 void EditingWidget::on_openedFilesList_currentIndexChanged(int index)
@@ -56,6 +46,16 @@ void EditingWidget::on_openedFilesList_currentIndexChanged(int index)
     if(editedFile.widget != NULL){
         setCentralWidget(editedFile.widget);
         ui->filePath->setText(editedFile.fi.absolutePath());
+        if (editedFile.fi.isWritable()) {
+            ui->fileAccess->setToolTip(tr("Read+Write access"));
+            ui->fileAccess->setStatusTip(tr("Read+Write access"));
+            ui->fileAccess->setPixmap(QPixmap(":/core/images/unlocked.png"));
+        }
+        else {
+            ui->fileAccess->setToolTip(tr("Read only access"));
+            ui->fileAccess->setStatusTip(tr("Read only access"));
+            ui->fileAccess->setPixmap(QPixmap(":/core/images/locked.png"));
+        }
         ui->closeFile->setEnabled(true);
     }
 }

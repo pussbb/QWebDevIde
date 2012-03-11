@@ -64,8 +64,11 @@
         </property>
        </spacer>
       </item>
-      <item row="0" column="3">
+      <item row="0" column="4">
        <widget class="QToolButton" name="closeFile">
+        <property name="toolTip">
+         <string>Close current opend file</string>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -85,7 +88,38 @@
          </size>
         </property>
         <property name="text">
-         <string>File path</string>
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLabel" name="fileAccess">
+        <property name="minimumSize">
+         <size>
+          <width>26</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Read+Write access indicator</string>
+        </property>
+        <property name="statusTip">
+         <string>Read+Write access indicator</string>
+        </property>
+        <property name="whatsThis">
+         <string>Read+Write access indicator</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="../3rdparty/qtcreator/fancywidgets/core.qrc">:/core/images/unlocked.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
