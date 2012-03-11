@@ -49,9 +49,10 @@ void EditingWidget::refreshFileList(QMap<QString, EditedFile> openedFiles)
 void EditingWidget::on_openedFilesList_currentIndexChanged(int index)
 {
     QString fileId = ui->openedFilesList->itemData(index).toString();
-    QWidget *editor = m_openedFiles.value(fileId).widget;
-    if(editor != NULL){
-        setCentralWidget(editor);
+    EditedFile editedFile = m_openedFiles.value(fileId);
+    if(editedFile.widget != NULL){
+        setCentralWidget(editedFile.widget);
+        ui->filePath->setText(editedFile.fi.absolutePath());
         ui->closeFile->setEnabled(true);
     }
 }
@@ -69,18 +70,11 @@ void EditingWidget::on_closeFile_clicked()
 {
     int index = ui->openedFilesList->currentIndex();
     QString fileId = ui->openedFilesList->itemData(index).toString();
+    ui->closeFile->setEnabled(false);
+    ui->filePath->setText("");
+    currentWidget->hide();
+    currentWidget->setParent(0);
+    currentWidget = 0;
+
     emit(closeFile(fileId));
-    --index;
-    if(index >= 0 && ui->openedFilesList->count() > 0){
-        ui->openedFilesList->setCurrentIndex(index);
-    }
-    else if(ui->openedFilesList->count() > 0){
-            ui->openedFilesList->setCurrentIndex(0);
-    }
-    else{
-        ui->closeFile->setEnabled(false);
-        currentWidget->hide();
-        currentWidget->setParent(0);
-        currentWidget = 0;
-    }
 }
