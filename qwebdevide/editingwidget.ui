@@ -67,7 +67,7 @@
       <item row="0" column="4">
        <widget class="QToolButton" name="closeFile">
         <property name="toolTip">
-         <string>Close current opend file</string>
+         <string>Close current opened file</string>
         </property>
         <property name="text">
          <string/>

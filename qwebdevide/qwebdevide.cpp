@@ -30,21 +30,27 @@ QWebDevIde::QWebDevIde(QWidget *parent) :
     #endif
     qApp->setStyle(new ManhattanStyle(baseName));
     ptab = new FancyTabWidget(this);
+    connect(ptab, SIGNAL(currentChanged(int)), this, SLOT(currentTabWidgetChanged(int)));
     setCentralWidget(ptab);
 
+    rightPaneControl = new QToolButton(ptab->statusBar());
+    rightPaneControl->setIcon(QIcon(":/core/images/sidebaricon.png"));
+    rightPaneControl->setFixedSize(QSize(22,22));
+    rightPaneControl->setVisible(false);
+    rightPaneControl->setDefaultAction(ui->actionShow_Hide_Editor_Right_pane);
 
     rightPaneSplitter = new MiniSplitter(parent);
-    MiniSplitter *splitter = new MiniSplitter(parent);
+    editingSplitter = new MiniSplitter(parent);
 
-    splitter->addWidget(rightPaneSplitter);
-    splitter->addWidget(editorsManager->getMainEditorWidget());
+    editingSplitter->addWidget(rightPaneSplitter);
+    editingSplitter->addWidget(editorsManager->getMainEditorWidget());
     rightPane = new RightPane(rightPaneSplitter);
     rightPane->initPlugins(pm->loadedPlugins());
     rightPaneSplitter->setOrientation(Qt::Vertical);
 
     ptab->insertTab(0,new QWidget(this),QIcon(":/core/images/category_core.png"),tr("Welcome") );
     ptab->setTabEnabled(0, true);
-    ptab->insertTab(1,splitter,QIcon(":/core/images/category_texteditor.png"),tr("Editor") );
+    ptab->insertTab(1,editingSplitter,QIcon(":/core/images/category_texteditor.png"),tr("Editor") );
     ptab->setTabEnabled(1, true);
     ptab->insertTab(2,new QWidget(this),QIcon(":/core/images/category_project.png"),tr("Project") );
     ptab->setTabEnabled(2, true);
@@ -134,4 +140,13 @@ void QWebDevIde::on_actionSave_file_triggered()
 void QWebDevIde::on_actionSave_all_triggered()
 {
     editorsManager->saveAll();
+}
+
+void QWebDevIde::currentTabWidgetChanged(int index)
+{
+    Q_UNUSED(index);
+    if ( rightPane->isVisible())
+        rightPaneControl->setVisible(true);
+    else
+        rightPaneControl->setVisible(false);
 }

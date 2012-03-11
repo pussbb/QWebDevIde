@@ -124,6 +124,10 @@
    </property>
   </action>
   <action name="actionShow_Hide_Editor_Right_pane">
+   <property name="icon">
+    <iconset resource="../3rdparty/qtcreator/fancywidgets/core.qrc">
+     <normaloff>:/core/images/sidebaricon.png</normaloff>:/core/images/sidebaricon.png</iconset>
+   </property>
    <property name="text">
     <string>Show/Hide Editor Right pane </string>
    </property>
@@ -147,6 +151,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
+  <include location="../3rdparty/qtcreator/fancywidgets/core.qrc"/>
   <include location="resource/app.qrc"/>
  </resources>
  <connections/>

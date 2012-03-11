@@ -33,17 +33,13 @@ public:
 
 public slots:
     void openFile(QString );
+    void currentTabWidgetChanged(int );
 private slots:
     void on_actionNewProject_triggered();
-
     void on_actionOpen_triggered();
-
     void on_actionFull_screen_triggered();
-
     void on_actionShow_Hide_Editor_Right_pane_triggered();
-
     void on_actionSave_file_triggered();
-
     void on_actionSave_all_triggered();
 
 private:
@@ -52,5 +48,7 @@ private:
     RightPane *rightPane;
     MiniSplitter *rightPaneSplitter;
     EditingWidget *m_editingWidget;
+    QToolButton *rightPaneControl;
+    MiniSplitter *editingSplitter;
 };
 #endif // QWEBDEVIDE_H
