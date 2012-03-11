@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QPointer>
 #include <QtCore>
-
+#include <QEvent>
 #include <editors_global.h>
 
 namespace Ui {

@@ -8,6 +8,10 @@ EditingWidget::EditingWidget(QWidget *parent) :
     ui->setupUi(this);
     ui->closeFile->setEnabled(false);
     m_openedFiles.clear();
+    ui->searchWidget->setVisible(false);
+  ///  installEventFilter(this);
+    ui->searchWidget->setProperty("panelwidget_singlerow",false);
+////    ui->editorContainer->installEventFilter (this);
 }
 
 EditingWidget::~EditingWidget()

@@ -39,7 +39,7 @@
        <number>0</number>
       </property>
       <property name="spacing">
-       <number>0</number>
+       <number>-1</number>
       </property>
       <item row="0" column="0">
        <widget class="QComboBox" name="openedFilesList">
@@ -48,34 +48,6 @@
           <width>150</width>
           <height>0</height>
          </size>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>394</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="0" column="4">
-       <widget class="QToolButton" name="closeFile">
-        <property name="toolTip">
-         <string>Close current opened file</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../3rdparty/qtcreator/fancywidgets/core.qrc">
-          <normaloff>:/core/images/closebutton.png</normaloff>
-          <disabledoff>:/core/images/darkclosebutton.png</disabledoff>:/core/images/closebutton.png</iconset>
         </property>
        </widget>
       </item>
@@ -91,6 +63,19 @@
          <string/>
         </property>
        </widget>
+      </item>
+      <item row="0" column="2">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>394</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
       <item row="0" column="3">
        <widget class="QLabel" name="fileAccess">
@@ -123,19 +108,42 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="4">
+       <widget class="QToolButton" name="closeFile">
+        <property name="toolTip">
+         <string>Close current opened file</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../3rdparty/qtcreator/fancywidgets/core.qrc">
+          <normaloff>:/core/images/closebutton.png</normaloff>
+          <disabledoff>:/core/images/darkclosebutton.png</disabledoff>:/core/images/closebutton.png</iconset>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
    <item row="1" column="0">
     <widget class="QWidget" name="editorContainer" native="true">
      <layout class="QGridLayout" name="gridLayout_3">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetNoConstraint</enum>
+      </property>
       <property name="margin">
        <number>0</number>
       </property>
       <property name="spacing">
-       <number>0</number>
+       <number>-1</number>
       </property>
      </layout>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="Utils::StyledBar" name="searchWidget" native="true">
+     <layout class="QGridLayout" name="gridLayout_4"/>
     </widget>
    </item>
   </layout>
