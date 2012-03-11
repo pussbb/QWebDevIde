@@ -29,45 +29,47 @@ void EditingWidget::setCentralWidget(QWidget *widget)
     currentWidget->show();
 }
 
-void EditingWidget::refreshFileList(QMap<QString, QWidget *> openedFiles)
+void EditingWidget::refreshFileList(QMap<QString, EditedFile> openedFiles)
 {
     m_openedFiles = openedFiles;
     for(int i = 0 ; i < ui->openedFilesList->count(); i++) {
         QString item = ui->openedFilesList->itemData(i).toString();
-        if(openedFiles.value(item) == NULL)
+        if( ! openedFiles.contains(item))
             ui->openedFilesList->removeItem(i);
         else
             openedFiles.remove(item);
     }
-    foreach(QString file,openedFiles.keys()){
-        ui->openedFilesList->addItem(file,file);
+
+    foreach(QString fileId, openedFiles.keys()){
+        EditedFile editedFile= openedFiles.value(fileId);
+        ui->openedFilesList->addItem(editedFile.fi.fileName(),fileId);
     }
 }
 
 void EditingWidget::on_openedFilesList_currentIndexChanged(int index)
 {
-    QString file = ui->openedFilesList->itemData(index).toString();
-    QWidget *editor = m_openedFiles.value(file);
+    QString fileId = ui->openedFilesList->itemData(index).toString();
+    QWidget *editor = m_openedFiles.value(fileId).widget;
     if(editor != NULL){
         setCentralWidget(editor);
         ui->closeFile->setEnabled(true);
     }
 }
 
-void EditingWidget::setCurrent(QString file)
+void EditingWidget::setCurrent(QString fileId)
 {
-    int index = ui->openedFilesList->findData(file);
+    int index = ui->openedFilesList->findData(fileId);
     if(index != -1){
         ui->openedFilesList->setCurrentIndex(index);
-        currentFileName = file;
+        currentFileId = fileId;
     }
 }
 
 void EditingWidget::on_closeFile_clicked()
 {
     int index = ui->openedFilesList->currentIndex();
-    QString file = ui->openedFilesList->itemData(index).toString();
-    emit(closeFile(file));
+    QString fileId = ui->openedFilesList->itemData(index).toString();
+    emit(closeFile(fileId));
     --index;
     if(index >= 0 && ui->openedFilesList->count() > 0){
         ui->openedFilesList->setCurrentIndex(index);

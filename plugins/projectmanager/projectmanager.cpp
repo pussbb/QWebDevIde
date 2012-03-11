@@ -17,22 +17,22 @@ void ProjectManager::init(QMap<QString, QObject *> dependencies, QObject *parent
     m_parent = parent;
 }
 
-QWidget * ProjectManager::open(const QString &file)
+QWidget * ProjectManager::open(const QString &file,const QString &fileId)
 {
-    Q_UNUSED(file);
+    Q_UNUSED(fileId);
     projects->openProject(file);
     return NULL;
 }
 
-bool ProjectManager::save(const QString &fileName)
+bool ProjectManager::save(const QString &fileId)
 {
-    Q_UNUSED(fileName);
+    Q_UNUSED(fileId);
     return true;
 }
 
-void ProjectManager::close(const QString &fileName)
+void ProjectManager::close(const QString &fileId)
 {
-    Q_UNUSED(fileName);
+    Q_UNUSED(fileId);
 }
 
 QStringList ProjectManager::mimeTypes()

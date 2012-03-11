@@ -40,7 +40,8 @@ HEADERS  += qwebdevide.h \
     wizard/startpage.h \
     wizard/commonsettings.h \
     wizard/pagedata.h \
-    editingwidget.h
+    editingwidget.h \
+    editors_global.h
 
 
 FORMS    += qwebdevide.ui \
@@ -70,3 +71,4 @@ else:unix: LIBS += -L$$PWD/../bin/ -lPluginManager
 
 INCLUDEPATH += $$PWD/../libs/PluginManager
 DEPENDPATH += $$PWD/../libs/PluginManager
+

@@ -7,9 +7,9 @@ class IEditors
 {
 public:
     virtual ~IEditors() {}
-    virtual QWidget * open(const QString &file) = 0;
-    virtual bool save(const QString &fileName) = 0;
-    virtual void close(const QString &fileName) = 0 ;
+    virtual QWidget * open(const QString &file, const QString &fileId) = 0;
+    virtual bool save(const QString &fileId) = 0;
+    virtual void close(const QString &fileId) = 0 ;
     virtual QStringList mimeTypes() = 0;
 
     QString errorString;

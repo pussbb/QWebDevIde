@@ -5,6 +5,8 @@
 #include <QPointer>
 #include <QtCore>
 
+#include <editors_global.h>
+
 namespace Ui {
     class EditingWidget;
 }
@@ -17,8 +19,8 @@ public:
     explicit EditingWidget(QWidget *parent = 0);
     ~EditingWidget();
     void setCurrent(QString file);
-    void refreshFileList(QMap<QString,QWidget *> openedFiles);
-    QString currentFileName;
+    void refreshFileList(QMap<QString,EditedFile> openedFiles);
+    QString currentFileId;
 private slots:
     void on_openedFilesList_currentIndexChanged(int index);
     void on_closeFile_clicked();
@@ -28,7 +30,7 @@ signals:
 private:
     QPointer<QWidget> currentWidget;
     Ui::EditingWidget *ui;
-    QMap<QString,QWidget *> m_openedFiles;
+    QMap<QString,EditedFile> m_openedFiles;
     void setCentralWidget(QWidget *widget);
 };
 

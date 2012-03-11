@@ -22,9 +22,9 @@ public:
     QStringList dependencies() const;
     void init(QMap<QString, QObject *> dependencies, QObject *parent);
     /// edor interface
-    QWidget * open(const QString &file);
-    bool save(const QString &fileName);
-    void close(const QString &fileName);
+    QWidget * open(const QString &file, const QString &fileId);
+    bool save(const QString &fileId);
+    void close(const QString &fileId);
     QStringList mimeTypes();
 
     /// RightPane interface

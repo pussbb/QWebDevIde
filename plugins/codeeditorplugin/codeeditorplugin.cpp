@@ -12,27 +12,27 @@ void CodeEditorPlugin::init(QMap<QString, QObject *> dependencies, QObject *pare
     Q_UNUSED(parent);
 }
 
-QWidget * CodeEditorPlugin::open(const QString &file)
+QWidget * CodeEditorPlugin::open(const QString &file, const QString &fileId)
 {
     CodeEditor *editor = new CodeEditor();
     editor->openFile(file);
     QFileInfo fi(file);
-    openedFiles.insert(fi.fileName(), editor);
+    openedFiles.insert(fileId, editor);
     emit(editorCreated(editor));
     return editor;
 }
 
-bool CodeEditorPlugin::save(const QString &fileName)
+bool CodeEditorPlugin::save(const QString &fileId)
 {
-    CodeEditor *editor = openedFiles.value(fileName);
+    CodeEditor *editor = openedFiles.value(fileId);
     editor->saveFile();
     return true;
 }
 
-void CodeEditorPlugin::close(const QString &fileName)
+void CodeEditorPlugin::close(const QString &fileId)
 {
-    openedFiles.value(fileName)->deleteLater();
-    openedFiles.remove(fileName);
+    openedFiles.value(fileId)->deleteLater();
+    openedFiles.remove(fileId);
 }
 
 QStringList CodeEditorPlugin::mimeTypes()
