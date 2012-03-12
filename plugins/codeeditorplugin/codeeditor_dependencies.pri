@@ -5,6 +5,6 @@ INCLUDEPATH += $$PWD/ \
 
 DEPENDPATH += $$PWD/codeeditor/
 
-HEADERS += codeeditorplugin.h \
-    codeeditor/codeeditor.h \
-    codeeditor/textblockdata.h
+HEADERS += $$PWD/codeeditorplugin.h \
+    $$PWD/codeeditor/codeeditor.h \
+    $$PWD/codeeditor/textblockdata.h
