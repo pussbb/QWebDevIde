@@ -7,6 +7,7 @@
 #include <editingwidget.h>
 #include <mimedata.h>
 #include "QMap"
+#include <editedfiles.h>
 
 class EditorsManager : public QObject
 {
@@ -15,7 +16,6 @@ class EditorsManager : public QObject
 public:
     explicit EditorsManager(QObject *parent = 0);
     inline QWidget * getMainEditorWidget(){return m_editingWidget;}
-    QMap<QString, EditedFile> openedFiles;
     void saveCurrent();
     void saveAll();
     void initPlugins(QMap<QString, QObject *> list);
@@ -27,6 +27,7 @@ public slots:
     void closeFile(QString );
 
 private :
+    EditedFiles *editedFiles;
     MimeData mime;
     QMap<QString, IEditors *> editors;
     EditingWidget *m_editingWidget;

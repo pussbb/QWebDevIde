@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     wizard/wizard.cpp \
     wizard/startpage.cpp \
     wizard/commonsettings.cpp \
-    editingwidget.cpp
+    editingwidget.cpp \
+    editedfiles.cpp
 
 HEADERS  += qwebdevide.h \
             qcorewindow.h \
@@ -41,7 +42,7 @@ HEADERS  += qwebdevide.h \
     wizard/commonsettings.h \
     wizard/pagedata.h \
     editingwidget.h \
-    editors_global.h
+    editedfiles.h
 
 
 FORMS    += qwebdevide.ui \
@@ -71,4 +72,7 @@ else:unix: LIBS += -L$$PWD/../bin/ -lPluginManager
 
 INCLUDEPATH += $$PWD/../libs/PluginManager
 DEPENDPATH += $$PWD/../libs/PluginManager
+
+
+
 

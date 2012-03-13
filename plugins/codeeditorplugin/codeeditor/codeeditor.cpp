@@ -13,6 +13,8 @@ CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
             this, SLOT(updateLineNumberArea(QRect,int)));
     connect(this, SIGNAL(cursorPositionChanged()),
             this, SLOT(highlightCurrentLine()));
+    connect(this,SIGNAL(textChanged()),
+            this,SLOT(changedText()));
 
     initSettings();
     updateLineNumberAreaWidth(0);
@@ -299,7 +301,7 @@ void CodeEditor::setLineAreaPalette(LineAreaStyle lineAreaStyle)
 
 void CodeEditor::keyPressEvent(QKeyEvent *e)
 {
-
+    emit(keyPressed(e));
     if ( e->key() == Qt::Key_Tab) {
         textCursor().insertText(QString(" ").repeated(4));
         return;
@@ -337,5 +339,11 @@ void CodeEditor::keyPressEvent(QKeyEvent *e)
 
     }
     QPlainTextEdit::keyPressEvent(e);
+}
+
+void CodeEditor::changedText()
+{
+    changed = true;
+    emit(contentChanged());
 }
 

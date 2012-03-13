@@ -40,13 +40,14 @@ protected:
     void keyPressEvent ( QKeyEvent * e );
 
 signals:
-
+    void keyPressed(QKeyEvent *);
+    void contentChanged();
 private slots:
     void updateLineNumberAreaWidth(int newBlockCount);
     void highlightCurrentLine();
     void updateLineNumberArea(const QRect &, int);
     void paintEvent(QPaintEvent *e);
-    inline void changedText(){changed = true;}
+    void changedText();
 
 private:
     QString m_file;

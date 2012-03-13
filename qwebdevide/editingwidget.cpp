@@ -1,17 +1,15 @@
 #include "editingwidget.h"
 #include "ui_editingwidget.h"
 
-EditingWidget::EditingWidget(QWidget *parent) :
+EditingWidget::EditingWidget(QWidget *parent, EditedFiles *ef ) :
     QWidget(parent),
-    ui(new Ui::EditingWidget)
+    ui(new Ui::EditingWidget),
+    editedFiles(ef)
 {
     ui->setupUi(this);
     ui->closeFile->setEnabled(false);
-    m_openedFiles.clear();
     ui->searchWidget->setVisible(false);
-  ///  installEventFilter(this);
     ui->searchWidget->setProperty("panelwidget_singlerow",false);
-////    ui->editorContainer->installEventFilter (this);
 }
 
 EditingWidget::~EditingWidget()
@@ -26,6 +24,7 @@ void EditingWidget::setCentralWidget(QWidget *widget)
        currentWidget->setParent(0);
        currentWidget = 0;
     }
+    QObject::connect(widget,SIGNAL(contentChanged()),this,SLOT(contentChanged()));
     currentWidget = widget;
     currentWidget->setParent(this);
     ui->editorContainer->layout()->addWidget(currentWidget);
@@ -33,20 +32,23 @@ void EditingWidget::setCentralWidget(QWidget *widget)
     currentWidget->show();
 }
 
-void EditingWidget::refreshFileList(QMap<QString, EditedFile> openedFiles)
+void EditingWidget::refreshFileList()
 {
-    m_openedFiles = openedFiles;
     ui->openedFilesList->clear();
-    foreach(QString fileId, openedFiles.keys()){
-        EditedFile editedFile= openedFiles.value(fileId);
-        ui->openedFilesList->addItem(editedFile.fi.fileName(),fileId);
+    foreach(QString fileId, editedFiles->openedFiles.keys()){
+        EditedFile editedFile= editedFiles->openedFiles.value(fileId);
+        QString text = editedFile.fi.fileName();
+        qDebug()<<editedFile.changed;
+        if ( editedFile.changed)
+            text = "*" + text;
+        ui->openedFilesList->addItem(text,fileId);
     }
 }
 
 void EditingWidget::on_openedFilesList_currentIndexChanged(int index)
 {
     QString fileId = ui->openedFilesList->itemData(index).toString();
-    EditedFile editedFile = m_openedFiles.value(fileId);
+    EditedFile editedFile = editedFiles->openedFiles.value(fileId);
     if(editedFile.widget != NULL){
         setCentralWidget(editedFile.widget);
         ui->filePath->setText(editedFile.fi.absolutePath());
@@ -85,4 +87,20 @@ void EditingWidget::on_closeFile_clicked()
     currentWidget = 0;
 
     emit(closeFile(fileId));
+}
+
+void EditingWidget::keyPressEvent(QKeyEvent *e)
+{
+    qDebug()<<"protected event";
+    qDebug()<< e->key();
+}
+
+void EditingWidget::contentChanged()
+{
+    int index = ui->openedFilesList->currentIndex();
+    QString text = ui->openedFilesList->itemText(index);
+    if ( text.at(0) != '*')
+        ui->openedFilesList->setItemText(index, "*" + text);
+    QString fileId = ui->openedFilesList->itemData(index).toString();
+    editedFiles->changeState(fileId, true);
 }

@@ -3,9 +3,12 @@
 EditorsManager::EditorsManager(QObject *parent) :
     QObject(parent)
 {
-    m_editingWidget = new EditingWidget(0);
+    editedFiles = new EditedFiles(this);
+    m_editingWidget = new EditingWidget(NULL,editedFiles);
     connect(m_editingWidget,SIGNAL(closeFile(QString)),
             this,SLOT(closeFile(QString)));
+    connect(m_editingWidget,SIGNAL(fileChanged(QString,bool)),
+            this, SLOT(fileChanged(QString,bool)));
 }
 
 void EditorsManager::openFile(QString file)
@@ -16,7 +19,7 @@ void EditorsManager::openFile(QString file)
     QString fileId = fi.fileName();
     QString hashId = QCryptographicHash::hash(fi.absoluteFilePath().toLatin1(), QCryptographicHash::Md5).toHex();
 
-    if ( openedFiles.contains(fileId) ) {
+    if ( editedFiles->openedFiles.contains(fileId) ) {
         if ( isOpened(fileId, fi) || isOpened(hashId, fi))
             return;
         fileId = hashId;
@@ -41,29 +44,30 @@ void EditorsManager::openFile(QString file)
     editedFile.fi = fi;
     editedFile.widget = editor->open(file, fileId);
     editedFile.editorInterface = editor;
+    editedFile.changed = false;
 
-    openedFiles.insert(fileId,editedFile);
+    editedFiles->openedFiles.insert(fileId,editedFile);
 
-    m_editingWidget->refreshFileList(openedFiles);
+    m_editingWidget->refreshFileList();
     m_editingWidget->setCurrent(fileId);
 
 }
 
 void EditorsManager::closeFile(QString fileId)
 {
-    EditedFile editedFile = openedFiles.value(fileId);
+    EditedFile editedFile = editedFiles->openedFiles.value(fileId);
     if( editedFile.editorInterface != NULL) {
         editedFile.editorInterface->close(fileId);
         editedFile.widget->deleteLater();
-        openedFiles.remove(fileId);
-        m_editingWidget->refreshFileList(openedFiles);
+        editedFiles->openedFiles.remove(fileId);
+        m_editingWidget->refreshFileList();
     }
 }
 
 void EditorsManager::saveCurrent()
 {
 
-    IEditors *editor = openedFiles.value(m_editingWidget->currentFileId).editorInterface;
+    IEditors *editor = editedFiles->openedFiles.value(m_editingWidget->currentFileId).editorInterface;
     if (editor == NULL)
         return;
     editor->save(m_editingWidget->currentFileId);
@@ -84,8 +88,8 @@ void EditorsManager::initPlugins(QMap<QString, QObject *> list)
 
 void EditorsManager::saveAll()
 {
-    foreach (const QString &fileId, openedFiles.keys()) {
-        IEditors *editor = openedFiles.value(fileId).editorInterface;
+    foreach (const QString &fileId, editedFiles->openedFiles.keys()) {
+        IEditors *editor = editedFiles->openedFiles.value(fileId).editorInterface;
         if ( editor)
             editor->save(fileId);
     }
@@ -93,8 +97,8 @@ void EditorsManager::saveAll()
 
 bool EditorsManager::isOpened(const QString &fileId, const QFileInfo &fi)
 {
-    if ( openedFiles.contains(fileId) ) {
-        EditedFile esixting = openedFiles.value(fileId);
+    if ( editedFiles->openedFiles.contains(fileId) ) {
+        EditedFile esixting = editedFiles->openedFiles.value(fileId);
         if ( fi.absoluteFilePath() == esixting.fi.absoluteFilePath()) {
             m_editingWidget->setCurrent(fileId);
             return true;
@@ -102,5 +106,4 @@ bool EditorsManager::isOpened(const QString &fileId, const QFileInfo &fi)
     }
     return false;
 }
-
 

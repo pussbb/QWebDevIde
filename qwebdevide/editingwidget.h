@@ -4,8 +4,8 @@
 #include <QWidget>
 #include <QPointer>
 #include <QtCore>
-#include <QEvent>
-#include <editors_global.h>
+#include <QKeyEvent>
+#include <editedfiles.h>
 
 namespace Ui {
     class EditingWidget;
@@ -16,21 +16,29 @@ class EditingWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit EditingWidget(QWidget *parent = 0);
+    explicit EditingWidget(QWidget *parent = 0, EditedFiles *ef = 0);
     ~EditingWidget();
     void setCurrent(QString file);
-    void refreshFileList(QMap<QString,EditedFile> openedFiles);
+    void refreshFileList();
     QString currentFileId;
+
+public slots:
+    void contentChanged();
+
 private slots:
     void on_openedFilesList_currentIndexChanged(int index);
     void on_closeFile_clicked();
 
+protected:
+    void keyPressEvent ( QKeyEvent * e );
+
 signals:
     void closeFile(QString fileName);
+
 private:
-    QPointer<QWidget> currentWidget;
     Ui::EditingWidget *ui;
-    QMap<QString,EditedFile> m_openedFiles;
+    EditedFiles *editedFiles;
+    QPointer<QWidget> currentWidget;
     void setCentralWidget(QWidget *widget);
 };
 
