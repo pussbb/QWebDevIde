@@ -80,13 +80,14 @@ void EditingWidget::on_closeFile_clicked()
 
     int index = ui->openedFilesList->currentIndex();
     QString fileId = ui->openedFilesList->itemData(index).toString();
-    ui->closeFile->setEnabled(false);
-    ui->filePath->setText("");
-    currentWidget->hide();
-    currentWidget->setParent(0);
-    currentWidget = 0;
-
-    emit(closeFile(fileId));
+    if (editedFiles->closeFile(fileId)) {
+        ui->closeFile->setEnabled(false);
+        ui->filePath->setText("");
+        currentWidget->hide();
+        currentWidget->setParent(0);
+        currentWidget = 0;
+    }
+    refreshFileList();
 }
 
 void EditingWidget::keyPressEvent(QKeyEvent *e)

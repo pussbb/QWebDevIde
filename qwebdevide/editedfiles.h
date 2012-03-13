@@ -3,6 +3,7 @@
 
 #include "../plugins/ifaces.h"
 #include <QObject>
+#include <QMessageBox>
 
 struct EditedFile {
     QFileInfo fi;
@@ -16,11 +17,17 @@ class EditedFiles : public QObject
     Q_OBJECT
 public:
     explicit EditedFiles(QObject *parent = 0);
+    ~EditedFiles();
     QMap<QString, EditedFile> openedFiles;
     void changeState(QString fileId, bool state);
+    bool closeFile(const QString &fileId, bool autoSave = false);
+    bool closeAllFiles();
 signals:
 
 public slots:
 
+private:
+    int changedCount;
+    void deleteItem(const QString &fileId);
 };
 #endif // EDITORS_GLOBAL_H

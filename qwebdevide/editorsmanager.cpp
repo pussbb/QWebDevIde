@@ -5,10 +5,6 @@ EditorsManager::EditorsManager(QObject *parent) :
 {
     editedFiles = new EditedFiles(this);
     m_editingWidget = new EditingWidget(NULL,editedFiles);
-    connect(m_editingWidget,SIGNAL(closeFile(QString)),
-            this,SLOT(closeFile(QString)));
-    connect(m_editingWidget,SIGNAL(fileChanged(QString,bool)),
-            this, SLOT(fileChanged(QString,bool)));
 }
 
 void EditorsManager::openFile(QString file)
@@ -55,13 +51,7 @@ void EditorsManager::openFile(QString file)
 
 void EditorsManager::closeFile(QString fileId)
 {
-    EditedFile editedFile = editedFiles->openedFiles.value(fileId);
-    if( editedFile.editorInterface != NULL) {
-        editedFile.editorInterface->close(fileId);
-        editedFile.widget->deleteLater();
-        editedFiles->openedFiles.remove(fileId);
-        m_editingWidget->refreshFileList();
-    }
+     editedFiles->closeFile(fileId);
 }
 
 void EditorsManager::saveCurrent()
