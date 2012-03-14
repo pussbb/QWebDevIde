@@ -2,7 +2,9 @@ TEMPLATE = subdirs
 SUBDIRS =  coreplugin \
             codeeditorplugin \
             colorscheme \
-            syntaxhighlighter
+            syntaxhighlighter \
+	    filebrowser \
+	    projectmanager
 
 
 # build must be last:
