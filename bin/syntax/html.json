@@ -12,13 +12,20 @@
     "open": "<!--",
     "close": "-->"
   },
+  "tag": [
+   "<\\w+",
+    "<\\s*/\\s*[a-zA-Z0-9:]+\\s*>",
+"\\s?/?\\w?\"?>"
+  ],
+"defualt_font_color" :[
+"<[^>]+>([^<].*)<\\s*/.>"
+],
+"attribute": [
+    "\\s[a-zA-Z0-9_:-]+\\s*="
+],
   "definition": [
-    "(\\S{2,20})=\""
   ],
   "keywords": [
-    "</?(\\w{1,20})/?(>| )?",
-    "<\\!",
-    ">",
     "(<!DOCTYPE html>|<!DOCTYPE html PUBLIC)"
   ],
   "reqexpr":[]

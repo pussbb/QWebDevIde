@@ -16,7 +16,7 @@ bool AbstractSyntaxHighlight::initSyntax(const QString &fileName)
     stream.setCodec("UTF-8");
     JsonReader reader;
     reader.parse(stream.readAll());
-
+    qDebug()<< reader.errorString();
     if( !reader.errorString().isEmpty())
         return false;
     QVariant v = reader.result();
@@ -25,8 +25,9 @@ bool AbstractSyntaxHighlight::initSyntax(const QString &fileName)
 
     QVariantMap syntax = v.toMap();
     description  = syntax.value("description",QVariantMap()).toMap();
+
     syntax.remove("description");
-    dependencies = syntax.value("dependencies",QStringList()).toStringList();
+    dependencies = syntax.value("dependencies",QStringList()).toMap();
     syntax.remove("dependencies");
 
     v = syntax.value("multiline_comment");
@@ -36,6 +37,7 @@ bool AbstractSyntaxHighlight::initSyntax(const QString &fileName)
         commentEndExpression = QRegExp(multiLine.value("close","").toString());
     }
     syntax.remove("multiline_comment");
+    QVector<HighlightingRule> m_highlightingRules;
     foreach(const QString &key,syntax.keys()){
 
         QVariant item = syntax.value(key);
@@ -49,8 +51,23 @@ bool AbstractSyntaxHighlight::initSyntax(const QString &fileName)
 //            rule.pattern.setMinimal(true);
             rule.pattern.setPatternSyntax(QRegExp::RegExp2);
             rule.format = colorScheme;
-            highlightingRules.append(rule);
+            m_highlightingRules.append(rule);
         }
+    }
+    if (description.contains("section"))
+    {
+        section =  description.value("section").toMap();
+        qDebug()<< section;
+        sectionHighlightingRule sectionHighlighting;
+        sectionHighlighting.start = QRegExp(section.value("start").toString());
+        sectionHighlighting.stop = QRegExp(section.value("stop").toString());
+        sectionHighlighting.opened = false;
+        sectionHighlighting.highlightingRules << m_highlightingRules;
+        sectionHighlightingRules.append(sectionHighlighting);
+    }
+    else
+    {
+        highlightingRules << m_highlightingRules;
     }
     return true;
 }
@@ -61,14 +78,32 @@ void AbstractSyntaxHighlight::dependenciesWalk(QMap<QString, AbstractSyntaxHighl
         dependenciesResolved = true;
         return;
     }
-    foreach(const QString &file,dependencies){
+    foreach(const QString &file,dependencies.keys()){
+        QVariantMap dependency = dependencies.value(file).toMap();
         AbstractSyntaxHighlight *syntax = existing.value(file);
         if ( syntax == NULL)
             continue;
         if ( !syntax->dependenciesResolved)
             syntax->dependenciesWalk(existing);
 
-        highlightingRules << syntax->highlightingRules;
+//        if ( ! syntax->section.isEmpty())
+//        {
+//            sectionHighlightingRule sectionHighlighting;
+//            sectionHighlighting.start = QRegExp(syntax->section.value("start").toString());
+//            sectionHighlighting.stop = QRegExp(syntax->section.value("stop").toString());
+//            sectionHighlighting.highlightingRules << syntax->highlightingRules;
+//            sectionHighlightingRules.append(sectionHighlighting);
+//        }
+        if ( dependency.contains("start")) {
+            sectionHighlightingRule sectionHighlighting;
+            sectionHighlighting.start = QRegExp(syntax->section.value("start").toString());
+            sectionHighlighting.stop = QRegExp(syntax->section.value("stop").toString());
+            sectionHighlighting.highlightingRules << syntax->highlightingRules;
+            sectionHighlightingRules.append(sectionHighlighting);
+        }
+        else{
+            highlightingRules << syntax->highlightingRules;
+        }
         if(commentStartExpression.isEmpty()){
             commentStartExpression = syntax->commentStartExpression;
         }

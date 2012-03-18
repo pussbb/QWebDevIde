@@ -1,9 +1,19 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
+
+
 struct HighlightingRule
 {
     QRegExp pattern;
     QTextCharFormat format;
+};
+
+struct sectionHighlightingRule
+{
+    QRegExp start;
+    QRegExp stop;
+    QVector<HighlightingRule> highlightingRules;
+    bool opened;
 };
 
 struct LineAreaStyle {

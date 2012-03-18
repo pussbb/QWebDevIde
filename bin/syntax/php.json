@@ -2,16 +2,24 @@
   "description" :{
 	"author": "pussbb",
 	"build": "2011.12.17",
-	"text": "Hi"
-    },
-  "dependencies": [
-    "default",
-    "html"
-  ],
+	"text": "Hi",
+    "section": {
+        "start": "<\\?",
+        "stop" : "\\?>"
+        }
+   },
+  "dependencies":{
+    "default" : {},
+    "html": {}
+  },
   "string":[
-      "'([^']*)'"
   ],
-  "definition": [
+  "definition" : [
+"=>",
+      "::",
+      "->"
+],
+  "builtin": [
       "abstract",
       "catch",
       "class",
@@ -47,25 +55,16 @@
       "include_once",
       "require",
       "require_once",
-      "return",
-      "[A-Za-z0-9_]+",
-      "=>",
-      "::",
-      "->"
+      "return"
   ],
   "operators": [
     "\\+=",
-    "\\(.*(,)",
     "!==",
     "===",
     "<\\?php|<\\?|<\\?=",
     "\\?>"
   ],
   "keywords": [
-    "echo",
-   "\\b?\\$[A-Za-z0-9_]+",
-    "\\b?[\\-\\>]([A-Za-z0-9_]+)\\b",
-    "[A-Za-z0-9_]+::"
   ],
   "reqexpr":[]
 } 

@@ -15,6 +15,7 @@ class AbstractSyntaxHighlight : public QObject
     Q_OBJECT
 public:
     QVector<HighlightingRule> highlightingRules;
+    QVector<sectionHighlightingRule> sectionHighlightingRules;
     explicit AbstractSyntaxHighlight(QObject *parent = 0);
     inline void setColorScheme(QMap<QString,QTextCharFormat> colorScheme)
                         { if ( ! colorScheme.isEmpty()) m_colorScheme = colorScheme;}
@@ -24,9 +25,10 @@ public:
     QRegExp commentStartExpression;
     QRegExp commentEndExpression;
     bool dependenciesResolved;
+    QVariantMap section;
 private:
     QMap<QString,QTextCharFormat> m_colorScheme;
-    QStringList dependencies;
+    QVariantMap dependencies;
 };
 
 #endif // ABSTRACTSYNTAXHIGHLIGHT_H

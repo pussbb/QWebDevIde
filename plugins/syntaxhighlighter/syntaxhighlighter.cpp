@@ -35,6 +35,7 @@ void SyntaxHighlighter::setEditorColorScheme(CodeEditor *editor)
     highlighter->commentEndExpression = highlightManager->getEndMultiComments(fi.completeSuffix());
     highlighter->commentStartExpression = highlightManager->getStartMultiComments(fi.completeSuffix());
     highlighter->multiLineCommentFormat = highlightManager->getMultiCommentsFormart();
+    highlighter->sectionHighlightingRules = highlightManager->getSectionHighlighting(fi.completeSuffix());
     emit(highlighter->rehighlight());
 }
 

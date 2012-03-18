@@ -32,8 +32,44 @@ void Highlighter::highlightBlock(const QString &text)
     }
 
     setCurrentBlockUserData(data);
-    if(!highlightingRules.isEmpty()){
-        foreach (const HighlightingRule &rule, highlightingRules) {
+    QVector<HighlightingRule> rules = highlightingRules;
+    if ( ! sectionHighlightingRules.isEmpty()) {
+        for (int i = 0; i < sectionHighlightingRules.size(); ++i) {
+            sectionHighlightingRule section = sectionHighlightingRules[i];
+
+            if (section.start.isEmpty() ||
+                    section.stop.isEmpty())
+                rules << section.highlightingRules;
+            int index = currentBlock().position();
+            int sectionStart = document()
+                    ->find(section.start,currentBlock().position(),QTextDocument::FindBackward)
+                    .position();
+            int sectionEnd = document()
+                    ->find(section.stop,currentBlock().position(),QTextDocument::FindBackward)
+                    .position();
+            bool inSection = ((sectionStart >= 0 && sectionEnd < 0)
+                             || (sectionStart >= index && sectionEnd <= index ));
+            if ( section.start.indexIn(text) >= 0
+                 || inSection){
+                setCurrentBlockState(i);
+                section.opened = true;
+            }
+
+            if ( section.opened )
+            {
+                rules << section.highlightingRules;
+            }
+
+            if ( section.stop.indexIn(text) >= 0){
+                section.opened = false;
+                setCurrentBlockState(-1);
+            }
+
+            sectionHighlightingRules[i] = section;
+        }
+    }
+    if( ! rules.isEmpty()){
+        foreach (const HighlightingRule &rule, rules) {
             QRegExp expression(rule.pattern);
             int index = expression.indexIn(text);
             while (index >= 0) {
@@ -43,8 +79,8 @@ void Highlighter::highlightBlock(const QString &text)
             }
         }
     }
-    setCurrentBlockState(0);
 
+    setCurrentBlockState(0);
     if(commentStartExpression.isEmpty() || commentEndExpression.isEmpty())
         return;
 
@@ -65,4 +101,5 @@ void Highlighter::highlightBlock(const QString &text)
         setFormat(startIndex, commentLength, multiLineCommentFormat);
         startIndex = commentStartExpression.indexIn(text, startIndex + commentLength);
     }
+    ///emit(rehighlight());
 }

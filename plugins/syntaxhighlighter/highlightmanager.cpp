@@ -33,6 +33,7 @@ void HighlightManager::initSyntaxes()
         if ( syntax == NULL)
             continue;
         syntax->dependenciesWalk(syntaxes);
+        ///qDebug()<< syntax->sectionHighlightingRules;
     }
 }
 
@@ -72,5 +73,16 @@ QRegExp HighlightManager::getEndMultiComments(QString syntax)
 QTextCharFormat HighlightManager::getMultiCommentsFormart()
 {
     return m_colorScheme.value("multiline_comment");
+}
+
+QVector<sectionHighlightingRule> HighlightManager::getSectionHighlighting(QString syntax)
+{
+    if( ! syntaxes.contains(syntax))
+        syntax = "default";
+
+    if( ! syntaxes.contains(syntax))
+        return QVector<sectionHighlightingRule> ();
+
+    return syntaxes.value(syntax)->sectionHighlightingRules;
 }
 

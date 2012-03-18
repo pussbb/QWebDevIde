@@ -18,6 +18,7 @@ public:
     explicit HighlightManager(QObject *parent = 0);
     QMap<QString , AbstractSyntaxHighlight*> syntaxes;
     QVector<HighlightingRule> getHighlighting(QString syntax = "");
+    QVector<sectionHighlightingRule> getSectionHighlighting(QString syntax = "");
     QRegExp getStartMultiComments(QString syntax = "");
     QRegExp getEndMultiComments(QString syntax = "");
     QTextCharFormat getMultiCommentsFormart();

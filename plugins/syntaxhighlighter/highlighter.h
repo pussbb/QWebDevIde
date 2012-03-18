@@ -18,6 +18,7 @@ class Highlighter : public QSyntaxHighlighter
 public:
     Highlighter(QTextDocument *parent = 0);
     QVector<HighlightingRule> highlightingRules;
+    QVector<sectionHighlightingRule> sectionHighlightingRules;
     QRegExp commentStartExpression;
     QRegExp commentEndExpression;
     QTextCharFormat multiLineCommentFormat;
