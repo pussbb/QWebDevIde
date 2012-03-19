@@ -4,6 +4,7 @@ moc_*
 /bin/plugins/lib*
 /bin/qwebdevide
 qrc*.cpp
+*.log
 *~
 *.pro.user
 *Makefile

@@ -74,5 +74,8 @@ INCLUDEPATH += $$PWD/../libs/PluginManager
 DEPENDPATH += $$PWD/../libs/PluginManager
 
 
-
+unix:{
+  QMAKE_LFLAGS += -Wl,--rpath=../bin/
+  QMAKE_LFLAGS_RPATH=
+}
 
