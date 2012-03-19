@@ -81,19 +81,13 @@ void AbstractSyntaxHighlight::dependenciesWalk(QMap<QString, AbstractSyntaxHighl
     foreach(const QString &file,dependencies.keys()){
         QVariantMap dependency = dependencies.value(file).toMap();
         AbstractSyntaxHighlight *syntax = existing.value(file);
+
         if ( syntax == NULL)
             continue;
-        if ( !syntax->dependenciesResolved)
+
+        if ( ! syntax->dependenciesResolved)
             syntax->dependenciesWalk(existing);
 
-//        if ( ! syntax->section.isEmpty())
-//        {
-//            sectionHighlightingRule sectionHighlighting;
-//            sectionHighlighting.start = QRegExp(syntax->section.value("start").toString());
-//            sectionHighlighting.stop = QRegExp(syntax->section.value("stop").toString());
-//            sectionHighlighting.highlightingRules << syntax->highlightingRules;
-//            sectionHighlightingRules.append(sectionHighlighting);
-//        }
         if ( dependency.contains("start")) {
             sectionHighlightingRule sectionHighlighting;
             sectionHighlighting.start = QRegExp(syntax->section.value("start").toString());
@@ -104,14 +98,16 @@ void AbstractSyntaxHighlight::dependenciesWalk(QMap<QString, AbstractSyntaxHighl
         else{
             highlightingRules << syntax->highlightingRules;
         }
-        if(commentStartExpression.isEmpty()){
+
+        if(commentStartExpression.isEmpty()) {
             commentStartExpression = syntax->commentStartExpression;
         }
-        else{
+        else {
             QString expression = commentStartExpression.pattern();
             expression.append("|" + syntax->commentStartExpression.pattern());
             commentStartExpression = QRegExp(expression);
         }
+
         if(commentEndExpression.isEmpty()){
             commentEndExpression = syntax->commentEndExpression;
         }
