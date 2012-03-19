@@ -16,10 +16,11 @@ bool AbstractSyntaxHighlight::initSyntax(const QString &fileName)
     stream.setCodec("UTF-8");
     JsonReader reader;
     reader.parse(stream.readAll());
-    qDebug()<< reader.errorString();
+    f.close();
     if( !reader.errorString().isEmpty())
         return false;
     QVariant v = reader.result();
+    reader.~JsonReader();
     if(!v.canConvert(QVariant::Map))
         return false;
 
@@ -54,7 +55,7 @@ bool AbstractSyntaxHighlight::initSyntax(const QString &fileName)
             m_highlightingRules.append(rule);
         }
     }
-    if (description.contains("section"))
+    if ( description.contains("section"))
     {
         section =  description.value("section").toMap();
         sectionHighlightingRule sectionHighlighting;
@@ -73,6 +74,9 @@ bool AbstractSyntaxHighlight::initSyntax(const QString &fileName)
     {
         highlightingRules << m_highlightingRules;
     }
+    m_highlightingRules.clear();
+    m_highlightingRules.squeeze();
+    syntax.clear();
     return true;
 }
 

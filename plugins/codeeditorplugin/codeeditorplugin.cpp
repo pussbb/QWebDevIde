@@ -31,7 +31,6 @@ bool CodeEditorPlugin::save(const QString &fileId)
 
 void CodeEditorPlugin::close(const QString &fileId)
 {
-
     openedFiles.value(fileId)->deleteLater();
     openedFiles.remove(fileId);
     emit(aboutToClose(fileId));

@@ -16,7 +16,7 @@ class HighlightManager : public QObject
     Q_OBJECT
 public:
     explicit HighlightManager(QObject *parent = 0);
-    QMap<QString , AbstractSyntaxHighlight*> syntaxes;
+
     QVector<HighlightingRule> getHighlighting(QString syntax = "");
     QVector<sectionHighlightingRule> getSectionHighlighting(QString syntax = "");
     QRegExp getStartMultiComments(QString syntax = "");
@@ -32,6 +32,7 @@ public slots:
 private:
     QString syntaxesPath;
     QMap<QString,QTextCharFormat> m_colorScheme;
+    QMap<QString , AbstractSyntaxHighlight*> syntaxes;
 };
 
 #endif // HIGHLIGHTMANAGER_H

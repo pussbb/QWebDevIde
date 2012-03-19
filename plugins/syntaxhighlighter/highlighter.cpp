@@ -12,8 +12,11 @@ Highlighter::Highlighter(QTextDocument *parent)
 
 Highlighter::~Highlighter()
 {
+
     highlightingRules.clear();
+    highlightingRules.squeeze();
     sectionHighlightingRules.clear();
+    sectionHighlightingRules.squeeze();
     ///highlightingRules.detach();
 }
 

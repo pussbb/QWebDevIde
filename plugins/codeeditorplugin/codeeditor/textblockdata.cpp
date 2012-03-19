@@ -4,6 +4,10 @@ TextBlockData::TextBlockData()
 {
     // Nothing to do
 }
+TextBlockData::~TextBlockData()
+{
+    m_parentheses.clear();
+}
 
 QVector<ParenthesisInfo *> TextBlockData::parentheses()
 {

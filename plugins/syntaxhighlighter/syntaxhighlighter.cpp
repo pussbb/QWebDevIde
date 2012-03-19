@@ -48,6 +48,7 @@ void SyntaxHighlighter::editorAboutToClose(const QString &fileId)
         return;
     qDebug()<<fileId;
     qDebug()<< "delete highlighter";
+    qDebug()<<highlighters.value(fileId);
     highlighters.value(fileId)->deleteLater();
     highlighters.remove(fileId);
 

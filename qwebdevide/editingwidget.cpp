@@ -38,7 +38,7 @@ void EditingWidget::refreshFileList()
     foreach(QString fileId, editedFiles->openedFiles.keys()){
         EditedFile editedFile= editedFiles->openedFiles.value(fileId);
         QString text = editedFile.fi.fileName();
-        qDebug()<<editedFile.changed;
+        qDebug()<<"is has not saved data"<<editedFile.changed;
         if ( editedFile.changed)
             text = "*" + text;
         ui->openedFilesList->addItem(text,fileId);
@@ -97,7 +97,7 @@ void EditingWidget::keyPressEvent(QKeyEvent *e)
 }
 
 void EditingWidget::contentChanged()
-{
+{qDebug()<<"text changed";
     int index = ui->openedFilesList->currentIndex();
     QString text = ui->openedFilesList->itemText(index);
     if ( text.at(0) != '*')

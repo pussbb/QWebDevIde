@@ -22,6 +22,18 @@ CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
 
 }
 
+CodeEditor::~CodeEditor()
+{
+    QTextBlock currentBlock = document()->begin();
+
+        while (currentBlock.isValid()) {
+            TextBlockData *data = static_cast<TextBlockData *>(currentBlock.userData());
+            if ( data)
+                data->~TextBlockData();
+            currentBlock = currentBlock.next();
+        }
+       delete lineNumberArea;
+}
 
 void CodeEditor::initSettings()
 {
@@ -243,6 +255,8 @@ void CodeEditor::openFile(const QString file)
         return;
     m_file = file;
     fetch(&f);
+    //file.clear();
+   /// delete &file;
 }
 
 void CodeEditor::fetch(QFile *file)
@@ -276,6 +290,8 @@ void CodeEditor::fetch(QFile *file)
     }
 
     setPlainText(codec->toUnicode(buf));
+    buf.clear();
+    ///delete codec;
 }
 
 bool CodeEditor::saveFile()
@@ -289,6 +305,7 @@ bool CodeEditor::saveFile()
                     ).toLocal8Bit()
                 );
     f.close();
+    f.deleteLater();
     changed = false;
     return true;
 }
