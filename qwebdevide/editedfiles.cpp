@@ -49,7 +49,7 @@ bool EditedFiles::closeFile(const QString &fileId, bool autoSave )
 
 bool EditedFiles::closeAllFiles()
 {
-    int state;
+    int state = QMessageBox::YesToAll;
     if (changedCount > 0) {
         QMessageBox msgBox;
         msgBox.setText("Do you realy whant to close files without saving.");
@@ -58,7 +58,7 @@ bool EditedFiles::closeAllFiles()
         msgBox.setDefaultButton(QMessageBox::Cancel);
         state = msgBox.exec();
     }
-    if (state == QMessageBox::Cancel)
+    if ( state == QMessageBox::Cancel)
         return false;
 
     foreach(const QString &fileId, openedFiles.keys()) {

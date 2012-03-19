@@ -57,7 +57,6 @@ bool AbstractSyntaxHighlight::initSyntax(const QString &fileName)
     if (description.contains("section"))
     {
         section =  description.value("section").toMap();
-        qDebug()<< section;
         sectionHighlightingRule sectionHighlighting;
         sectionHighlighting.start = QRegExp(section.value("start").toString());
         sectionHighlighting.stop = QRegExp(section.value("stop").toString());
