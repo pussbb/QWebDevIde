@@ -9,7 +9,10 @@
         }
    },
   "dependencies":{
-    "default" : {},
+    "default" : {
+      "start": "<\\w+",
+      "stop" : "\\s?/?\\w?\"?>"
+    },
     "html": {}
   },
   "string":[

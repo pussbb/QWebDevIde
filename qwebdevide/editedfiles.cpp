@@ -43,6 +43,7 @@ bool EditedFiles::closeFile(const QString &fileId, bool autoSave )
     }
     editedFile.editorInterface->close(fileId);
     editedFile.widget->deleteLater();
+    editedFile.fi.~QFileInfo();
     openedFiles.remove(fileId);
     return true;
 }

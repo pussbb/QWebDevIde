@@ -22,7 +22,7 @@ public:
     inline QMap<QString,QTextCharFormat> currentColorScheme() {return m_colorScheme;}
 
 public slots:
-    void setEditorColorScheme(CodeEditor *editor);
+    void setEditorColorScheme(CodeEditor *editor, const QString &);
 private:
     QString appPath;
     QString schemesPath;

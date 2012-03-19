@@ -66,8 +66,8 @@ void ColorScheme::init(QMap<QString, QObject *> dependencies, QObject *parent)
 {
     Q_UNUSED(parent);
     CodeEditorPlugin *editorPlugin = static_cast<CodeEditorPlugin *> (dependencies.value("CodeEditor"));
-    connect(editorPlugin,SIGNAL(editorCreated(CodeEditor*)),
-            this,SLOT(setEditorColorScheme(CodeEditor*)));
+    connect(editorPlugin,SIGNAL(editorCreated(CodeEditor*, const QString &)),
+            this,SLOT(setEditorColorScheme(CodeEditor*, const QString &)));
 }
 
 QColor ColorScheme::getEditorBackround()
@@ -77,7 +77,7 @@ QColor ColorScheme::getEditorBackround()
     return QColor(220,220,217);
 }
 
-void ColorScheme::setEditorColorScheme(CodeEditor *editor)
+void ColorScheme::setEditorColorScheme(CodeEditor *editor, const QString &)
 {
     LineAreaStyle lineArea;
     QColor bgColor = m_colorScheme.value("line_area_background").foreground().color();

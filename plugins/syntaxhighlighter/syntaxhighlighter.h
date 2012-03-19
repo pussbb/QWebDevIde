@@ -5,6 +5,9 @@
 #include "../../libs/PluginManager/iplugin.h"
 #include <codeeditor.h>
 #include <highlightmanager.h>
+#include <json.h>
+#include <highlighter.h>
+
 class SyntaxHighlighter : public QObject, IPlugin
 {
     Q_OBJECT
@@ -23,13 +26,15 @@ public:
     QColor getEditorBackround();
 
 public slots:
-    void setEditorColorScheme(CodeEditor *editor);
+    void setEditorHighlighter(CodeEditor *editor, const QString &fileId);
+    void editorAboutToClose(const QString &);
 
 private:
     HighlightManager *highlightManager;
     void initSyntaxes();
     QString syntaxesPath;
     QMap<QString,QTextCharFormat> m_colorScheme;
+    QMap<QString, Highlighter *> highlighters;
 };
 
 #endif

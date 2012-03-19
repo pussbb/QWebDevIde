@@ -17,6 +17,7 @@ class Highlighter : public QSyntaxHighlighter
 
 public:
     Highlighter(QTextDocument *parent = 0);
+    ~Highlighter();
     QVector<HighlightingRule> highlightingRules;
     QVector<sectionHighlightingRule> sectionHighlightingRules;
     QRegExp commentStartExpression;
@@ -26,5 +27,8 @@ protected:
     void highlightBlock(const QString &text);
 
 private:
+    bool highlighted;
+    void highlight(const QVector<HighlightingRule> &highlightingRules, const QString &text);
+    void deleteHighlightingRules(QVector<HighlightingRule> &m_highlightingRules);
 };
 #endif

@@ -15,7 +15,8 @@ class CodeEditorPlugin : public QObject, IPlugin, IEditors
     Q_INTERFACES(IEditors)
 
 signals:
-    void editorCreated(CodeEditor *);
+    void editorCreated(CodeEditor *, const QString &);
+    void aboutToClose(const QString &);
 
 public:
     QStringList dependencies() const;

@@ -18,7 +18,7 @@ QWidget * CodeEditorPlugin::open(const QString &file, const QString &fileId)
     editor->openFile(file);
     QFileInfo fi(file);
     openedFiles.insert(fileId, editor);
-    emit(editorCreated(editor));
+    emit(editorCreated(editor,fileId));
     return editor;
 }
 
@@ -31,8 +31,10 @@ bool CodeEditorPlugin::save(const QString &fileId)
 
 void CodeEditorPlugin::close(const QString &fileId)
 {
+
     openedFiles.value(fileId)->deleteLater();
     openedFiles.remove(fileId);
+    emit(aboutToClose(fileId));
 }
 
 QStringList CodeEditorPlugin::mimeTypes()

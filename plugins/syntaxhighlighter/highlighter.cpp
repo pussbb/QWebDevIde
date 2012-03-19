@@ -10,6 +10,15 @@ Highlighter::Highlighter(QTextDocument *parent)
 
 }
 
+Highlighter::~Highlighter()
+{
+    highlightingRules.clear();
+    sectionHighlightingRules.clear();
+    ///highlightingRules.detach();
+}
+
+
+
 void Highlighter::highlightBlock(const QString &text)
 {
     TextBlockData *data = new TextBlockData;
@@ -39,46 +48,43 @@ void Highlighter::highlightBlock(const QString &text)
 
             if (section.start.isEmpty() ||
                     section.stop.isEmpty())
-                rules << section.highlightingRules;
-            int index = currentBlock().position();
-            int sectionStart = document()
-                    ->find(section.start,currentBlock().position(),QTextDocument::FindBackward)
-                    .position();
-            int sectionEnd = document()
-                    ->find(section.stop,currentBlock().position(),QTextDocument::FindBackward)
-                    .position();
-            bool inSection = ((sectionStart >= 0 && sectionEnd < 0)
-                             || (sectionStart >= index && sectionEnd <= index ));
-            if ( section.start.indexIn(text) >= 0
-                 || inSection){
-                setCurrentBlockState(i);
-                section.opened = true;
+                highlight(highlightingRules, text);
+
+            if ( ! section.opened) {
+
+                if ( section.start.indexIn(text) >= 0 ) {
+                    section.opened = true;
+                }
+                else {
+                    qDebug()<< "find start of section";
+                    int index = currentBlock().position();
+                    int sectionStart = document()
+                            ->find(section.start,currentBlock().position(),QTextDocument::FindBackward)
+                            .position();
+                    int sectionEnd = document()
+                            ->find(section.stop,currentBlock().position(),QTextDocument::FindBackward)
+                            .position();
+                    if ((sectionStart >= 0 && sectionEnd < 0)
+                            || (sectionStart >= index && sectionEnd <= index ))
+                        section.opened = true;
+
+                }
             }
+
 
             if ( section.opened )
             {
-                rules << section.highlightingRules;
-            }
+                highlight(section.highlightingRules, text);
 
-            if ( section.stop.indexIn(text) >= 0){
-                section.opened = false;
-                setCurrentBlockState(-1);
+                if ( section.stop.indexIn(text) >= 0)
+                    section.opened = false;
             }
 
             sectionHighlightingRules[i] = section;
         }
     }
-    if( ! rules.isEmpty()){
-        foreach (const HighlightingRule &rule, rules) {
-            QRegExp expression(rule.pattern);
-            int index = expression.indexIn(text);
-            while (index >= 0) {
-                int length = expression.matchedLength();
-                setFormat(index, length, rule.format);
-                index = expression.indexIn(text, index + length);
-            }
-        }
-    }
+    if( ! highlighted)
+         highlight(highlightingRules, text);
 
     setCurrentBlockState(0);
     if(commentStartExpression.isEmpty() || commentEndExpression.isEmpty())
@@ -101,5 +107,26 @@ void Highlighter::highlightBlock(const QString &text)
         setFormat(startIndex, commentLength, multiLineCommentFormat);
         startIndex = commentStartExpression.indexIn(text, startIndex + commentLength);
     }
-    ///emit(rehighlight());
+
 }
+
+void Highlighter::highlight(const QVector<HighlightingRule> &highlightingRules, const QString &text)
+{
+
+    if( highlightingRules.isEmpty())
+        return;
+
+    highlighted = true;
+    foreach (const HighlightingRule &rule, highlightingRules) {
+        QRegExp expression(rule.pattern);
+        int index = expression.indexIn(text);
+        while (index >= 0) {
+            int length = expression.matchedLength();
+            setFormat(index, length, rule.format);
+            index = expression.indexIn(text, index + length);
+        }
+    }
+
+}
+
+
