@@ -26,7 +26,7 @@ void SimpleLoggingHandler(QtMsgType type, const char *msg) {
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
+#if QT_NO_DEBUG
     QString logFileName = a.applicationDirPath()
             + QDir::toNativeSeparators("/log/")
             + QDate::currentDate().toString()
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 
     logFile.open(logFileName.toLocal8Bit(), ios::app);
     qInstallMsgHandler(SimpleLoggingHandler);
-
+#endif
     QWebDevIde w;
     w.show();
     return a.exec();
