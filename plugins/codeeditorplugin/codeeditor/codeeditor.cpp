@@ -13,8 +13,7 @@ CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
             this, SLOT(updateLineNumberArea(QRect,int)));
     connect(this, SIGNAL(cursorPositionChanged()),
             this, SLOT(highlightCurrentLine()));
-    connect(this,SIGNAL(textChanged()),
-            this,SLOT(changedText()));
+
 
     initSettings();
     updateLineNumberAreaWidth(0);
@@ -24,14 +23,6 @@ CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
 
 CodeEditor::~CodeEditor()
 {
-    QTextBlock currentBlock = document()->begin();
-
-        while (currentBlock.isValid()) {
-            TextBlockData *data = static_cast<TextBlockData *>(currentBlock.userData());
-            if ( data)
-                data->~TextBlockData();
-            currentBlock = currentBlock.next();
-        }
        delete lineNumberArea;
 }
 
@@ -255,7 +246,7 @@ void CodeEditor::openFile(const QString file)
         return;
     m_file = file;
     fetch(&f);
-    //file.clear();
+
    /// delete &file;
 }
 
@@ -290,6 +281,10 @@ void CodeEditor::fetch(QFile *file)
     }
 
     setPlainText(codec->toUnicode(buf));
+    //TODO a hack need to remove
+    origin = toPlainText();
+    connect(this,SIGNAL(textChanged()),
+            this,SLOT(changedText()));
     buf.clear();
     ///delete codec;
 }
@@ -360,6 +355,10 @@ void CodeEditor::keyPressEvent(QKeyEvent *e)
 
 void CodeEditor::changedText()
 {
+    //TODO origin is a hack need to remove
+    if ( changed || origin.compare(toPlainText()) == 0)
+        return;
+
     changed = true;
     emit(contentChanged());
 }

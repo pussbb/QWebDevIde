@@ -12,12 +12,6 @@ Highlighter::Highlighter(QTextDocument *parent)
 
 Highlighter::~Highlighter()
 {
-
-    highlightingRules.clear();
-    highlightingRules.squeeze();
-    sectionHighlightingRules.clear();
-    sectionHighlightingRules.squeeze();
-    ///highlightingRules.detach();
 }
 
 
@@ -44,6 +38,7 @@ void Highlighter::highlightBlock(const QString &text)
     }
 
     setCurrentBlockUserData(data);
+
     QVector<HighlightingRule> rules = highlightingRules;
     if ( ! sectionHighlightingRules.isEmpty()) {
         for (int i = 0; i < sectionHighlightingRules.size(); ++i) {
@@ -60,6 +55,7 @@ void Highlighter::highlightBlock(const QString &text)
                 }
                 else {
                     qDebug()<< "find start of section";
+
                     int index = currentBlock().position();
                     int sectionStart = document()
                             ->find(section.start,currentBlock().position(),QTextDocument::FindBackward)

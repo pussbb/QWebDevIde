@@ -43,6 +43,7 @@ protected:
 signals:
     void keyPressed(QKeyEvent *);
     void contentChanged();
+
 private slots:
     void updateLineNumberAreaWidth(int newBlockCount);
     void highlightCurrentLine();
@@ -52,6 +53,8 @@ private slots:
 
 private:
     QString m_file;
+    // a hack need to remove
+    QString origin;
     void createParenthesisSelection(int pos);
     void matchParentheses();
     void fetch(QFile *file);

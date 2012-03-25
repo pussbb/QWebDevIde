@@ -24,8 +24,8 @@ QWidget * CodeEditorPlugin::open(const QString &file, const QString &fileId)
 
 bool CodeEditorPlugin::save(const QString &fileId)
 {
-    CodeEditor *editor = openedFiles.value(fileId);
-    editor->saveFile();
+;
+    openedFiles.value(fileId)->saveFile();
     return true;
 }
 
