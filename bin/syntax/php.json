@@ -12,7 +12,7 @@
     "default" : {},
     "html": {
       "start": "<\\w+",
-      "stop" : "\\s?/?\\w?\"?>"
+      "stop" : "/>|</\\w+>"
     }
   },
   "string":[

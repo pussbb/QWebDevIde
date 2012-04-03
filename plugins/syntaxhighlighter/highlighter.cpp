@@ -49,38 +49,44 @@ void Highlighter::highlightBlock(const QString &text)
             {
                 continue;
             }
+            int index = currentBlock().position();
 
-            if ( ! section.opened) {
-
-                if ( section.start.indexIn(text) >= 0 ) {
-                    section.opened = true;
-                }
-                else {
+            if ( section.start.indexIn(text) >= 0) {
+                section.opened = true;
+                ++section.count;
+            }
+            if ( ! section.opened && section.count == 0 ) {
                     qDebug()<< "find start of section";
-
-                    int index = currentBlock().position();
                     int sectionStart = document()
                             ->find(section.start,currentBlock().position(),QTextDocument::FindBackward)
                             .position();
                     int sectionEnd = document()
-                            ->find(section.stop,currentBlock().position(),QTextDocument::FindBackward)
+                            ->find(section.stop,currentBlock().position())
                             .position();
                     if ((sectionStart >= 0 && sectionEnd < 0)
-                            || (sectionStart >= index && sectionEnd <= index ))
+                            || (sectionStart >= index && sectionEnd <= index )) {
                         section.opened = true;
-
-                }
+                        ++section.count;
+                  }
             }
-            ///qDebug()<<section.opened<< "start reg"<<section.start.pattern();
-            if ( section.opened )
+            qDebug()<<section.opened<< "start reg"<<section.start.pattern();
+            qDebug()<<text;
+            if ( section.opened || section.count > 0)
             {
                 highlight(section.highlightingRules, text);
 
-                if ( section.stop.indexIn(text) >= 0)
+                if ( section.stop.indexIn(text) >= 0) {
+                    --section.count;
                     section.opened = false;
-
-                sectionHighlightingRules[i] = section;
+                }
             }
+            if ( index == document()->blockCount())
+            {
+                section.count = 0;
+                section.opened = false;
+            }
+
+            sectionHighlightingRules[i] = section;
         }
     }
 
