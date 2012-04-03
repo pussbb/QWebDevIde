@@ -48,8 +48,7 @@ bool AbstractSyntaxHighlight::initSyntax(const QString &fileName)
         QTextCharFormat colorScheme = m_colorScheme.value(key,QTextCharFormat());
         HighlightingRule rule;
         foreach (const QString &pattern,rules) {
-            rule.pattern = QRegExp(pattern);
-//            rule.pattern.setMinimal(true);
+            rule.pattern.setPattern(pattern);
             rule.pattern.setPatternSyntax(QRegExp::RegExp2);
             rule.format = colorScheme;
             m_highlightingRules.append(rule);
@@ -60,10 +59,10 @@ bool AbstractSyntaxHighlight::initSyntax(const QString &fileName)
         section =  description.value("section").toMap();
         sectionHighlightingRule sectionHighlighting;
 
-        sectionHighlighting.start = QRegExp(section.value("start").toString());
+        sectionHighlighting.start.setPattern(section.value("start").toString());
 //        sectionHighlighting.start.setPatternSyntax(QRegExp::RegExp2);
 
-        sectionHighlighting.stop = QRegExp(section.value("stop").toString());
+        sectionHighlighting.stop.setPattern(section.value("stop").toString());
 //        sectionHighlighting.stop.setPatternSyntax(QRegExp::RegExp2);
 
         sectionHighlighting.opened = false;
@@ -98,15 +97,11 @@ void AbstractSyntaxHighlight::dependenciesWalk(QMap<QString, AbstractSyntaxHighl
 
         if ( dependency.contains("start")) {
             sectionHighlightingRule sectionHighlighting;
-            sectionHighlighting.start = QRegExp(syntax->section.value("start").toString());
-            sectionHighlighting.stop = QRegExp(syntax->section.value("stop").toString());
-
-//            sectionHighlighting.start.setPatternSyntax(QRegExp::RegExp2);
-//            sectionHighlighting.stop.setPatternSyntax(QRegExp::RegExp2);
-
+            sectionHighlighting.start.setPattern(dependency.value("start").toString());
+            sectionHighlighting.stop.setPattern(dependency.value("stop").toString());
             sectionHighlighting.highlightingRules << syntax->highlightingRules;
             // + default;
-            sectionHighlighting.highlightingRules << highlightingRules;
+            //sectionHighlighting.highlightingRules << highlightingRules;
             sectionHighlightingRules.append(sectionHighlighting);
         }
         else {

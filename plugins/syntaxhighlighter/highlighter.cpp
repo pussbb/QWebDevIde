@@ -43,10 +43,12 @@ void Highlighter::highlightBlock(const QString &text)
     if ( ! sectionHighlightingRules.isEmpty()) {
         for (int i = 0; i < sectionHighlightingRules.size(); ++i) {
             sectionHighlightingRule section = sectionHighlightingRules[i];
-
+///qDebug()<<"start of the section"<<section.start.pattern()<< "end of section"<<section.stop.pattern();
             if (section.start.isEmpty() ||
                     section.stop.isEmpty())
-                highlight(highlightingRules, text);
+            {
+                continue;
+            }
 
             if ( ! section.opened) {
 
@@ -69,21 +71,20 @@ void Highlighter::highlightBlock(const QString &text)
 
                 }
             }
-
-
+            ///qDebug()<<section.opened<< "start reg"<<section.start.pattern();
             if ( section.opened )
             {
                 highlight(section.highlightingRules, text);
 
                 if ( section.stop.indexIn(text) >= 0)
                     section.opened = false;
-            }
 
-            sectionHighlightingRules[i] = section;
+                sectionHighlightingRules[i] = section;
+            }
         }
     }
-    if( ! highlighted)
-         highlight(highlightingRules, text);
+
+    highlight(highlightingRules, text);
 
     setCurrentBlockState(0);
     if(commentStartExpression.isEmpty() || commentEndExpression.isEmpty())
@@ -117,12 +118,11 @@ void Highlighter::highlight(const QVector<HighlightingRule> &highlightingRules, 
 
     highlighted = true;
     foreach (const HighlightingRule &rule, highlightingRules) {
-        QRegExp expression(rule.pattern);
-        int index = expression.indexIn(text);
-        while (index >= 0) {
-            int length = expression.matchedLength();
+        int index = rule.pattern.indexIn(text);
+        int length = 0;
+        while ((index = rule.pattern.indexIn(text, index + length)) != -1) {
+            length = rule.pattern.matchedLength();
             setFormat(index, length, rule.format);
-            index = expression.indexIn(text, index + length);
         }
     }
 
