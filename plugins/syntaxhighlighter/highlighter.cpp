@@ -43,7 +43,7 @@ void Highlighter::highlightBlock(const QString &text)
     if ( ! sectionHighlightingRules.isEmpty()) {
         for (int i = 0; i < sectionHighlightingRules.size(); ++i) {
             sectionHighlightingRule section = sectionHighlightingRules[i];
-///qDebug()<<"start of the section"<<section.start.pattern()<< "end of section"<<section.stop.pattern();
+
             if (section.start.isEmpty() ||
                     section.stop.isEmpty())
             {
@@ -61,16 +61,16 @@ void Highlighter::highlightBlock(const QString &text)
                             ->find(section.start,currentBlock().position(),QTextDocument::FindBackward)
                             .position();
                     int sectionEnd = document()
-                            ->find(section.stop,currentBlock().position())
+                            ->find(section.stop,sectionStart)
                             .position();
+
                     if ((sectionStart >= 0 && sectionEnd < 0)
-                            || (sectionStart >= index && sectionEnd <= index )) {
+                            || (sectionStart <= index && sectionEnd > index )) {
                         section.opened = true;
                         ++section.count;
                   }
             }
-            qDebug()<<section.opened<< "start reg"<<section.start.pattern();
-            qDebug()<<text;
+
             if ( section.opened || section.count > 0)
             {
                 highlight(section.highlightingRules, text);
@@ -80,10 +80,9 @@ void Highlighter::highlightBlock(const QString &text)
                     section.opened = false;
                 }
             }
-            if ( index == document()->blockCount())
+            if ( section.count < 0)
             {
                 section.count = 0;
-                section.opened = false;
             }
 
             sectionHighlightingRules[i] = section;
