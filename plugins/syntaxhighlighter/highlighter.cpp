@@ -42,6 +42,7 @@ void Highlighter::highlightBlock(const QString &text)
 
     setCurrentBlockUserData(data);
 
+    highlight(highlightingRules, text);
     QVector<HighlightingRule> rules = highlightingRules;
     if ( ! sectionHighlightingRules.isEmpty()) {
         for (int i = 0; i < sectionHighlightingRules.size(); ++i) {
@@ -65,7 +66,7 @@ void Highlighter::highlightBlock(const QString &text)
                   if (sectionStart <= index && sectionEnd >= index) {
                         ++section.count;
                   }
-                    else{qDebug()<<section.auto_decrease;
+                    else{
                         if (section.count > 0 && section.auto_decrease )
                             --section.count;
                     }
@@ -83,9 +84,6 @@ void Highlighter::highlightBlock(const QString &text)
             sectionHighlightingRules[i] = section;
         }
     }
-
-    highlight(highlightingRules, text);
-
     setCurrentBlockState(0);
     if(commentStartExpression.isEmpty() || commentEndExpression.isEmpty())
         return;

@@ -64,13 +64,13 @@
         "color":"#e6db74"
     },
     "number": {
-        "bold":true,
+        "bold":false,
         "italic":false,
         "underline":false,
         "color":{
-            "r":186,
-            "g":206,
-            "b":188,
+            "r":163,
+            "g":98,
+            "b":243,
             "a":255
         }
     },
@@ -84,76 +84,76 @@
         "bold":false,
         "italic":false,
         "underline":false,
-        "color":"#e6db74"
+        "color":"#ff0000"
     },
     "builtin":{
-        "bold":true,
+        "bold":false,
         "italic":true,
         "underline":false,
         "color":{
-            "r":86,
-            "g":16,
-            "b":8,
+            "r":249,
+            "g":38,
+            "b":86,
             "a":255
         }
     },
     "class":{
-        "bold":true,
+        "bold":false,
         "italic":false,
         "underline":false,
         "color":{
-            "r":86,
-            "g":206,
-            "b":188,
+            "r":89,
+            "g":197,
+            "b":232,
             "a":255
         }
     },
     "namespace":{
-        "bold":true,
+        "bold":false,
         "italic":false,
         "underline":false,
         "color":{
-            "r":86,
-            "g":206,
-            "b":188,
+            "r":157,
+            "g":209,
+            "b":41,
             "a":255
         }
     },
     "exception":{
-        "bold":true,
+        "bold":false,
         "italic":false,
         "underline":false,
         "color":{
-            "r":86,
-            "g":206,
-            "b":188,
+            "r":255,
+            "g":0,
+            "b":0,
             "a":255
         }
     },
     "variable":{
-        "bold":true,
+        "bold":false,
         "italic":false,
         "underline":false,
         "color":{
-            "r":86,
-            "g":206,
-            "b":188,
+            "r":180,
+            "g":182,
+            "b":65,
             "a":255
         }
     },
     "constant":{
-        "bold":true,
+        "bold":false,
         "italic":false,
         "underline":false,
         "color":{
-            "r":86,
-            "g":206,
-            "b":188,
+            "r":192,
+            "g":140,
+            "b":18,
             "a":255
         }
     },
     "entity":{
-        "bold":true,
+        "bold":false,
         "italic":false,
         "underline":false,
         "color":{
@@ -164,7 +164,7 @@
         }
     },
     "attribute":{
-        "bold":true,
+        "bold":false,
         "italic":true,
         "underline":true,
         "color":{
@@ -175,7 +175,7 @@
         }
     },
     "tag":{
-        "bold":true,
+        "bold":false,
         "italic":false,
         "underline":false,
         "color":{
@@ -187,7 +187,7 @@
     },
 
     "function":{
-        "bold":true,
+        "bold":false,
         "italic":false,
         "underline":false,
         "color":{

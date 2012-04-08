@@ -18,42 +18,56 @@
   },
   "string":[
   ],
-  "definition" : [
-      "=>",
-      "::",
-      "->",
-      "\\$[A-Za-z_]+",
-      "<\\?\\w+"
-],
-  "builtin": [
-      "abstract",
-      "catch",
-      "class",
-      "clone",
-      "const",
-      "exception",
-      "extends",
-      "final",
-      "function",
-      "global",
-      "implements",
-      "instanceof",
-      "interface",
-      "new",
-      "self",
-      "static",
-      "parent",
+    "definition" : [
+	"=>",
+	"::",
+	"->",
+	"<\\?\\w+"
+  ],
+  "variable": [
+  "\\$[A-Za-z_]+",
+  "\\sstatic\\s"
+  ],
+  "constant":["\\b[A-Z_]+\\b"],
+  "exception":[
+    "[A-Za-z_]+_[E|e]xception|[E|e]xception",
+     "catch",
+      "try",
+      "throw"
+
+  ],
+  "class":[
+    "abstract",
+    "class",
+    "const" ,
+    "implements",
+    "instanceof",
+    "interface",     
       "private",
       "protected",
       "public",
-      "throw",
-      "try",
-      "band|AND",
-      "bor|OR",
+    "\\s\\bnamespace\\b",
+      "\\s\\buse\\b"
+  ],
+  "operator_word":[
+   "\\s\\bnew\\b",
+      "\\s\\bself\\b",
+      "\\s\\bparent\\b",
+      "\\s\\bclone\\b"
+  ],
+  "namespace":[
+    "extends\\s+([A-Za-z_]+)",
+          "\\s?function\\s"
+  ],
+  "builtin": [
+      "extends",
+      "final",
+      "global",
+      "\\sand\\s|\\sAND\\s",
+      "\\sor\\s|\\sOR\\s",
       "xor",
       "var",
-      "namespace",
-      "use",
+
       "if",
       "else",
       "elseif",
