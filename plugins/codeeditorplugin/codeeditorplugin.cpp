@@ -24,7 +24,6 @@ QWidget * CodeEditorPlugin::open(const QString &file, const QString &fileId)
 
 bool CodeEditorPlugin::save(const QString &fileId)
 {
-;
     openedFiles.value(fileId)->saveFile();
     return true;
 }
@@ -47,7 +46,7 @@ QStringList CodeEditorPlugin::mimeTypes()
                          << "text/plain";
 }
 
-Q_EXPORT_PLUGIN2(CodeEditor, CodeEditorPlugin);
+Q_EXPORT_PLUGIN2(CodeEditor, CodeEditorPlugin)
 
 
 

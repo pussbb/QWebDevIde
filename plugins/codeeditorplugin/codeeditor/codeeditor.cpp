@@ -294,7 +294,16 @@ bool CodeEditor::saveFile()
     QFile f (m_file);
     if ( !f.open(QFile::WriteOnly | QFile::Text))
         return false;
+
 // rewrite
+    QTextCursor cursor = textCursor();
+    QStringList list = document()->toPlainText().split('\n');
+    for (int i = 0; i < list.count(); ++i)
+        list[i] = list[i].remove(QRegExp("\\s*$"));
+
+    document()->setPlainText(list.join("\n"));
+    setTextCursor(cursor);
+
     f.write(codec->toUnicode(
                         document()->toPlainText().toLocal8Bit()
                     ).toLocal8Bit()
@@ -315,7 +324,23 @@ void CodeEditor::keyPressEvent(QKeyEvent *e)
 {
     emit(keyPressed(e));
     if ( e->key() == Qt::Key_Tab) {
-        textCursor().insertText(QString(" ").repeated(4));
+        if ( ! textCursor().hasSelection()) {
+            textCursor().insertText(QString(" ").repeated(4));
+            return;
+        }
+
+        QTextCursor cursor = textCursor();
+
+        QStringList list = cursor.selection().toPlainText().split('\n');
+        for (int i=0; i < list.count(); ++i)
+            list[i] = QString(" ").repeated(4) + list[i];
+
+        int start = cursor.selectionStart();
+        int end = cursor.selectionEnd();        ///cursor.setKeepPositionOnInsert(true);
+        cursor.insertText(list.join("\n"));
+        //cursor.setPosition(start);
+       // cursor.setPosition(b.position(), QTextCursor::KeepAnchor);
+        setTextCursor(cursor);
         return;
     }
     /// to upper case

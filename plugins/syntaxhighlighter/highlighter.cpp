@@ -18,9 +18,6 @@ Highlighter::~Highlighter()
 
 void Highlighter::highlightBlock(const QString &text)
 {
-    if (text.isEmpty())
-       return;
-
     TextBlockData *data = new TextBlockData;
 
     QString m_matchBracketsList = "()[]{}<>";
@@ -55,21 +52,21 @@ void Highlighter::highlightBlock(const QString &text)
                 ++section.count;
             }
             if ( ! section.opened ) {
-                    int sectionStart = document()
-                            ->find(section.start,currentBlock().position(),QTextDocument::FindBackward)
-                            .position();
+                int sectionStart = document()
+                        ->find(section.start,currentBlock().position(),QTextDocument::FindBackward)
+                        .position();
 
-                    int sectionEnd = document()
-                            ->find(section.stop,sectionStart)
-                            .position();
+                int sectionEnd = document()
+                        ->find(section.stop,sectionStart)
+                        .position();
 
-                  if (sectionStart <= index && sectionEnd >= index) {
-                        ++section.count;
-                  }
-                    else{
-                        if (section.count > 0 && section.auto_decrease )
-                            --section.count;
-                    }
+                if (sectionStart <= index && sectionEnd >= index) {
+                    ++section.count;
+                }
+                else{
+                    if (section.count > 0 && section.auto_decrease )
+                        --section.count;
+                }
             }
 
             if ( section.opened || section.count > 0)
@@ -79,7 +76,7 @@ void Highlighter::highlightBlock(const QString &text)
                     if (section.count > 0 )
                         --section.count;
                     section.opened = false;
-               }
+                }
             }
             sectionHighlightingRules[i] = section;
         }

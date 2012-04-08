@@ -101,8 +101,6 @@ void AbstractSyntaxHighlight::dependenciesWalk(QMap<QString, AbstractSyntaxHighl
             sectionHighlighting.count = 0;
             sectionHighlighting.opened = false;
             sectionHighlighting.auto_decrease = dependency.value("auto_decrease",true).toBool();
-            // + default;
-            //sectionHighlighting.highlightingRules << highlightingRules;
             sectionHighlightingRules.append(sectionHighlighting);
         }
         else {
