@@ -60,13 +60,10 @@ bool AbstractSyntaxHighlight::initSyntax(const QString &fileName)
         sectionHighlightingRule sectionHighlighting;
 
         sectionHighlighting.start.setPattern(section.value("start").toString());
-//        sectionHighlighting.start.setPatternSyntax(QRegExp::RegExp2);
-
         sectionHighlighting.stop.setPattern(section.value("stop").toString());
-//        sectionHighlighting.stop.setPatternSyntax(QRegExp::RegExp2);
-
         sectionHighlighting.opened = false;
         sectionHighlighting.count = 0;
+        sectionHighlighting.auto_decrease = section.value("auto_decrease",true).toBool();
         sectionHighlighting.highlightingRules << m_highlightingRules;
         sectionHighlightingRules.append(sectionHighlighting);
     }
@@ -103,6 +100,7 @@ void AbstractSyntaxHighlight::dependenciesWalk(QMap<QString, AbstractSyntaxHighl
             sectionHighlighting.highlightingRules << syntax->highlightingRules;
             sectionHighlighting.count = 0;
             sectionHighlighting.opened = false;
+            sectionHighlighting.auto_decrease = dependency.value("auto_decrease",true).toBool();
             // + default;
             //sectionHighlighting.highlightingRules << highlightingRules;
             sectionHighlightingRules.append(sectionHighlighting);

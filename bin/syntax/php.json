@@ -11,8 +11,9 @@
   "dependencies":{
     "default" : {},
     "html": {
-      "start": "<\\w+",
-      "stop" : "/>|</\\w+>"
+      "start": "\\?>|<\\w+",
+      "stop" : "/>|</\\w+>",
+      "auto_decrease": false
     }
   },
   "string":[

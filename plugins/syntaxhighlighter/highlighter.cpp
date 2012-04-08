@@ -18,6 +18,9 @@ Highlighter::~Highlighter()
 
 void Highlighter::highlightBlock(const QString &text)
 {
+    if (text.isEmpty())
+       return;
+
     TextBlockData *data = new TextBlockData;
 
     QString m_matchBracketsList = "()[]{}<>";
@@ -44,47 +47,39 @@ void Highlighter::highlightBlock(const QString &text)
         for (int i = 0; i < sectionHighlightingRules.size(); ++i) {
             sectionHighlightingRule section = sectionHighlightingRules[i];
 
-            if (section.start.isEmpty() ||
-                    section.stop.isEmpty())
-            {
-                continue;
-            }
             int index = currentBlock().position();
 
             if ( section.start.indexIn(text) >= 0) {
                 section.opened = true;
                 ++section.count;
             }
-            if ( ! section.opened && section.count == 0 ) {
-                    qDebug()<< "find start of section";
+            if ( ! section.opened ) {
                     int sectionStart = document()
                             ->find(section.start,currentBlock().position(),QTextDocument::FindBackward)
                             .position();
+
                     int sectionEnd = document()
                             ->find(section.stop,sectionStart)
                             .position();
 
-                    if ((sectionStart >= 0 && sectionEnd < 0)
-                            || (sectionStart <= index && sectionEnd > index )) {
-                        section.opened = true;
+                  if (sectionStart <= index && sectionEnd >= index) {
                         ++section.count;
                   }
+                    else{qDebug()<<section.auto_decrease;
+                        if (section.count > 0 && section.auto_decrease )
+                            --section.count;
+                    }
             }
 
             if ( section.opened || section.count > 0)
             {
                 highlight(section.highlightingRules, text);
-
                 if ( section.stop.indexIn(text) >= 0) {
-                    --section.count;
+                    if (section.count > 0 )
+                        --section.count;
                     section.opened = false;
-                }
+               }
             }
-            if ( section.count < 0)
-            {
-                section.count = 0;
-            }
-
             sectionHighlightingRules[i] = section;
         }
     }
@@ -115,14 +110,13 @@ void Highlighter::highlightBlock(const QString &text)
 
 }
 
-void Highlighter::highlight(const QVector<HighlightingRule> &highlightingRules, const QString &text)
+void Highlighter::highlight(const QVector<HighlightingRule> &m_highlightingRules, const QString &text)
 {
 
-    if( highlightingRules.isEmpty())
+    if( m_highlightingRules.isEmpty())
         return;
 
-    highlighted = true;
-    foreach (const HighlightingRule &rule, highlightingRules) {
+    foreach (const HighlightingRule &rule, m_highlightingRules ) {
         int index = rule.pattern.indexIn(text);
         int length = 0;
         while ((index = rule.pattern.indexIn(text, index + length)) != -1) {

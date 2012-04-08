@@ -14,6 +14,7 @@ struct sectionHighlightingRule
     QRegExp stop;
     QVector<HighlightingRule> highlightingRules;
     bool opened;
+    bool auto_decrease;
     int count;
 };
 
