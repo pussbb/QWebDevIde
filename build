@@ -1,0 +1,4 @@
+#!/bin/bash
+./clean_all
+qmake ./build_all.pro
+make

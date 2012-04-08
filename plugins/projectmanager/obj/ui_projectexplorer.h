@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'projectexplorer.ui'
 **
-** Created: Sun Mar 11 13:49:44 2012
-**      by: Qt User Interface Compiler version 4.8.0
+** Created: Sun Apr 8 17:43:14 2012
+**      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/

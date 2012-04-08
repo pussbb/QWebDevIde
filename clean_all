@@ -1,0 +1,6 @@
+#!/bin/bash
+find ./ -name "obj" | xargs rm -Rf
+find ./ -name "Makefile" | xargs rm -Rf
+find ./bin/ -name "lib*" | xargs rm -Rf
+rm ./bin/logs/*
+rm ./bin/qwebdevide
