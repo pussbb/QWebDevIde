@@ -94,6 +94,19 @@ void EditingWidget::keyPressEvent(QKeyEvent *e)
 {
     qDebug()<<"protected event";
     qDebug()<< e->key();
+    if ( (e->key() == Qt::Key_F && e->modifiers() == Qt::ControlModifier)
+         || ( e->key() == Qt::Key_R && e->modifiers() == Qt::ControlModifier)) {
+        IEditors *editor = editedFiles->openedFiles.value(currentFileId).editorInterface;
+        QPointer<QWidget> sr = editor->searchReplace();
+        qDebug()<<"searchWidget"<<sr;
+        if ( ! sr.isNull()) {qDebug()<<"searchWidget"<<sr;
+            sr->setParent(ui->searchWidget);
+            ui->searchWidget->layout()->addWidget(sr);
+            setFocusProxy(sr);
+            ui->searchWidget->setVisible(true);
+        }
+    }
+    QWidget::keyPressEvent(e);
 }
 
 void EditingWidget::contentChanged()

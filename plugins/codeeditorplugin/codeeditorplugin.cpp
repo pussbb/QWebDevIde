@@ -45,6 +45,11 @@ QStringList CodeEditorPlugin::mimeTypes()
                          << "text/html"
                          << "text/plain";
 }
+#include <findwidget.h>
+QWidget *CodeEditorPlugin::searchReplace()
+{
+    return new FindWidget();
+}
 
 Q_EXPORT_PLUGIN2(CodeEditor, CodeEditorPlugin)
 

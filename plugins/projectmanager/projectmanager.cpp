@@ -41,6 +41,11 @@ QStringList ProjectManager::mimeTypes()
                         << "application/web.dev.ide";
 }
 
+QWidget *ProjectManager::searchReplace()
+{
+    return NULL;
+}
+
 QWidget * ProjectManager::getWidget()
 {
     if(projectExplorer != NULL)

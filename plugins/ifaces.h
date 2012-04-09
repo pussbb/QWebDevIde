@@ -11,7 +11,7 @@ public:
     virtual bool save(const QString &fileId) = 0;
     virtual void close(const QString &fileId) = 0 ;
     virtual QStringList mimeTypes() = 0;
-
+    virtual QWidget * searchReplace() = 0;
     QString errorString;
 };
 

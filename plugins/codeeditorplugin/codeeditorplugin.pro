@@ -6,10 +6,14 @@ CONFIG += plugin
 include("../commonplugin.pri")
 include("../json.pri")
 include("./codeeditor_dependencies.pri")
-
+include("../../3rdparty/qtcreator/fancywidgets.pri")
 SOURCES += codeeditorplugin.cpp \
     codeeditor/codeeditor.cpp \
-    codeeditor/textblockdata.cpp
+    codeeditor/textblockdata.cpp \
+    findwidget.cpp
+INCLUDEPATH += $$PWD
+
+DEPENDPATH += $$PWD/
 
 unix{
     OBJECTS_DIR = ./obj/
@@ -19,7 +23,11 @@ unix{
 }
 
 HEADERS += \
-    global.h
+    global.h \
+    findwidget.h
+
+FORMS += \
+    findwidget.ui
 
 
 

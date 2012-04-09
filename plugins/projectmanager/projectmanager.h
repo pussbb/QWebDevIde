@@ -26,7 +26,7 @@ public:
     bool save(const QString &fileId);
     void close(const QString &fileId);
     QStringList mimeTypes();
-
+    QWidget * searchReplace();
     /// RightPane interface
     QWidget * getWidget();
     inline QString widgetTitle() { return tr("Projects");}
