@@ -5,7 +5,7 @@
 	"text": "Hi",
     "section": {
         "start": "<\\?",
-        "stop" : "\\?>"
+        "stop" : "\\b\\?>\\b"
         }
    },
   "dependencies":{
@@ -68,14 +68,14 @@
       "xor",
       "var",
 
-      "if",
-      "else",
-      "elseif",
-      "include",
-      "include_once",
-      "require",
-      "require_once",
-      "return"
+      "\\bif\\b",
+      "\\belse\\b",
+      "\\belseif\\b",
+      "\\binclude\\b",
+      "\\binclude_once\\b",
+      "\\brequire\\b",
+      "\\brequire_once\\b",
+      "\\breturn\\b"
   ],
   "operators": [
     "\\+=",

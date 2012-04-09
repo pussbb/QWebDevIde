@@ -23,7 +23,7 @@ CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
 
 CodeEditor::~CodeEditor()
 {
-       delete lineNumberArea;
+    delete lineNumberArea;
 }
 
 void CodeEditor::initSettings()
@@ -45,7 +45,7 @@ void CodeEditor::initSettings()
     option.setFlags( QTextOption::IncludeTrailingSpaces
                      | QTextOption::AddSpaceForLineAndParagraphSeparators
                      |QTextOption::ShowTabsAndSpaces
-                   );
+                     );
     option.setUseDesignMetrics(true);
     document()->setDefaultTextOption(option);
 }
@@ -162,7 +162,7 @@ void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
             QString number = QString::number(blockNumber + 1);
             painter.setPen(Qt::lightGray);
             painter.drawText(0, top - 1, lineNumberArea->width(), fontMetrics().height(),
-                                         Qt::AlignRight, number);
+                             Qt::AlignRight, number);
         }
         block = block.next();
         top = bottom;
@@ -209,32 +209,32 @@ int CodeEditor::findMatchingChar(QChar c1, QChar c2, bool forward, QTextBlock &b
     int i = 1;
     while (block.isValid())
     {
-            TextBlockData *data = static_cast<TextBlockData *>(block.userData());
-            QVector<ParenthesisInfo *> parentheses = data->parentheses();
-            for( int k=0; (data) && (k<parentheses.size()); k++)
-            {
-                    int j = forward? k : parentheses.size() - k - 1;
-                    ParenthesisInfo *m = parentheses.at(j);
-                    int globalPosition = m->position + block.position();
-                    if (forward) {
-                            if (globalPosition <= from) continue;
-                    }	else if (globalPosition >= from) continue;
+        TextBlockData *data = static_cast<TextBlockData *>(block.userData());
+        QVector<ParenthesisInfo *> parentheses = data->parentheses();
+        for( int k=0; (data) && (k<parentheses.size()); k++)
+        {
+            int j = forward? k : parentheses.size() - k - 1;
+            ParenthesisInfo *m = parentheses.at(j);
+            int globalPosition = m->position + block.position();
+            if (forward) {
+                if (globalPosition <= from) continue;
+            }	else if (globalPosition >= from) continue;
 
-                    if (m->character == c1){
-                            i ++;
-                    }
-                    if (m->character == c2)
-                            i --;
-                    // we found the braket
-                    if (i==0) {
-                        createParenthesisSelection(globalPosition);
-                        return globalPosition;
-                    }
+            if (m->character == c1){
+                i ++;
             }
-            if (forward)
-                    block = block.next();
-            else
-                    block = block.previous();
+            if (m->character == c2)
+                i --;
+            // we found the braket
+            if (i==0) {
+                createParenthesisSelection(globalPosition);
+                return globalPosition;
+            }
+        }
+        if (forward)
+            block = block.next();
+        else
+            block = block.previous();
     }
     return -1;
 }
@@ -247,14 +247,14 @@ void CodeEditor::openFile(const QString file)
     m_file = file;
     fetch(&f);
 
-   /// delete &file;
+    /// delete &file;
 }
 
 void CodeEditor::fetch(QFile *file)
 {
     QByteArray buf;
     //if(!file->isWritable())
-   //     setReadOnly(true);
+    //     setReadOnly(true);
     buf = file->readAll();
     file->close();
     int mib = 106; // utf-8
@@ -295,7 +295,7 @@ bool CodeEditor::saveFile()
     if ( !f.open(QFile::WriteOnly | QFile::Text))
         return false;
 
-// rewrite
+    // rewrite
     QTextCursor cursor = textCursor();
     QStringList list = document()->toPlainText().split('\n');
     for (int i = 0; i < list.count(); ++i)
@@ -305,9 +305,9 @@ bool CodeEditor::saveFile()
     setTextCursor(cursor);
 
     f.write(codec->toUnicode(
-                        document()->toPlainText().toLocal8Bit()
-                    ).toLocal8Bit()
-                );
+                document()->toPlainText().toLocal8Bit()
+                ).toLocal8Bit()
+            );
     f.close();
     f.deleteLater();
     changed = false;
@@ -323,7 +323,8 @@ void CodeEditor::setLineAreaPalette(LineAreaStyle lineAreaStyle)
 void CodeEditor::keyPressEvent(QKeyEvent *e)
 {
     emit(keyPressed(e));
-    if ( e->key() == Qt::Key_Tab) {
+    if ( e->key() == Qt::Key_Tab
+         && e->modifiers() != Qt::ControlModifier) {
         if ( ! textCursor().hasSelection()) {
             textCursor().insertText(QString(" ").repeated(4));
             return;
@@ -335,11 +336,36 @@ void CodeEditor::keyPressEvent(QKeyEvent *e)
         for (int i=0; i < list.count(); ++i)
             list[i] = QString(" ").repeated(4) + list[i];
 
-        int start = cursor.selectionStart();
-        int end = cursor.selectionEnd();        ///cursor.setKeepPositionOnInsert(true);
+        //int start = cursor.selectionStart();
+        //int end = cursor.selectionEnd();
+
+        //  cursor.beginEditBlock();        cursor.joinPreviousEditBlock();
         cursor.insertText(list.join("\n"));
-        //cursor.setPosition(start);
-       // cursor.setPosition(b.position(), QTextCursor::KeepAnchor);
+        //   cursor.setPosition(start);
+        //   cursor.setPosition(end, QTextCursor::KeepAnchor);
+        //setTextCursor(cursor);
+
+        return;
+    }
+    if ( e->key() == Qt::Key_Tab
+         && e->modifiers() == Qt::ControlModifier) {
+        QString text;
+        QTextCursor cursor = textCursor();
+        cursor.beginEditBlock();
+        if ( ! textCursor().hasSelection()) {
+            cursor.select(QTextCursor::LineUnderCursor);
+            text = cursor.selection().toPlainText().remove(QRegExp("^\\s{1,4}"));
+        }
+        else {
+            QStringList list = cursor.selection().toPlainText().split('\n');
+            for (int i=0; i < list.count(); ++i)
+                list[i] = list[i].remove(QRegExp("^\\s{1,4}"));
+            text = list.join("\n");
+        }
+        int start = cursor.anchor();
+        cursor.insertText(text);
+        cursor.endEditBlock();
+        cursor.setPosition(start);
         setTextCursor(cursor);
         return;
     }
