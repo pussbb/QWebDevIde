@@ -298,6 +298,7 @@ bool CodeEditor::saveFile()
     // rewrite
     QTextCursor cursor = textCursor();
     QTextBlock b =  document()->findBlock( cursor.position());
+
     QStringList list = document()->toPlainText().split('\n');
     for (int i = 0; i < list.count(); ++i)
         list[i] = list[i].remove(QRegExp("\\s*$"));
