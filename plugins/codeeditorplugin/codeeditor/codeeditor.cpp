@@ -297,12 +297,14 @@ bool CodeEditor::saveFile()
 
     // rewrite
     QTextCursor cursor = textCursor();
+    int start =  document()->findBlock( cursor.position()).position();
     QStringList list = document()->toPlainText().split('\n');
     for (int i = 0; i < list.count(); ++i)
         list[i] = list[i].remove(QRegExp("\\s*$"));
-
     document()->setPlainText(list.join("\n"));
-    setTextCursor(cursor);
+
+    cursor.setPosition( start, QTextCursor::MoveAnchor);
+    setTextCursor( cursor);
 
     f.write(codec->toUnicode(
                 document()->toPlainText().toLocal8Bit()
@@ -347,6 +349,7 @@ void CodeEditor::keyPressEvent(QKeyEvent *e)
         setTextCursor(cursor);
         return;
     }
+
     if ( e->key() == Qt::Key_Tab
          && e->modifiers() == Qt::ControlModifier) {
         QString text;
@@ -391,14 +394,12 @@ void CodeEditor::keyPressEvent(QKeyEvent *e)
     if ( e->key() == Qt::Key_U
          && int(e->modifiers()) == (Qt::ControlModifier + Qt::ShiftModifier)
          && textCursor().hasSelection()) {
-
         cursor.beginEditBlock();
         cursor.insertText(cursor.selectedText().toLower());
         cursor.setPosition(start);
         cursor.setPosition(end, QTextCursor::KeepAnchor);
         cursor.endEditBlock();
         setTextCursor(cursor);
-
     }
     QPlainTextEdit::keyPressEvent(e);
 }

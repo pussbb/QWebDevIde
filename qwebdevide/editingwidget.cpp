@@ -105,3 +105,12 @@ void EditingWidget::contentChanged()
     QString fileId = ui->openedFilesList->itemData(index).toString();
     editedFiles->changeState(fileId, true);
 }
+
+void EditingWidget::markAsSaved(const QString &fileId)
+{
+    int index = ui->openedFilesList->findData(fileId,Qt::UserRole);
+    if ( index == -1)
+        return;
+    QString text = ui->openedFilesList->itemText(index);
+    ui->openedFilesList->setItemText(index, text.remove(QRegExp("^\\*")));
+}

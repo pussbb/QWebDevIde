@@ -108,7 +108,7 @@ void Highlighter::highlightBlock(const QString &text)
 void Highlighter::highlight(const QVector<HighlightingRule> &m_highlightingRules, const QString &text)
 {
 
-    if( m_highlightingRules.isEmpty())
+    if( m_highlightingRules.isEmpty() || text.isEmpty())
         return;
 
     foreach (const HighlightingRule &rule, m_highlightingRules ) {

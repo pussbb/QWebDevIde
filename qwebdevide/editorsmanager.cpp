@@ -60,7 +60,12 @@ void EditorsManager::saveCurrent()
     IEditors *editor = editedFiles->openedFiles.value(m_editingWidget->currentFileId).editorInterface;
     if (editor == NULL)
         return;
-    editor->save(m_editingWidget->currentFileId);
+    if ( editor->save(m_editingWidget->currentFileId))
+    {
+        editedFiles->changeState(m_editingWidget->currentFileId,false);
+        m_editingWidget->markAsSaved(m_editingWidget->currentFileId);
+    }
+
 }
 
 void EditorsManager::initPlugins(QMap<QString, QObject *> list)
@@ -80,8 +85,13 @@ void EditorsManager::saveAll()
 {
     foreach (const QString &fileId, editedFiles->openedFiles.keys()) {
         IEditors *editor = editedFiles->openedFiles.value(fileId).editorInterface;
-        if ( editor)
-            editor->save(fileId);
+        if ( editor) {
+            if (editor->save(fileId)) {
+                editedFiles->changeState(fileId,false);
+                m_editingWidget->markAsSaved(fileId);
+            }
+
+        }
     }
 }
 

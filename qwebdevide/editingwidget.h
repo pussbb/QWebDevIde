@@ -21,7 +21,7 @@ public:
     void setCurrent(QString file);
     void refreshFileList();
     QString currentFileId;
-
+    void markAsSaved(const QString &fileId);
 public slots:
     void contentChanged();
 
