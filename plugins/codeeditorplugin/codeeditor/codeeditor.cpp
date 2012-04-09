@@ -323,6 +323,11 @@ void CodeEditor::setLineAreaPalette(LineAreaStyle lineAreaStyle)
 void CodeEditor::keyPressEvent(QKeyEvent *e)
 {
     emit(keyPressed(e));
+
+    QTextCursor cursor = textCursor();
+    int start = cursor.selectionStart();
+    int end = cursor.selectionEnd();
+
     if ( e->key() == Qt::Key_Tab
          && e->modifiers() != Qt::ControlModifier) {
         if ( ! textCursor().hasSelection()) {
@@ -330,42 +335,42 @@ void CodeEditor::keyPressEvent(QKeyEvent *e)
             return;
         }
 
-        QTextCursor cursor = textCursor();
-
         QStringList list = cursor.selection().toPlainText().split('\n');
         for (int i=0; i < list.count(); ++i)
             list[i] = QString(" ").repeated(4) + list[i];
 
-        //int start = cursor.selectionStart();
-        //int end = cursor.selectionEnd();
-
-        //  cursor.beginEditBlock();        cursor.joinPreviousEditBlock();
+        QTextBlock b1 = document()->findBlock(start);
+        QTextBlock b2 = document()->findBlock(end);
         cursor.insertText(list.join("\n"));
-        //   cursor.setPosition(start);
-        //   cursor.setPosition(end, QTextCursor::KeepAnchor);
-        //setTextCursor(cursor);
-
+        cursor.setPosition(b1.position(), QTextCursor::KeepAnchor);
+        cursor.setPosition(b2.position(), QTextCursor::KeepAnchor);
+        setTextCursor(cursor);
         return;
     }
     if ( e->key() == Qt::Key_Tab
          && e->modifiers() == Qt::ControlModifier) {
         QString text;
-        QTextCursor cursor = textCursor();
+
         cursor.beginEditBlock();
         if ( ! textCursor().hasSelection()) {
             cursor.select(QTextCursor::LineUnderCursor);
             text = cursor.selection().toPlainText().remove(QRegExp("^\\s{1,4}"));
+            int anchor = cursor.anchor();
+            cursor.insertText(text);
+            cursor.setPosition(anchor);
         }
         else {
             QStringList list = cursor.selection().toPlainText().split('\n');
             for (int i=0; i < list.count(); ++i)
                 list[i] = list[i].remove(QRegExp("^\\s{1,4}"));
             text = list.join("\n");
+            QTextBlock b1 = document()->findBlock(start);
+            QTextBlock b2 = document()->findBlock(end);
+            cursor.insertText(text);
+            cursor.setPosition(b1.position(), QTextCursor::KeepAnchor);
+            cursor.setPosition(b2.position(), QTextCursor::KeepAnchor);
         }
-        int start = cursor.anchor();
-        cursor.insertText(text);
         cursor.endEditBlock();
-        cursor.setPosition(start);
         setTextCursor(cursor);
         return;
     }
@@ -374,10 +379,7 @@ void CodeEditor::keyPressEvent(QKeyEvent *e)
          && e->modifiers() == Qt::ControlModifier
          && textCursor().hasSelection()) {
 
-        QTextCursor cursor = textCursor();
         cursor.beginEditBlock();
-        int start = cursor.selectionStart();
-        int end = cursor.selectionEnd();
         cursor.insertText(cursor.selectedText().toUpper());
         cursor.setPosition(start);
         cursor.setPosition(end, QTextCursor::KeepAnchor);
@@ -390,10 +392,7 @@ void CodeEditor::keyPressEvent(QKeyEvent *e)
          && int(e->modifiers()) == (Qt::ControlModifier + Qt::ShiftModifier)
          && textCursor().hasSelection()) {
 
-        QTextCursor cursor = textCursor();
         cursor.beginEditBlock();
-        int start = cursor.selectionStart();
-        int end = cursor.selectionEnd();
         cursor.insertText(cursor.selectedText().toLower());
         cursor.setPosition(start);
         cursor.setPosition(end, QTextCursor::KeepAnchor);
