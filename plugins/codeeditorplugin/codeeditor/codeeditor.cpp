@@ -297,13 +297,13 @@ bool CodeEditor::saveFile()
 
     // rewrite
     QTextCursor cursor = textCursor();
-    int start =  document()->findBlock( cursor.position()).position();
+    QTextBlock b =  document()->findBlock( cursor.position());
     QStringList list = document()->toPlainText().split('\n');
     for (int i = 0; i < list.count(); ++i)
         list[i] = list[i].remove(QRegExp("\\s*$"));
     document()->setPlainText(list.join("\n"));
 
-    cursor.setPosition( start, QTextCursor::MoveAnchor);
+    cursor.setPosition( b.position() , QTextCursor::MoveAnchor);
     setTextCursor( cursor);
 
     f.write(codec->toUnicode(

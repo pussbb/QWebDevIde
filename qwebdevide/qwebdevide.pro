@@ -8,8 +8,7 @@ include(../3rdparty/qtcreator/fancywidgets.pri)
 include(../3rdparty/qtjsonsettings/qtjsonsettings.pri)
 
 TARGET = qwebdevide
-INCLUDEPATH += $$PWD/codeeditor \
-                $$PWD/wizard
+INCLUDEPATH += $$PWD/wizard
 TEMPLATE = app
 unix{
     OBJECTS_DIR = ./obj/
